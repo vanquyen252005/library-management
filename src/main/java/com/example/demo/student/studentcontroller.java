@@ -1,18 +1,18 @@
-package com.example.demo.admin;
+package com.example.demo.student;
 
 import com.example.demo.HelloController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-public class admincontroller extends HelloController {
+public class studentcontroller extends HelloController {
     @FXML
     private TextField username;
     @FXML
     private PasswordField password;
     @FXML
     private Label loginFailLabel;
-    protected static admin user = new admin();
+    protected static student user = new student();
 
     public void login(ActionEvent event) {
         //System.out.println(username);

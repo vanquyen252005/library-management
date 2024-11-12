@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
+<?import javafx.scene.image.Image?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.menucontroller">
    <children>
-      <Pane layoutX="14.0" layoutY="12.0" prefHeight="574.0" prefWidth="212.0" styleClass="side_ankerpane">
-         <children>
-            <Button fx:id="home" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass=".btn_workbench" text="Home" />
-            <Button fx:id="manageStudent" layoutX="14.0" layoutY="172.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Manage Student" />
-            <Button fx:id="manageBook" layoutX="14.0" layoutY="256.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Manage Book " />
-            <Button fx:id="search" layoutX="14.0" layoutY="414.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Search Book" />
-            <Button fx:id="handleRequest" layoutX="14.0" layoutY="337.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
-         </children>
-      </Pane>
+      <!-- Sidebar Pane -->
+      <Pane layoutX="18.0" layoutY="10.0" prefHeight="574.0" prefWidth="188.0" styleClass="side_ankerpane" />
+      <Button fx:id="home" layoutX="18.0" layoutY="83.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="188.0" styleClass="sidebar-button" text="Home">
+         <graphic>
+            <ImageView fx:id="homeIcon" fitHeight="20" fitWidth="20">
+               <Image url="@../../../../Picture/home.png" />
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="manageStudent" layoutX="18.0" layoutY="124.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Student">
+      <graphic>
+         <ImageView fx:id="userIcon" fitHeight="20" fitWidth="20">
+            <Image url="@../../../../Picture/user.png" />
+         </ImageView>
+      </graphic>
+      </Button>
+      <Button fx:id="manageBook" layoutX="18.0" layoutY="165.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Book" >
+         <graphic>
+            <ImageView fx:id="bookIcon" fitHeight="20" fitWidth="20">
+               <Image url="@../../../../Picture/book.png" />
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="handleRequest" layoutX="18.0" layoutY="206.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Handle Request" />
+      <Button fx:id="search" layoutX="18.0" layoutY="247.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Search Book" />
+
    </children>
 </AnchorPane>

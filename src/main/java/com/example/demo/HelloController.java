@@ -9,6 +9,8 @@ import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
+import java.util.Objects;
+
 public class HelloController{
     protected Stage stage;
     protected Scene scene;
@@ -28,11 +30,24 @@ public class HelloController{
         }
     }
     @FXML
+    protected void displayScene(ActionEvent event, String fxmlLink, Object o) {
+        try {
+            System.out.println(getClass().getResource(fxmlLink));
+            root = FXMLLoader.load(getClass().getResource(fxmlLink));
+            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+            scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    @FXML
     protected void AdminLogin(ActionEvent event) {
-        displayScene(event,"Admin/AdminLogin.fxml");
+        displayScene(event,"admin/AdminLogin.fxml");
     }
     @FXML
     protected void StudentLogin(ActionEvent event) {
-        displayScene(event,"StudentLogin");
+        displayScene(event,"student/StudentLogin.fxml");
     }
 }

@@ -4,6 +4,8 @@ module com.example.demo {
     requires java.sql;
     requires java.desktop;
     requires jdk.compiler;
+    requires java.net.http;
+    requires org.json;
 
 
     opens com.example.demo to javafx.fxml;

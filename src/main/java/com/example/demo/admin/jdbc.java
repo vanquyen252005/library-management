@@ -1,6 +1,6 @@
 package com.example.demo.admin;
 
-import com.example.demo.student.Student;
+import com.example.demo.student.student;
 
 import java.sql.*;
 
@@ -10,7 +10,7 @@ public class jdbc {
     jdbc() {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/userdata",
+                    "jdbc:mysql://localhost:3306/lib",
                     "root",
                     "123456789"
             );
@@ -26,7 +26,7 @@ public class jdbc {
         try {
             username_ = "'" + username_ + "'";
             password_ = "'" + password_ + "'";
-            String query = "SELECT * FROM information WHERE username = " + username_
+            String query = "SELECT * FROM userdata WHERE username = " + username_
                     +" AND password = " +password_ + ";";
             System.out.println(query);
             resultSet = statement.executeQuery(query);
@@ -42,7 +42,7 @@ public class jdbc {
         }
         return resultSet;
     }
-    public boolean addStudentData(Student newUser) {
+    public boolean addStudentData(student newUser) {
         String id = newUser.getId();                     // Gán id
         String username = newUser.getUsername();         // Gán username
         String password = newUser.getPassword();         // Gán password
@@ -52,7 +52,7 @@ public class jdbc {
         String classname = newUser.getClassname();       // Gán classname
         ResultSet resultSet = null;
         try {
-            String query  = "INSERT INTO information column(id, username,password,name,role,phone,classname) " +
+            String query  = "INSERT INTO userdata column(id, username,password,name,role,phone,classname) " +
                     "values(id, username,password,name,role,phone,classname)";
             System.out.println(query);
             resultSet = statement.executeQuery(query);
@@ -72,7 +72,7 @@ public class jdbc {
         ResultSet resultSet = null;
         try {
             info = "'%" + info + "%'";
-            String query = "SELECT * FROM information WHERE " + op + " LIKE " + info + " and role = 'Student';";
+            String query = "SELECT * FROM userdata WHERE " + op + " LIKE " + info + " and role = 'Student';";
             System.out.println(query);
             resultSet = statement.executeQuery(query);
             if (resultSet != null)

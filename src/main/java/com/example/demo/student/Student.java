@@ -5,18 +5,18 @@ import com.example.demo.user.User;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public class Student extends User {
+public class student extends User {
     private String classname;
-    private jdbc DataUser = new jdbc();
-    public Student() {
+    private jdbc Request = new jdbc();
+    public student() {
         super();
 
     }
-    public Student(String id, String username, String password, String name, String role, String phone, String classname) {
+    public student(String id, String username, String password, String name, String role, String phone, String classname) {
         super(id, username, password, name, role, phone);
         this.classname = classname;
     }
-    public Student(String id, String username, String name) {
+    public student(String id, String username, String name) {
         super(id, username, name);
     }
     public void setClassname(String classname) {
@@ -26,20 +26,32 @@ public class Student extends User {
         return classname;
     }
     @Override
-    public boolean login(String username, String password) throws SQLException {
-        ResultSet resultSet = DataUser.getData(username, password);
-        if (resultSet.next() != false) {
-            if (resultSet.getString("role").equals("admin")) {
-                super.setID(resultSet.getString("id"));
-                super.setUsername(resultSet.getString("username"));
-                super.setPassword(resultSet.getString("password"));
-                super.setName(resultSet.getString("name"));
-                super.setRole(resultSet.getString("role"));
-                super.setPhone(resultSet.getString("phone")); // Chuyển đổi kiểu nếu cần
-                return true;
-            }
+    public boolean login(String username, String password) {
+        try{
+            ResultSet resultSet = Request.getData(username, password);
+            while (resultSet.next() != false) {
+                if (resultSet.getString("role").equals("Student")) {
+                    super.setID(resultSet.getString("id"));
+                    super.setUsername(resultSet.getString("username"));
+                    super.setPassword(resultSet.getString("password"));
+                    super.setName(resultSet.getString("name"));
+                    super.setRole(resultSet.getString("role"));
+                    super.setPhone(resultSet.getString("phone"));
+                    this.setClassname("classname");
+                    return true;
+                }
 
+            }
+            return false;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        return false;
     }
+    public student getStudent() {
+        return this;
+    }
+    public void deleteStudent() {
+        Request.deleteStudent(super.getId());
+    }
+
 }

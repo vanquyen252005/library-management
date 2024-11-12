@@ -6,15 +6,15 @@ import javafx.scene.control.Button;
 
 public class menucontroller extends admincontroller {
     @FXML
-    private Button home;
+    protected Button home;
     @FXML
-    private Button manageStudent;
+    protected Button manageStudent;
     @FXML
-    private Button manageBook;
+    protected Button manageBook;
     @FXML
-    private Button search;
+    protected Button search;
     @FXML
-    private Button handleRequest;
+    protected Button handleRequest;
 
     @FXML
     public void initialize() {
@@ -26,23 +26,23 @@ public class menucontroller extends admincontroller {
         handleRequest.setOnAction(event -> handleHandleRequestAction(event));
     }
 
-    private void handleHomeAction(ActionEvent event) {
+    public void handleHomeAction(ActionEvent event) {
         displayScene(event, "menu.fxml");
     }
 
-    private void handleManageStudentAction(ActionEvent event) {
+    public void handleManageStudentAction(ActionEvent event) {
         displayScene(event, "ManageStudent.fxml");
     }
 
-    private void handleManageBookAction(ActionEvent event) {
+    public void handleManageBookAction(ActionEvent event) {
+        displayScene(event, "ManageBook.fxml");
+    }
+
+    public void handleSearchAction(ActionEvent event) {
         displayScene(event, "menu.fxml");
     }
 
-    private void handleSearchAction(ActionEvent event) {
-        displayScene(event, "menu.fxml");
-    }
-
-    private void handleHandleRequestAction(ActionEvent event) {
+    public void handleHandleRequestAction(ActionEvent event) {
         displayScene(event, "menu.fxml");
     }
 
