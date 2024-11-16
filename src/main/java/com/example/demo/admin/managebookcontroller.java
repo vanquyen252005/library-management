@@ -1,124 +1,241 @@
 package com.example.demo.admin;
 
 import com.example.demo.book.Book;
-import com.example.demo.book.ConnectDB;
+import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.HBox;
+import javafx.util.Callback;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
-public class managebookcontroller {
 
+public class managebookcontroller extends menucontroller {
     @FXML
-    private Button addButton, searchButton, OK, Delete;
+    private ComboBox<String> bookSearchType;
     @FXML
-    private VBox contentBox;
+    private TextField input;
     @FXML
-    private TextField Title_field, Author_field, PublishYear_field, Publisher_field, ISBN_field;
+    TableView<Book> bookTable;
     @FXML
-    private TextArea Show;
+    private ListView<String> suggestionList;
+    private String op;
+    public static Book onClickBook = new Book();
+    @Override
+    @FXML
+    public void initialize() {
+        home.setOnAction(event -> handleHomeAction(event));
+        manageStudent.setOnAction(event -> handleManageStudentAction(event));
+        manageBook.setOnAction(event -> handleManageBookAction(event));
+        search.setOnAction(event -> handleSearchAction(event));
+        handleRequest.setOnAction(event -> handleHandleRequestAction(event));
 
-    private static int func_route;
-    private final ConnectDB BookDatabase = new ConnectDB();
-
-    public void ClickDeleteButton(ActionEvent e) {
-        clearFields();
-        System.out.println("press delete");
-    }
-
-    public void clickOKButton(ActionEvent e) {
-        System.out.println("you clicked on OK button");
-        String ISBN = ISBN_field.getText();
-        String title = Title_field.getText();
-        String author = Author_field.getText();
-        String publishYear = PublishYear_field.getText();
-        String publisher = Publisher_field.getText();
-
-        switch (func_route) {
-            case 1 ->
-            {
-                System.out.println("process when clicking OK button on Route:Add Document");
-                BookDatabase.addDocument(title, author, publishYear, publisher);
-                Show.setText("Document added successfully.");
+        bookSearchType.getItems().addAll("ID", "Username", "Name");
+        bookSearchType.setOnAction(event -> {
+            op = bookSearchType.getValue();
+            System.out.println("Bạn đã chọn: " + op);
+            switch (op) {
+                case "ID":
+                    op = "id";
+                    break;
+                case "Username":
+                    op = "username";
+                    break;
+                case "Name":
+                    op = "name";
+                    break;
             }
-            case 2 -> searchDocument(title);
-            case 3 ->
-            {
-                System.out.println("processing to edit document with ISBN:" + ISBN);
-                BookDatabase.editDocument(ISBN,title,author,publisher,publishYear);
-                System.out.println("Managing to edit the document");
-            }
-            case 4 -> BookDatabase.deleteDocument(ISBN);
-            default -> Show.setText("Invalid operation selected.");
-        }
-    }
+        });
 
-    private void searchDocument(String title) {
-        System.out.println("process when clicking OK button on Route:Search Document");
-        if (!title.isEmpty()) {
-            System.out.println("Querying the database for title: " + title);
-            Task<List<Book>> task = new Task<>() {
-                @Override
-                protected List<Book> call() throws Exception {
-                    return BookDatabase.searchDocuments(title);
-                }
-            };
+        // Điều chỉnh chiều rộng của TreeView nếu cần
 
-            task.setOnSucceeded(event -> {
-                System.out.println("Database query completed.");
-                List<Book> bookList = task.getValue();
-                if (bookList != null && !bookList.isEmpty()) {
-                    StringBuilder result = new StringBuilder();
-                    for (Book book : bookList) {
-                        result.append(book).append(System.lineSeparator());
+
+        TableColumn<Book, String> column1 =
+                new TableColumn<>("ID");
+        TableColumn<Book, String> column2 =
+                new TableColumn<>("Username");
+        TableColumn<Book, String> column3 =
+                new TableColumn<>("Name");
+        TableColumn<Book, String> column4 =
+                new TableColumn<>("Classname");
+        TableColumn<Book, Void> actionColumn = new TableColumn<>("Action");
+
+        column1.setCellValueFactory(
+                new PropertyValueFactory<>("id"));
+        column2.setCellValueFactory(
+                new PropertyValueFactory<>("username"));
+        column3.setCellValueFactory(
+                new PropertyValueFactory<>("name"));
+        column4.setCellValueFactory(
+                new PropertyValueFactory<>("classname")
+        );
+        Callback<TableColumn<Book, Void>, TableCell<Book, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Book, Void> call(final TableColumn<Book, Void> param) {
+                final TableCell<Book, Void> cell = new TableCell<>() {
+                    private Button deleteButton = new Button("Delete");
+                    private Button detailButton = new Button("Detail");
+                    private final HBox hbox = new HBox(10); // HBox để chứa các nút, khoảng cách giữa các nút là 10
+
+                    {
+                        deleteButton.getStyleClass().add("delete-button");
+                        // Đặt sự kiện cho nút "Delete"
+                        deleteButton.setOnAction(event -> {
+                            Book book = getTableView().getItems().get(getIndex());
+                            book.deleteBook(); // Gọi phương thức deleteStudent()
+                        });
+
+                        detailButton.getStyleClass().add("detail-button");
+                        // Đặt sự kiện cho nút "Detail"
+                        detailButton.setOnAction(event -> {
+                            Book book = getTableView().getItems().get(getIndex());
+                            detailStudent(book.getBook(), event);
+                        });
+
+                        // Thêm các nút vào HBox
+                        hbox.getChildren().addAll(deleteButton, detailButton);
                     }
-                    System.out.println("Preparing results to display.");
-                    Show.setText(result.toString());
-                } else {
-                    Show.setText("No books found with the specified title.");
-                }
-            });
 
-            task.setOnFailed(event -> {
-                Show.setText("Error occurred while searching the database.");
-                task.getException().printStackTrace();
-            });
+                    @Override
+                    protected void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(hbox); // Hiển thị HBox chứa các nút trong ô
+                        }
+                    }
+                };
+                cell.getStyleClass().add("table-student-detail-cell");
+                return cell;
+            }
+        };
+        column1.setCellFactory(param -> new TableCell<Book, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(item);
+                getStyleClass().add("table-student-id-cell");
+            }
+        });
+        column2.setCellFactory(param -> new TableCell<Book, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(item);
+                getStyleClass().add("table-student-username-cell");
+            }
+        });
+        column3.setCellFactory(param -> new TableCell<Book, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(item);
+                getStyleClass().add("table-student-name-cell");
+            }
+        });
+        column4.setCellFactory(param -> new TableCell<Book, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                setText(item);
+                getStyleClass().add("table-student-class-cell");
+            }
+        });
+        // Đặt cellFactory cho cột actions
+        actionColumn.setCellFactory(cellFactory);
+        column1.getStyleClass().add("table-student-id-cell");
+        column2.getStyleClass().add("table-student-username-cell");
+        column3.getStyleClass().add("table-student-name-cell");
+        column4.getStyleClass().add("table-student-class-cell");
+        bookTable.getColumns().addAll(column1, column2, column3, column4, actionColumn);
+        suggestionList.setVisible(false); // Ẩn gợi ý ban đầu
+        input.setOnKeyTyped(this::onKeyTyped); // Lắng nghe sự kiện khi gõ
+        suggestionList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) { // Single click
+                input.setText(suggestionList.getSelectionModel().getSelectedItem());
+                System.out.println("Clicked: " + input.getText());
+                suggestionList.setVisible(false);
+                searchStudent();
+            }
+        });
+    }
 
-            new Thread(task).start();
-        } else {
-            Show.setText("Query not valid");
+    private void onKeyTyped(KeyEvent event) {
+        String searchText = input.getText().trim();
+//        System.out.println(searchText);
+        if (searchText.isEmpty()) {
+            suggestionList.setVisible(false); // Ẩn khi không có từ khóa
+            return;
+        }
+        // Tạo một Task để lấy các gợi ý không đồng bộ
+        Task<List<String>> task = new Task<>() {
+            @Override
+            protected List<String> call() throws Exception {
+                return getSearchSuggestions(searchText); // Lấy gợi ý từ cơ sở dữ liệu
+            }
+        };
+
+        // Khi tìm kiếm hoàn thành, cập nhật danh sách gợi ý
+        task.setOnSucceeded(e -> {
+            List<String> suggestions = task.getValue();
+            suggestionList.setItems(FXCollections.observableArrayList(suggestions));
+            suggestionList.setVisible(!suggestions.isEmpty()); // Hiển thị nếu có gợi ý
+        });
+
+        // Nếu có lỗi
+        task.setOnFailed(e -> task.getException().printStackTrace());
+
+        // Chạy Task trong một luồng riêng
+        new Thread(task).start();
+    }
+    private List<String> getSearchSuggestions(String searchText) {
+        List<String> suggestions = new ArrayList<>();
+        List<Book> cur=  Book.getBook(searchText);
+        for (Book x:cur) {
+            if (x.getTitle().contains(searchText)) {
+            suggestions.add(x.getTitle());}
+            if (x.getTitle().contains(searchText)) {
+            suggestions.add(x.getISBN());}
+            if (x.getTitle().contains(searchText)) {
+            suggestions.add(x.getAuthor());}
+            if (x.getTitle().contains(searchText)) {
+            suggestions.add(x.getPublisher());}
+            if (x.getTitle().contains(searchText)) {
+            suggestions.add(x.getPublishYear());}
+        }
+        return suggestions;
+    }
+    @FXML
+    public void searchStudent() {
+        List<Book> result = Book.getBook(input.getText());
+        bookTable.setItems(FXCollections.observableArrayList());
+        toggleTableViewVisibility(bookTable, true);
+//        System.out.println(count++);
+        for (Book x:result) {
+//            root1.getChildren().add(new TreeItem<>(x));
+            bookTable.getItems().add(x);
         }
     }
-
-    private void clearFields() {
-        ISBN_field.setText("");
-        Title_field.setText("");
-        Author_field.setText("");
-        Publisher_field.setText("");
-        PublishYear_field.setText("");
-        Show.setText("");
+    public void toggleTableViewVisibility(TableView<?> tableView, boolean isVisible) {
+//        boolean isVisible = tableView.isVisible();
+        tableView.setVisible(isVisible);
+        tableView.setManaged(isVisible);
+    }
+    public void detailStudent(Book cur, ActionEvent event) {
+        bookTable.setItems(FXCollections.observableArrayList());
+        System.out.println(event.getTarget());
+        onClickBook = cur;
+        displayScene(event,"DetailStudent.fxml");
     }
 
-    public void add_function(ActionEvent e) {
-        func_route = 1;
-        System.out.println(func_route);
-    }
-
-    public void search_function(ActionEvent e) {
-        func_route = 2;
-        System.out.println(func_route);
-    }
-
-    public void alert_function(ActionEvent e) {
-        func_route = 3;
-        System.out.println(func_route);
-    }
-
-    public void dump_function(ActionEvent e) {
-        func_route = 4;
-        System.out.println(func_route);
+    public void createStudent(ActionEvent event) {
+        displayScene(event,"CreateStudent.fxml");
     }
 }

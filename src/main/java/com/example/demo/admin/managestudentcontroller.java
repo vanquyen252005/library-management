@@ -2,23 +2,29 @@ package com.example.demo.admin;
 
 import com.example.demo.student.student;
 import javafx.collections.FXCollections;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class managestudentcontroller extends menucontroller {
     @FXML
-    public TreeView<String> studentSearchType;
+    private ComboBox<String> studentSearchType;
     @FXML
     private TextField input;
     @FXML
     TableView<student> studentTable;
+    @FXML
+    private ListView<String> suggestionList;
     private String op;
     public static student onClickStudent = new student();
     @Override
@@ -29,27 +35,26 @@ public class managestudentcontroller extends menucontroller {
         manageBook.setOnAction(event -> handleManageBookAction(event));
         search.setOnAction(event -> handleSearchAction(event));
         handleRequest.setOnAction(event -> handleHandleRequestAction(event));
-        TreeItem<String> root = new TreeItem<>("types");
-        TreeItem<String> childItem1 = new TreeItem<>("ID");
-        TreeItem<String> childItem2 = new TreeItem<>("Username");
-        TreeItem<String> childItem3 = new TreeItem<>("name");
-        root.getChildren().addAll(childItem1,childItem2,childItem3);
-        studentSearchType.setRoot(root);
-        studentSearchType.setPrefHeight(150);
-//        studentSearchType.setShowRoot(true);
-        studentSearchType.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue == childItem1) {
-                op = "ID";
-//               studentSearchType.setPrefHeight(20);
-            } else if (newValue == childItem2) {
-                op = "username";
-//               studentSearchType.setPrefHeight(20);
 
-            } else if (newValue == childItem3) {
-                op = "name";
-//               studentSearchType.setPrefHeight(20);
+        studentSearchType.getItems().addAll("ID", "Username", "Name");
+        studentSearchType.setOnAction(event -> {
+            op = studentSearchType.getValue();
+            System.out.println("Bạn đã chọn: " + op);
+            switch (op) {
+                case "ID":
+                    op = "id";
+                    break;
+                case "Username":
+                    op = "username";
+                    break;
+                case "Name":
+                    op = "name";
+                    break;
             }
         });
+
+         // Điều chỉnh chiều rộng của TreeView nếu cần
+
 
         TableColumn<student, String> column1 =
                 new TableColumn<>("ID");
@@ -82,15 +87,15 @@ public class managestudentcontroller extends menucontroller {
                         deleteButton.getStyleClass().add("delete-button");
                         // Đặt sự kiện cho nút "Delete"
                         deleteButton.setOnAction(event -> {
-                            student student = getTableView().getItems().get(getIndex());
-                            student.deleteStudent(); // Gọi phương thức deleteStudent()
+                            student Student = getTableView().getItems().get(getIndex());
+                            Student.deleteStudent(Student.getId()); // Gọi phương thức deleteStudent()
                         });
 
                         detailButton.getStyleClass().add("detail-button");
                         // Đặt sự kiện cho nút "Detail"
                         detailButton.setOnAction(event -> {
-                            student student = getTableView().getItems().get(getIndex());
-                            detailStudent(student.getStudent(), event);
+                            student Student = getTableView().getItems().get(getIndex());
+                            detailStudent(Student.getStudent(), event);
                         });
 
                         // Thêm các nút vào HBox
@@ -150,11 +155,72 @@ public class managestudentcontroller extends menucontroller {
         column3.getStyleClass().add("table-student-name-cell");
         column4.getStyleClass().add("table-student-class-cell");
         studentTable.getColumns().addAll(column1, column2, column3, column4, actionColumn);
+
+        suggestionList.setVisible(false); // Ẩn gợi ý ban đầu
+        input.setOnKeyTyped(this::onKeyTyped); // Lắng nghe sự kiện khi gõ
+        suggestionList.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) { // Single click
+                 input.setText(suggestionList.getSelectionModel().getSelectedItem());
+                System.out.println("Clicked: " + input.getText());
+                suggestionList.setVisible(false);
+                searchStudent();
+            }
+        });
     }
 
+    private void onKeyTyped(KeyEvent event) {
+        String searchText = input.getText().trim();
+//        System.out.println(searchText);
+        if (searchText.isEmpty()) {
+            suggestionList.setVisible(false); // Ẩn khi không có từ khóa
+            return;
+        }
+        // Tạo một Task để lấy các gợi ý không đồng bộ
+        Task<List<String>> task = new Task<>() {
+            @Override
+            protected List<String> call() throws Exception {
+                return getSearchSuggestions(searchText); // Lấy gợi ý từ cơ sở dữ liệu
+            }
+        };
 
-    public void searchStudent(ActionEvent event) {
-        List<student> result = user.getStudentBy(op, input.getText());
+        // Khi tìm kiếm hoàn thành, cập nhật danh sách gợi ý
+        task.setOnSucceeded(e -> {
+            List<String> suggestions = task.getValue();
+            suggestionList.setItems(FXCollections.observableArrayList(suggestions));
+            suggestionList.setVisible(!suggestions.isEmpty()); // Hiển thị nếu có gợi ý
+        });
+
+        // Nếu có lỗi
+        task.setOnFailed(e -> task.getException().printStackTrace());
+
+        // Chạy Task trong một luồng riêng
+        new Thread(task).start();
+    }
+    private List<String> getSearchSuggestions(String searchText) {
+        List<String> suggestions = new ArrayList<>();
+        List<student> cur=  student.getStudentBy(op, searchText);
+        switch (op) {
+            case "id":
+                for(student x:cur) {
+                    suggestions.add(x.getId());
+                }
+                break;
+            case "username":
+                for(student x:cur) {
+                    suggestions.add(x.getUsername());
+                }
+                break;
+            case "name":
+                for(student x:cur) {
+                    suggestions.add(x.getName());
+                }
+                break;
+        }
+        return suggestions;
+    }
+    @FXML
+    public void searchStudent() {
+        List<student> result = student.getStudentBy(op, input.getText());
         studentTable.setItems(FXCollections.observableArrayList());
         toggleTableViewVisibility(studentTable, true);
 //        System.out.println(count++);
@@ -163,8 +229,6 @@ public class managestudentcontroller extends menucontroller {
             studentTable.getItems().add(x);
             System.out.println(x.getUsername() + " " + x.getName());
         }
-//        studentTable.setRoot(root1);
-//        studentTable.setShowRoot(true);
     }
     public void toggleTableViewVisibility(TableView<?> tableView, boolean isVisible) {
 //        boolean isVisible = tableView.isVisible();
@@ -177,7 +241,6 @@ public class managestudentcontroller extends menucontroller {
         onClickStudent = cur;
         displayScene(event,"DetailStudent.fxml");
     }
-
     public void createStudent(ActionEvent event) {
         displayScene(event,"CreateStudent.fxml");
     }

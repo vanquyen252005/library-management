@@ -61,4 +61,10 @@ public class admin extends User {
             throw new RuntimeException(e);
         }
     }
+    public void addStudent(student newStudent) {
+        Request.addStudentData(newStudent);
+    }
+    public void deleteStudent(String id) {
+        Request.deleteStudent(id);
+    }
 }

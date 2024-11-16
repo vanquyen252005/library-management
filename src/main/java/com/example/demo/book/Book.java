@@ -1,5 +1,11 @@
 package com.example.demo.book;
 
+import com.example.demo.student.student;
+
+import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Book {
     private String ISBN;
     private String Title;
@@ -7,7 +13,7 @@ public class Book {
     private String Publisher;
     private String PublishYear;
     private String image;
-
+    private static ConnectDB Request = new ConnectDB();
     public Book() {
     }
 
@@ -26,6 +32,19 @@ public class Book {
         this.Author = Author;
         this.Publisher = Publisher;
         this.PublishYear = PublishYear;
+    }
+
+    public static List<Book> getBook(String searchText) {
+        List<Book> arr = new ArrayList<>();
+        try{
+            arr = Request.searchDocuments(searchText);
+//            for(Student a:arr) {
+//                System.out.println(a.getUsername() + " " + a.getName());
+//            }
+            return arr;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public String getISBN() {
@@ -81,5 +100,13 @@ public class Book {
 
     public void setImage(String image) {
 
+    }
+
+    public void deleteBook() {
+        Request.deleteDocument(this.ISBN);
+    }
+
+    public Book getBook() {
+        return this;
     }
 }

@@ -1,122 +1,66 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.managebookcontroller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.managebookcontroller">
     <children>
-        <Pane layoutX="18.0" layoutY="10.0" prefHeight="574.0" prefWidth="188.0" styleClass="side_ankerpane" />
-        <Button fx:id="home" layoutX="18.0" layoutY="83.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="188.0" styleClass="sidebar-button" text="Home">
-            <graphic>
-                <ImageView fx:id="homeIcon" fitHeight="20" fitWidth="20">
-                    <Image url="@../../../../Picture/home.png" />
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button fx:id="manageStudent" layoutX="18.0" layoutY="124.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Student">
-            <graphic>
-                <ImageView fx:id="userIcon" fitHeight="20" fitWidth="20">
-                    <Image url="@../../../../Picture/user.png" />
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button fx:id="manageBook" layoutX="18.0" layoutY="165.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Book">
-            <graphic>
-                <ImageView fx:id="bookIcon" fitHeight="20" fitWidth="20">
-                    <Image url="@../../../../Picture/book.png" />
-                </ImageView>
-            </graphic>
-        </Button>
-        <Button fx:id="handleRequest" layoutX="18.0" layoutY="206.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Handle Request" />
-        <Button fx:id="search" layoutX="18.0" layoutY="247.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Search Book" />
-
-        <GridPane hgap="7.0" layoutX="220.8" layoutY="110.4" prefHeight="482.0" prefWidth="978.0" vgap="7.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="221.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="110.0">
-            <columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="249.33333333333331" minWidth="10.0" prefWidth="94.66665903727214" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="399.33332570393884" minWidth="0.0" prefWidth="83.66670735677086" />
-                <ColumnConstraints hgrow="SOMETIMES" maxWidth="402.33331298828125" minWidth="10.0" prefWidth="395.6666259765625" />
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="15.66668701171875" minHeight="7.0" prefHeight="7.0" vgrow="SOMETIMES" />
-                <RowConstraints maxHeight="35.0" minHeight="10.0" prefHeight="35.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-            </rowConstraints>
-            <padding>
-                <Insets bottom="20.0" left="5.0" right="5.0" top="20.0" />
-            </padding>
+        <Label layoutX="361.0" layoutY="114.0" text="Search student by ">
+            <font>
+                <Font size="14.0" />
+            </font></Label>
+        <TextField fx:id="input" layoutX="721.0" layoutY="111.0" prefHeight="26.0" prefWidth="236.0" />
+        <Button layoutX="980.0" layoutY="109.0" mnemonicParsing="false" onAction="#searchBook" styleClass="search-button" text="Search" />
+        <Button layoutX="390.0" layoutY="62.0" mnemonicParsing="false" onAction="#createBook" styleClass="create-button" text="+Create" />
+        <VBox layoutX="390.0" layoutY="220.0" prefHeight="200.0" prefWidth="638.0">
             <children>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#add_function" text="ADD" GridPane.rowIndex="2">
-                    <GridPane.margin>
-                        <Insets left="20.0" />
-                    </GridPane.margin>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#search_function" text="SEARCH" GridPane.rowIndex="3">
-                    <GridPane.margin>
-                        <Insets left="20.0" />
-                    </GridPane.margin>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#alert_function" text="ALERT" GridPane.rowIndex="4">
-                    <GridPane.margin>
-                        <Insets left="20.0" />
-                    </GridPane.margin>
-                </Button>
-                <Button alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#dump_function" text="DUMP" textAlignment="CENTER" GridPane.rowIndex="5">
-                    <GridPane.margin>
-                        <Insets left="20.0" />
-                    </GridPane.margin>
-                </Button>
-                <Label text="ISBN" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-                <Label text="Author" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-                <Label text="Title" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-                <Label text="PublishYear" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-                <Label text="Publisher" GridPane.columnIndex="1" GridPane.rowIndex="5" />
-                <TextField fx:id="Title_field" text="Title field" GridPane.columnIndex="2" GridPane.rowIndex="2" />
-                <TextField fx:id="Author_field" text="Author field" GridPane.columnIndex="2" GridPane.rowIndex="3" />
-                <TextField fx:id="ISBN_field" text="ISBN field" GridPane.columnIndex="2" GridPane.rowIndex="1" />
-                <TextField fx:id="PublishYear_field" text="Year field" GridPane.columnIndex="2" GridPane.rowIndex="4" />
-                <TextField fx:id="Publisher_field" text="Publisher field" GridPane.columnIndex="2" GridPane.rowIndex="5" />
-                <TextArea fx:id="Show" prefHeight="200.0" prefWidth="200.0" text="Show result" GridPane.columnIndex="2" GridPane.rowIndex="7" GridPane.rowSpan="2" />
-                <Label text="Outcome" GridPane.columnIndex="1" GridPane.rowIndex="7" />
-                <VBox prefHeight="200.0" prefWidth="100.0" GridPane.columnIndex="2" GridPane.rowIndex="10">
-                    <children>
-                        <Button fx:id="Delete" mnemonicParsing="false" onAction="#ClickDeleteButton" text="Delete">
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </Button>
-                        <Button fx:id="OK" mnemonicParsing="false" onAction="#clickOKButton" text="OK">
-                            <VBox.margin>
-                                <Insets />
-                            </VBox.margin>
-                        </Button>
-                    </children>
-                </VBox>
+                <TableView fx:id="studentTable" prefHeight="200.0" prefWidth="200.0" styleClass="table-view" visible="false" />
             </children>
-        </GridPane>
-        <ImageView fitHeight="111.0" fitWidth="600.0" pickOnBounds="true">
-            <image>
-                <Image url="@../../../../Picture/book.png" />
-            </image>
-        </ImageView>
-        <TextField layoutX="-135.0" layoutY="-117.0" />
+        </VBox>
+        <Pane prefHeight="594.0" prefWidth="192.0" styleClass="side_ankerpane">
+            <children>
+                <Button fx:id="home" layoutY="73.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="188.0" styleClass="sidebar-button" text="Home">
+                    <graphic>
+                        <ImageView fx:id="homeIcon" fitHeight="20" fitWidth="20">
+                            <image>
+                                <Image url="@../../../../Picture/home.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="manageStudent" layoutY="115.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Student">
+                    <graphic>
+                        <ImageView fx:id="userIcon" fitHeight="20" fitWidth="20">
+                            <image>
+                                <Image url="@../../../../Picture/user.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="manageBook" layoutY="156.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Book">
+                    <graphic>
+                        <ImageView fx:id="bookIcon" fitHeight="20" fitWidth="20">
+                            <image>
+                                <Image url="@../../../../Picture/book.png" />
+                            </image>
+                        </ImageView>
+                    </graphic>
+                </Button>
+                <Button fx:id="handleRequest" layoutY="197.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Handle Request" />
+                <Button fx:id="search" layoutY="238.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="42.0" prefWidth="206.0" styleClass="sidebar-button" text="Search Book" />
+            </children>
+        </Pane>
+        <ComboBox fx:id="studentSearchType" layoutX="510.0" layoutY="110.0" prefWidth="150.0" />
+        <ListView fx:id="suggestionList" layoutX="721.0" layoutY="138.0" prefHeight="78.0" prefWidth="236.0" />
     </children>
 </AnchorPane>

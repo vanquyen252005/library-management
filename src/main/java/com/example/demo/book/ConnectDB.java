@@ -151,7 +151,6 @@ public class ConnectDB {
         }
     }
 
-
     public void deleteDocument(String ISBN) {
         String sql = "DELETE FROM books WHERE ISBN = ?";
         try (Connection conn = ConnectDB.getConnection();

@@ -4,10 +4,12 @@ import com.example.demo.user.User;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class student extends User {
     private String classname;
-    private jdbc Request = new jdbc();
+    private static jdbc Request = new jdbc();
     public student() {
         super();
 
@@ -50,8 +52,35 @@ public class student extends User {
     public student getStudent() {
         return this;
     }
-    public void deleteStudent() {
-        Request.deleteStudent(super.getId());
+    public static List<student> getStudentBy(String op, String infor) {
+        List<student> arr = new ArrayList<>();
+        try{
+            System.out.println(op);
+            ResultSet resultSet = Request.getStudentData(op, infor);
+            while (resultSet.next() != false) {
+                student cur = new student();
+                cur.setID(resultSet.getString("id"));
+                cur.setUsername(resultSet.getString("username"));
+                cur.setPassword(resultSet.getString("password"));
+                cur.setName(resultSet.getString("name"));
+                cur.setRole(resultSet.getString("role"));
+                cur.setPhone(resultSet.getString("phone")); // Chuyển đổi kiểu nếu cần
+                cur.setClassname(resultSet.getString("classname"));
+                arr.add(cur);
+            }
+//            for(Student a:arr) {
+//                System.out.println(a.getUsername() + " " + a.getName());
+//            }
+            return arr;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+    public void addStudent(student newStudent) {
+        Request.addStudentData(newStudent);
+    }
+    public void deleteStudent(String id) {
+        Request.deleteStudent(id);
     }
 
 }
