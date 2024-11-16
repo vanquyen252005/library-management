@@ -1,6 +1,6 @@
 package com.example.demo.admin;
 
-import com.example.demo.student.student;
+import com.example.demo.student.Student;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
@@ -11,7 +11,6 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
-import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,11 +21,11 @@ public class managestudentcontroller extends menucontroller {
     @FXML
     private TextField input;
     @FXML
-    TableView<student> studentTable;
+    TableView<Student> studentTable;
     @FXML
     private ListView<String> suggestionList;
     private String op;
-    public static student onClickStudent = new student();
+    public static Student onClickStudent = new Student();
     @Override
     @FXML
     public void initialize() {
@@ -56,15 +55,15 @@ public class managestudentcontroller extends menucontroller {
          // Điều chỉnh chiều rộng của TreeView nếu cần
 
 
-        TableColumn<student, String> column1 =
+        TableColumn<Student, String> column1 =
                 new TableColumn<>("ID");
-        TableColumn<student, String> column2 =
+        TableColumn<Student, String> column2 =
                 new TableColumn<>("Username");
-        TableColumn<student, String> column3 =
+        TableColumn<Student, String> column3 =
                 new TableColumn<>("Name");
-        TableColumn<student, String> column4 =
+        TableColumn<Student, String> column4 =
                 new TableColumn<>("Classname");
-        TableColumn<student, Void> actionColumn = new TableColumn<>("Action");
+        TableColumn<Student, Void> actionColumn = new TableColumn<>("Action");
 
         column1.setCellValueFactory(
                 new PropertyValueFactory<>("id"));
@@ -75,10 +74,10 @@ public class managestudentcontroller extends menucontroller {
         column4.setCellValueFactory(
                 new PropertyValueFactory<>("classname")
         );
-        Callback<TableColumn<student, Void>, TableCell<student, Void>> cellFactory = new Callback<>() {
+        Callback<TableColumn<Student, Void>, TableCell<Student, Void>> cellFactory = new Callback<>() {
             @Override
-            public TableCell<student, Void> call(final TableColumn<student, Void> param) {
-                final TableCell<student, Void> cell = new TableCell<>() {
+            public TableCell<Student, Void> call(final TableColumn<Student, Void> param) {
+                final TableCell<Student, Void> cell = new TableCell<>() {
                     private Button deleteButton = new Button("Delete");
                     private Button detailButton = new Button("Detail");
                     private final HBox hbox = new HBox(10); // HBox để chứa các nút, khoảng cách giữa các nút là 10
@@ -87,15 +86,15 @@ public class managestudentcontroller extends menucontroller {
                         deleteButton.getStyleClass().add("delete-button");
                         // Đặt sự kiện cho nút "Delete"
                         deleteButton.setOnAction(event -> {
-                            student Student = getTableView().getItems().get(getIndex());
-                            Student.deleteStudent(Student.getId()); // Gọi phương thức deleteStudent()
+                            Student student = getTableView().getItems().get(getIndex());
+                            student.deleteStudent(student.getId()); // Gọi phương thức deleteStudent()
                         });
 
                         detailButton.getStyleClass().add("detail-button");
                         // Đặt sự kiện cho nút "Detail"
                         detailButton.setOnAction(event -> {
-                            student Student = getTableView().getItems().get(getIndex());
-                            detailStudent(Student.getStudent(), event);
+                            Student student = getTableView().getItems().get(getIndex());
+                            detailStudent(student.getStudent(), event);
                         });
 
                         // Thêm các nút vào HBox
@@ -116,7 +115,7 @@ public class managestudentcontroller extends menucontroller {
                 return cell;
             }
         };
-        column1.setCellFactory(param -> new TableCell<student, String>() {
+        column1.setCellFactory(param -> new TableCell<Student, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -124,7 +123,7 @@ public class managestudentcontroller extends menucontroller {
                 getStyleClass().add("table-student-id-cell");
             }
         });
-        column2.setCellFactory(param -> new TableCell<student, String>() {
+        column2.setCellFactory(param -> new TableCell<Student, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -132,7 +131,7 @@ public class managestudentcontroller extends menucontroller {
                 getStyleClass().add("table-student-username-cell");
             }
         });
-        column3.setCellFactory(param -> new TableCell<student, String>() {
+        column3.setCellFactory(param -> new TableCell<Student, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -140,7 +139,7 @@ public class managestudentcontroller extends menucontroller {
                 getStyleClass().add("table-student-name-cell");
             }
         });
-        column4.setCellFactory(param -> new TableCell<student, String>() {
+        column4.setCellFactory(param -> new TableCell<Student, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
@@ -198,20 +197,20 @@ public class managestudentcontroller extends menucontroller {
     }
     private List<String> getSearchSuggestions(String searchText) {
         List<String> suggestions = new ArrayList<>();
-        List<student> cur=  student.getStudentBy(op, searchText);
+        List<Student> cur=  Student.getStudentBy(op, searchText);
         switch (op) {
             case "id":
-                for(student x:cur) {
+                for(Student x:cur) {
                     suggestions.add(x.getId());
                 }
                 break;
             case "username":
-                for(student x:cur) {
+                for(Student x:cur) {
                     suggestions.add(x.getUsername());
                 }
                 break;
             case "name":
-                for(student x:cur) {
+                for(Student x:cur) {
                     suggestions.add(x.getName());
                 }
                 break;
@@ -220,11 +219,11 @@ public class managestudentcontroller extends menucontroller {
     }
     @FXML
     public void searchStudent() {
-        List<student> result = student.getStudentBy(op, input.getText());
+        List<Student> result = Student.getStudentBy(op, input.getText());
         studentTable.setItems(FXCollections.observableArrayList());
         toggleTableViewVisibility(studentTable, true);
 //        System.out.println(count++);
-        for (student x:result) {
+        for (Student x:result) {
 //            root1.getChildren().add(new TreeItem<>(x));
             studentTable.getItems().add(x);
             System.out.println(x.getUsername() + " " + x.getName());
@@ -235,7 +234,7 @@ public class managestudentcontroller extends menucontroller {
         tableView.setVisible(isVisible);
         tableView.setManaged(isVisible);
     }
-    public void detailStudent(student cur, ActionEvent event) {
+    public void detailStudent(Student cur, ActionEvent event) {
         studentTable.setItems(FXCollections.observableArrayList());
         System.out.println(event.getTarget());
         onClickStudent = cur;

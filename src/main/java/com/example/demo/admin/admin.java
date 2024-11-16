@@ -1,6 +1,6 @@
 package com.example.demo.admin;
 
-import com.example.demo.student.student;
+import com.example.demo.student.Student;
 import com.example.demo.user.User;
 
 import java.sql.ResultSet;
@@ -37,13 +37,13 @@ public class admin extends User {
         }
 //        return false;
     }
-    public List<student> getStudentBy(String op, String infor) {
-        List<student> arr = new ArrayList<>();
+    public List<Student> getStudentBy(String op, String infor) {
+        List<Student> arr = new ArrayList<>();
         try{
             System.out.println(op);
             ResultSet resultSet = Request.getStudentData(op, infor);
             while (resultSet.next() != false) {
-                student cur = new student();
+                Student cur = new Student();
                     cur.setID(resultSet.getString("id"));
                     cur.setUsername(resultSet.getString("username"));
                     cur.setPassword(resultSet.getString("password"));
@@ -61,7 +61,7 @@ public class admin extends User {
             throw new RuntimeException(e);
         }
     }
-    public void addStudent(student newStudent) {
+    public void addStudent(Student newStudent) {
         Request.addStudentData(newStudent);
     }
     public void deleteStudent(String id) {

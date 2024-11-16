@@ -1,6 +1,6 @@
 package com.example.demo.admin;
 
-import com.example.demo.student.student;
+import com.example.demo.student.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -20,13 +20,13 @@ public class createstudentcontroller extends menucontroller {
     private TextField id;
     @FXML
     public void addStudent(ActionEvent event) {
-        student newStudent = new student(id.getText(),
+        Student newStudent = new Student(id.getText(),
                 username.getText(),
                 Password.getText(),
                 name.getText(),
                 "student",
                 phone.getText(),
                 Class.getText());
-        user.addStudent(newStudent);
+        Student.addStudent(newStudent);
     }
 }

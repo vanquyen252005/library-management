@@ -3,22 +3,21 @@ package com.example.demo.student;
 import com.example.demo.user.User;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class student extends User {
+public class Student extends User {
     private String classname;
     private static jdbc Request = new jdbc();
-    public student() {
+    public Student() {
         super();
 
     }
-    public student(String id, String username, String password, String name, String role, String phone, String classname) {
+    public Student(String id, String username, String password, String name, String role, String phone, String classname) {
         super(id, username, password, name, role, phone);
         this.classname = classname;
     }
-    public student(String id, String username, String name) {
+    public Student(String id, String username, String name) {
         super(id, username, name);
     }
     public void setClassname(String classname) {
@@ -49,16 +48,16 @@ public class student extends User {
             throw new RuntimeException(e);
         }
     }
-    public student getStudent() {
+    public Student getStudent() {
         return this;
     }
-    public static List<student> getStudentBy(String op, String infor) {
-        List<student> arr = new ArrayList<>();
+    public static List<Student> getStudentBy(String op, String infor) {
+        List<Student> arr = new ArrayList<>();
         try{
             System.out.println(op);
             ResultSet resultSet = Request.getStudentData(op, infor);
             while (resultSet.next() != false) {
-                student cur = new student();
+                Student cur = new Student();
                 cur.setID(resultSet.getString("id"));
                 cur.setUsername(resultSet.getString("username"));
                 cur.setPassword(resultSet.getString("password"));
@@ -76,7 +75,7 @@ public class student extends User {
             throw new RuntimeException(e);
         }
     }
-    public void addStudent(student newStudent) {
+    public static void addStudent(Student newStudent) {
         Request.addStudentData(newStudent);
     }
     public void deleteStudent(String id) {

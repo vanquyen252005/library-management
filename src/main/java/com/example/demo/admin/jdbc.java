@@ -1,6 +1,6 @@
 package com.example.demo.admin;
 
-import com.example.demo.student.student;
+import com.example.demo.student.Student;
 
 import java.sql.*;
 
@@ -52,7 +52,7 @@ public class jdbc {
         }
         return resultSet;
     }
-    public void addStudentData(student newUser) {
+    public void addStudentData(Student newUser) {
         String id = newUser.getId();                     // Gán id
         String username_ = newUser.getUsername();         // Gán username
         String password_ = newUser.getPassword();         // Gán password
