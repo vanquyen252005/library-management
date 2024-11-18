@@ -1,12 +1,10 @@
 package com.example.demo.admin;
 
-import com.example.demo.student.student;
+import com.example.demo.student.Student;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 
 public class detailstudentcontroller extends menucontroller {
     @FXML
@@ -23,7 +21,7 @@ public class detailstudentcontroller extends menucontroller {
     public Text Class;
     @FXML
     public Text phone;
-    private student cur = managestudentcontroller.onClickStudent;
+    private Student cur = managestudentcontroller.onClickStudent;
 
     @Override
     public void initialize() {

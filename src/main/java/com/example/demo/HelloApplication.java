@@ -12,8 +12,10 @@ import javafx.scene.control.Label;
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+    private static Stage primaryStage;
     @Override
     public void start(Stage stage) throws IOException {
+        primaryStage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("hello-view.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
@@ -24,5 +26,8 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+    }
+    public static Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

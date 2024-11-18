@@ -16,4 +16,6 @@ module com.example.demo {
     opens com.example.demo.user to javafx.fxml;
     exports com.example.demo.student;
     opens com.example.demo.student to javafx.fxml;
+    opens com.example.demo.book to javafx.base;  // Mở gói cho javafx.base
+
 }

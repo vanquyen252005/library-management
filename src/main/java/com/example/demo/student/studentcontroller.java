@@ -12,7 +12,7 @@ public class studentcontroller extends HelloController {
     private PasswordField password;
     @FXML
     private Label loginFailLabel;
-    protected static student user = new student();
+    protected static Student user = new Student();
 
     public void login(ActionEvent event) {
         //System.out.println(username);

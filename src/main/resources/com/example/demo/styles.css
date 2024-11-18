@@ -111,12 +111,12 @@
 
 /* Đổi màu khi hover */
 .delete-button:hover {
-    -fx-background-color: #FF2D2D; /* Màu đỏ đậm khi hover */
+    -fx-background-color: #b30000; /* Màu đỏ đậm khi hover */
 }
 
 /* Đặt màu nền đỏ và chữ trắng cho nút "Delete" */
 .detail-button {
-    -fx-background-color: #FF4C4C; /* Màu nền đỏ */
+    -fx-background-color: #4da6ff; /* Màu nền đỏ */
     -fx-text-fill: #ffffff;        /* Màu chữ trắng */
   -fx-font-size: 14px;    /* Kích thước font chữ */
      -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
@@ -125,22 +125,9 @@
      -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
 }
 
-/* Đổi màu khi hover */
-.delete-button:hover {
-    -fx-background-color: #FF2D2D; /* Màu đỏ đậm khi hover */
-}
 /* Đặt màu nền đỏ và chữ trắng cho nút "Delete" */
-.detail-button {
-    -fx-background-color: #2196F3; /* Màu nền đỏ */
-    -fx-text-fill: #ffffff;        /* Màu chữ trắng */
-  -fx-font-size: 14px;    /* Kích thước font chữ */
-     -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
-     -fx-pref-height: 30;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
-     -fx-border-color: transparent; /* Xóa viền mặc định */
-     -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
-}
 
 /* Đổi màu khi hover */
-.delete-button:hover {
-    -fx-background-color: #1976D2; /* Màu đỏ đậm khi hover */
+.detail-button:hover {
+    -fx-background-color: #004080; /* Màu đỏ đậm khi hover */
 }

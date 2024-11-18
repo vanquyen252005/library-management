@@ -1,8 +1,9 @@
 package com.example.demo.user;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
-public abstract class User {
+public abstract class User implements Serializable {
     private String id;
     private String username;
     private String password;
