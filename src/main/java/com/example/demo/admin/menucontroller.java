@@ -59,7 +59,7 @@ miniBar.setRoot(rootItem);
                     case "Logout":
                         user = null;
                         user1 = null;
-                        HelloController.writeAdmin(null,"log.data");
+                        HelloController.writeAdmin(null,"log.txt");
                         Stage stage = HelloApplication.getPrimaryStage();
                         HelloController.displayScene(stage, "hello-view.fxml");
                         // Xử lý logout ở đây

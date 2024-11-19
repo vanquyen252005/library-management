@@ -3,6 +3,7 @@ package com.example.demo.admin;
 import com.example.demo.student.Student;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
@@ -21,9 +22,12 @@ public class detailstudentcontroller extends menucontroller {
     public Text Class;
     @FXML
     public Text phone;
+    @FXML
+    public TreeView<String> miniBar;
     private Student cur = managestudentcontroller.onClickStudent;
 
     @Override
+    @FXML
     public void initialize() {
         name.setText(cur.getName());
         id.setText(cur.getId());

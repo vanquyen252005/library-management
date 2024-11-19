@@ -1,5 +1,7 @@
 package com.example.demo;
 
+import com.example.demo.admin.admin;
+import com.example.demo.student.Student;
 import com.example.demo.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,41 +50,43 @@ public class HelloController{
     public static void writeAdmin(User user, String fileName) {
         String path = "src/main/resources/com/example/demo/" + fileName;
 
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path))) {
-            oos.writeObject(user);
+        try  {
+            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
+            oos.writeObject(user); // Ghi đối tượng vào tệp
+            oos.close();
             System.out.println("Đã lưu đối tượng vào tệp " + path);
         } catch (IOException e) {
             System.err.println("Lỗi khi ghi đối tượng: " + e.getMessage());
         }
     }
     public static User readAdmin(String fileName) {
-
-        InputStream inputStream = HelloController.class.getResourceAsStream("/com/example/demo/" + fileName);
-
-        // Kiểm tra nếu tài nguyên tồn tại
-        if (inputStream != null) {
-            try (ObjectInputStream ois = new ObjectInputStream(inputStream)) {
-                // Đọc đối tượng và ép kiểu thành User
-                return (User) ois.readObject();
-            } catch (IOException | ClassNotFoundException e) {
-                System.err.println("Lỗi khi đọc đối tượng: " + e.getMessage());
+        String path = "src/main/resources/com/example/demo/" + fileName;
+        try  {
+            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
+            Object o = ois.readObject();
+            if (o instanceof Student) {
+                System.out.println("student read");
+            } else if (o instanceof admin) {
+                System.out.println("admin read");
             }
-        } else {
-            System.err.println("Không tìm thấy tài nguyên: " + fileName);
+            return (User) ois.readObject(); // Đọc đối tượng từ tệp và ép kiểu
+        } catch (IOException | ClassNotFoundException e) {
+            System.err.println("Lỗi khi đọc đối tượng: " + e.getMessage());
         }
-        return null;  // Trả về null nếu có lỗi hoặc tài nguyên không tồn tại
+        return null;  // Trả về null nếu có lỗi
     }
     @FXML
     public void initialize() {
-        if (HelloController.readAdmin("log.data") != null) {
+        if (HelloController.readAdmin("log.txt") != null) {
             System.out.println("kdoaljdoids");
-            user1 = HelloController.readAdmin("log.data");
+            user1 = HelloController.readAdmin("log.txt");
             System.out.println(user1.getRole());
         }
     }
     @FXML
     protected void AdminLogin(ActionEvent event) {
         if (user1 != null && user1.getRole().equals("admin")) {
+            System.out.println('#' + user1.getRole());
                 displayScene(event, "admin/menu.fxml");
         } else {
         displayScene(event,"admin/AdminLogin.fxml");

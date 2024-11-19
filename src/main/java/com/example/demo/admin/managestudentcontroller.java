@@ -88,6 +88,7 @@ public class managestudentcontroller extends menucontroller {
                         deleteButton.setOnAction(event -> {
                             Student student = getTableView().getItems().get(getIndex());
                             student.deleteStudent(student.getId()); // Gọi phương thức deleteStudent()
+                            searchStudent();
                         });
 
                         detailButton.getStyleClass().add("detail-button");

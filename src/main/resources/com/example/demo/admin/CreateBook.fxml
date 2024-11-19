@@ -3,29 +3,32 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.createstudentcontroller">
-    <children>
-      <Pane fx:id="detailStudent" layoutX="324.0" layoutY="42.0" prefHeight="288.0" prefWidth="679.0">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.CreateBookController">
+   <children>
+      <Pane fx:id="detailStudent" layoutX="324.0" layoutY="42.0" prefHeight="436.0" prefWidth="679.0">
          <children>
-            <Label layoutX="253.0" layoutY="143.0" prefHeight="30.0" prefWidth="76.0" text="ID:" />
-            <Label layoutX="252.0" layoutY="61.0" text="Username:" />
-            <Label layoutX="253.0" layoutY="91.0" text="Password:" />
-            <Label layoutX="252.0" layoutY="33.0" text="Name:" />
-            <Label layoutX="252.0" layoutY="113.0" prefHeight="30.0" prefWidth="34.0" text="Class:" />
-            <Label layoutX="251.0" layoutY="173.0" prefHeight="41.0" prefWidth="56.0" text="Phone:" />
-            <TextField fx:id="name" layoutX="345.0" layoutY="29.0" />
-            <TextField fx:id="username" layoutX="345.0" layoutY="57.0" />
-            <TextField fx:id="Password" layoutX="345.0" layoutY="87.0" />
-            <TextField fx:id="Class" layoutX="345.0" layoutY="116.0" />
-            <TextField fx:id="id" layoutX="345.0" layoutY="146.0" />
-            <TextField fx:id="phone" layoutX="345.0" layoutY="181.0" />
-            <Button layoutX="442.0" layoutY="233.0" mnemonicParsing="false" onAction="#addStudent" text="Button" />
+            <Label layoutX="253.0" layoutY="143.0" prefHeight="30.0" prefWidth="76.0" text="Publisher" />
+            <Label layoutX="252.0" layoutY="61.0" prefHeight="17.0" prefWidth="34.0" text="Title:" />
+            <Label layoutX="253.0" layoutY="91.0" text="Author:" />
+            <Label layoutX="252.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="ISBN:" />
+            <Label layoutX="252.0" layoutY="113.0" prefHeight="30.0" prefWidth="76.0" text="PublishYear:" />
+            <Label layoutX="251.0" layoutY="173.0" prefHeight="41.0" prefWidth="76.0" text="Image-URL-S" />
+            <TextField fx:id="isbn" layoutX="367.0" layoutY="30.0" />
+            <TextField fx:id="title" layoutX="367.0" layoutY="58.0" />
+            <TextField fx:id="author" layoutX="367.0" layoutY="88.0" />
+            <TextField fx:id="publisyear" layoutX="367.0" layoutY="117.0" />
+            <TextField fx:id="publisher" layoutX="367.0" layoutY="147.0" />
+            <TextField fx:id="imgUrlS" layoutX="367.0" layoutY="182.0" />
+            <Button layoutX="442.0" layoutY="327.0" mnemonicParsing="false" onAction="#addBook" text="Button" />
+            <Label layoutX="253.0" layoutY="222.0" prefHeight="30.0" prefWidth="82.0" text="Image-URL-M:" />
+            <Label layoutX="251.0" layoutY="252.0" prefHeight="41.0" prefWidth="76.0" text="Image-URL-L:" />
+            <TextField fx:id="imgUrlM" layoutX="367.0" layoutY="219.0" />
+            <TextField fx:id="imgUrlL" layoutX="367.0" layoutY="261.0" />
          </children>
       </Pane>
       <Pane prefHeight="600.0" prefWidth="187.0" styleClass="side_ankerpane">
@@ -61,7 +64,5 @@
             <Button fx:id="search" layoutY="238.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="42.0" prefWidth="206.0" styleClass="sidebar-button" text="Search Book" />
          </children>
       </Pane>
-      <TreeView fx:id="miniBar" layoutX="1003.0" layoutY="37.0" prefHeight="98.0" prefWidth="162.0" />
-
-    </children>
+   </children>
 </AnchorPane>
