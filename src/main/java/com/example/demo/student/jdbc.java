@@ -1,10 +1,17 @@
 package com.example.demo.student;
 
+import com.example.demo.book.Book;
+import com.example.demo.book.Book_borrowed;
+
 import java.sql.*;
+import java.util.ArrayList;
+
+import static java.lang.Integer.parseInt;
 
 public class jdbc {
     Connection connection;
     Statement statement;
+
     jdbc() {
         try {
             connection = DriverManager.getConnection(
@@ -18,100 +25,11 @@ public class jdbc {
             e.printStackTrace();
         }
     }
-//    public ResultSet getData(String username_, String password_){
-//
-//        ResultSet resultSet = null;
-//        String query = "SELECT * FROM userdata WHERE username = ? AND password = ?";
-//
-//        try {
-//            // Sử dụng PreparedStatement để tránh SQL Injection
-//            PreparedStatement pstmt = connection.prepareStatement(query);
-//
-//            // Gán giá trị cho các tham số ? trong câu truy vấn
-//            pstmt.setString(1, username_);
-//            pstmt.setString(2, password_);
-//
-//            // Thực thi truy vấn
-//            resultSet = pstmt.executeQuery();
-//
-//            // Kiểm tra nếu có kết quả
-//            if (resultSet != null) {
-//                System.out.println("Login successful or data found");
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//
-//        return resultSet;
-//    }
-//    public boolean addStudentData(student newUser) {
-//        String id = newUser.getId();                     // Gán id
-//        String username = newUser.getUsername();         // Gán username
-//        String password = newUser.getPassword();         // Gán password
-//        String name = newUser.getName();                 // Gán name
-//        String role = newUser.getRole();                 // Gán role
-//        String phone = newUser.getPhone();               // Gán phone
-//        String classname = newUser.getClassname();       // Gán classname
-//        ResultSet resultSet = null;
-//        try {
-//            String query  = "INSERT INTO information column(id, username,password,name,role,phone,classname) " +
-//                    "values(id, username,password,name,role,phone,classname)";
-//            System.out.println(query);
-//            resultSet = statement.executeQuery(query);
-//            if (resultSet != null)
-//            {
-//                //System.out.println();
-//                return true;
-//
-//            }
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return false;
-//    }
-//    public ResultSet getStudentDataByUsername(String username_) {
-//        ResultSet resultSet = null;
-//        try {
-//            username_ = "'" + username_ + "'";
-//            String query = "SELECT * FROM userdata WHERE username = " + username_ + ";";
-//            System.out.println(query);
-//            resultSet = statement.executeQuery(query);
-//            if (resultSet != null)
-//            {
-//                System.out.println("hehe");
-//            }
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return resultSet;
-//    }
-//    public ResultSet getStudentDataById(String id) {
-//        ResultSet resultSet = null;
-//        try {
-//            id = "'" + id + "'";
-//            String query = "SELECT * FROM userdata WHERE id = " + id + ";";
-//            System.out.println(query);
-//            resultSet = statement.executeQuery(query);
-//            if (resultSet != null)
-//            {
-//                System.out.println("hehe");
-//            }
-//        }
-//        catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return resultSet;
-//    }
-    public ResultSet getData(String username_, String password_){
+
+    public ResultSet getData(String username_, String password_) {
 
         ResultSet resultSet = null;
         try {
-//            username_ = "'" + username_ + "'";
-//            password_ = "'" + password_ + "'";
-//            String query = "SELECT * FROM userdata WHERE username = " + username_
-//                    +" AND password = " +password_ + ";";
             String query = "SELECT * FROM userdata WHERE username = ? AND password = ?";
 
             // Dùng PreparedStatement để tránh SQL Injection
@@ -124,18 +42,17 @@ public class jdbc {
             // Thực thi câu lệnh
             resultSet = pstmt.executeQuery();
             System.out.println(query);
-            if (resultSet != null)
-            {
+            if (resultSet != null) {
                 System.out.println("hehe");
             } else {
                 System.out.println("connect fail");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return resultSet;
     }
+
     public void addStudentData(Student newUser) {
         String id = newUser.getId();                     // Gán id
         String username_ = newUser.getUsername();         // Gán username
@@ -149,10 +66,8 @@ public class jdbc {
             String query = "INSERT INTO userdata (id, username, password, name, role, phone, classname) " +
                     "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-// Sử dụng PreparedStatement
             PreparedStatement pstmt = connection.prepareStatement(query);
 
-// Gán giá trị cho các tham số
             pstmt.setString(1, id);            // Gán giá trị cho id
             pstmt.setString(2, username_);   // Gán giá trị cho username
             pstmt.setString(3, password_);   // Gán giá trị cho password
@@ -160,14 +75,14 @@ public class jdbc {
             pstmt.setString(5, role);       // Gán giá trị cho role
             pstmt.setString(6, phone);      // Gán giá trị cho phone
             pstmt.setString(7, classname);  // Gán giá trị cho classname
-            // Thực thi câu lệnh
+
             pstmt.executeUpdate();
 
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
     public ResultSet getStudentData(String op, String info) {
         ResultSet resultSet = null;
         try {
@@ -175,16 +90,15 @@ public class jdbc {
             String query = "SELECT * FROM userdata WHERE " + op + " LIKE " + info + " and role = 'Student';";
             System.out.println(query);
             resultSet = statement.executeQuery(query);
-            if (resultSet != null)
-            {
+            if (resultSet != null) {
                 System.out.println("OK");
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return resultSet;
     }
+
     public void deleteStudent(String id) {
         String query = "DELETE FROM userdata WHERE id = ?";
 
@@ -195,10 +109,10 @@ public class jdbc {
             // Gán giá trị ID cho tham số ?
             pstmt.setString(1, id);
 
-            // Thực thi câu lệnh DELETE
+
             int rowsAffected = pstmt.executeUpdate();
 
-            // Kiểm tra xem có bản ghi nào bị xóa hay không
+
             if (rowsAffected > 0) {
                 System.out.println("Student with ID " + id + " deleted successfully.");
             } else {
@@ -206,6 +120,67 @@ public class jdbc {
             }
 
         } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public ArrayList<Book_borrowed> loadBorrowedBook(int user_id) {
+        ArrayList<Book_borrowed> listBook = new ArrayList<>();
+        String query = "SELECT bb.book_id,b.Title,bb.borrow_date, bb.return_date " +
+                "FROM book_borrowed bb " +
+                "LEFT JOIN books b ON bb.book_id = b.ISBN " +
+                "WHERE user_id = ?";
+
+        try {
+
+            System.out.println(query);
+            PreparedStatement pstmt = connection.prepareStatement(query);
+
+
+            pstmt.setInt(1, user_id);
+
+
+            ResultSet resultSet = pstmt.executeQuery();
+
+
+            while (resultSet.next()) {
+                Book_borrowed book = new Book_borrowed();
+
+                book.setISBN(resultSet.getString("book_id"));
+                book.setBorrow_date(resultSet.getString("borrow_date"));
+                book.setReturn_date(resultSet.getString("return_date"));
+                book.setTitle(resultSet.getString("Title"));
+                listBook.add(book);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listBook;
+    }
+
+    public void updateUserProfile(String userId, String username, String name, String phone, String userClass) {
+        // Câu lệnh SQL để cập nhật dữ liệu
+        String query = "UPDATE userdata SET username = ?, name = ?, phone = ?, classname = ? WHERE id = ?";
+
+        try {
+            PreparedStatement stmt = connection.prepareStatement(query);
+
+            // Gán giá trị vào câu lệnh SQL
+            stmt.setString(1, username);
+            stmt.setString(2, name);
+            stmt.setString(3, phone);
+            stmt.setString(4, userClass);
+            stmt.setInt(5, parseInt(userId));
+
+            // Thực hiện câu lệnh
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Cập nhật dữ liệu thành công!");
+            } else {
+                System.out.println("Không tìm thấy người dùng với ID: " + userId);
+            }
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

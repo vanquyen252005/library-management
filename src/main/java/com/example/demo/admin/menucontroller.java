@@ -50,7 +50,7 @@ public class menucontroller extends admincontroller {
 
         // Tạo TreeView
 //        TreeView<String> miniBar = new TreeView<>(rootItem);
-miniBar.setRoot(rootItem);
+        miniBar.setRoot(rootItem);
         // Thêm sự kiện khi click vào các mục
         miniBar.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {

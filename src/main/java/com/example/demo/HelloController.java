@@ -66,10 +66,12 @@ public class HelloController{
             Object o = ois.readObject();
             if (o instanceof Student) {
                 System.out.println("student read");
+                return (Student)o;
             } else if (o instanceof admin) {
                 System.out.println("admin read");
+                return (admin)o;
             }
-            return (User) ois.readObject(); // Đọc đối tượng từ tệp và ép kiểu
+//            return (User) ois.readObject(); // Đọc đối tượng từ tệp và ép kiểu
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Lỗi khi đọc đối tượng: " + e.getMessage());
         }
@@ -85,7 +87,7 @@ public class HelloController{
     }
     @FXML
     protected void AdminLogin(ActionEvent event) {
-        if (user1 != null && user1.getRole().equals("admin")) {
+        if (user1 != null && user1 instanceof admin ) {
             System.out.println('#' + user1.getRole());
                 displayScene(event, "admin/menu.fxml");
         } else {
@@ -94,6 +96,11 @@ public class HelloController{
     }
     @FXML
     protected void StudentLogin(ActionEvent event) {
-        displayScene(event,"student/StudentLogin.fxml");
+        if (user1 != null && user1 instanceof Student) {
+            System.out.println('#' + ((Student) user1).getClassname());
+            displayScene(event, "student/menu.fxml");
+        } else {
+            displayScene(event,"student/StudentLogin.fxml");
+        }
     }
 }

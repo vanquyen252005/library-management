@@ -3,6 +3,7 @@ package com.example.demo.admin;
 import com.example.demo.student.Student;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class jdbc {
     Connection connection;
@@ -51,5 +52,36 @@ public class jdbc {
             e.printStackTrace();
         }
         return resultSet;
+    }
+
+    public ArrayList<RequestBook> getInQueue() {
+        ArrayList<RequestBook> requestList = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM request_borrow_book WHERE status = 'pending' ORDER BY request_date ASC";
+
+            // Dùng PreparedStatement để tạo truy vấn
+            PreparedStatement pstmt = connection.prepareStatement(query);
+
+            // Thực thi truy vấn
+            ResultSet rs = pstmt.executeQuery();
+
+            // Duyệt qua kết quả và thêm vào danh sách
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String bookId = rs.getString("book_id");
+                int userId = rs.getInt("user_id");
+                String requestDate = rs.getTimestamp("request_date").toString();
+                String status = rs.getString("status");
+
+                // Tạo đối tượng RequestBook và thêm vào danh sách
+                RequestBook request = new RequestBook(id, bookId, userId, requestDate, status);
+                requestList.add(request);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return requestList;
     }
 }

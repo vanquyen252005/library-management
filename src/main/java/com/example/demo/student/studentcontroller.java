@@ -1,6 +1,7 @@
 package com.example.demo.student;
 
 import com.example.demo.HelloController;
+import com.example.demo.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -17,6 +18,7 @@ public class studentcontroller extends HelloController {
     public void login(ActionEvent event) {
         //System.out.println(username);
         if (user.login(username.getText(), password.getText())) {
+            HelloController.writeAdmin((User) user,"log.txt");
             displayScene(event, "menu.fxml");
         }
         else {

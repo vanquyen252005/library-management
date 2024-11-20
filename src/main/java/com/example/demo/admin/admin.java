@@ -18,16 +18,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class admin extends User  {
-    private transient jdbc Request = new jdbc();
+    private static jdbc Request = new jdbc();
     //private Admin user = new Admin();
 
     public admin() {
     }
     public admin(String id, String username, String password, String name, String role, String phone) {
         super(id, username, password, name, role, phone);
-    }
-    public void restoreRequest() {
-        Request = new jdbc();
     }
     @Override
     public boolean login(String username, String password) {
@@ -51,4 +48,9 @@ public class admin extends User  {
         }
 //        return false;
     }
+    public ArrayList<RequestBook> inQueue() {
+        ArrayList<RequestBook> ans = Request.getInQueue();
+        return ans;
+    }
+
 }
