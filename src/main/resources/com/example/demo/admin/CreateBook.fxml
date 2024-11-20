@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.CreateBookController">
+   <children>
+      <Pane fx:id="detailStudent" layoutX="324.0" layoutY="42.0" prefHeight="436.0" prefWidth="679.0">
+         <children>
+            <Label layoutX="253.0" layoutY="143.0" prefHeight="30.0" prefWidth="76.0" text="Publisher" />
+            <Label layoutX="252.0" layoutY="61.0" prefHeight="17.0" prefWidth="34.0" text="Title:" />
+            <Label layoutX="253.0" layoutY="91.0" text="Author:" />
+            <Label layoutX="252.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="ISBN:" />
+            <Label layoutX="252.0" layoutY="113.0" prefHeight="30.0" prefWidth="76.0" text="PublishYear:" />
+            <Label layoutX="251.0" layoutY="173.0" prefHeight="41.0" prefWidth="76.0" text="Image-URL-S" />
+            <TextField fx:id="isbn" layoutX="367.0" layoutY="30.0" />
+            <TextField fx:id="title" layoutX="367.0" layoutY="58.0" />
+            <TextField fx:id="author" layoutX="367.0" layoutY="88.0" />
+            <TextField fx:id="publisyear" layoutX="367.0" layoutY="117.0" />
+            <TextField fx:id="publisher" layoutX="367.0" layoutY="147.0" />
+            <TextField fx:id="imgUrlS" layoutX="367.0" layoutY="182.0" />
+            <Button layoutX="442.0" layoutY="327.0" mnemonicParsing="false" onAction="#addBook" text="Button" />
+            <Label layoutX="253.0" layoutY="222.0" prefHeight="30.0" prefWidth="82.0" text="Image-URL-M:" />
+            <Label layoutX="251.0" layoutY="252.0" prefHeight="41.0" prefWidth="76.0" text="Image-URL-L:" />
+            <TextField fx:id="imgUrlM" layoutX="367.0" layoutY="219.0" />
+            <TextField fx:id="imgUrlL" layoutX="367.0" layoutY="261.0" />
+         </children>
+      </Pane>
+      <Pane prefHeight="600.0" prefWidth="187.0" styleClass="side_ankerpane">
+         <children>
+            <Button fx:id="home" layoutY="73.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="188.0" styleClass="sidebar-button" text="Home">
+               <graphic>
+                  <ImageView fx:id="homeIcon" fitHeight="20" fitWidth="20">
+                     <image>
+                        <Image url="@../../../../Picture/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="manageStudent" layoutY="115.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Student">
+               <graphic>
+                  <ImageView fx:id="userIcon" fitHeight="20" fitWidth="20">
+                     <image>
+                        <Image url="@../../../../Picture/user.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="manageBook" layoutY="156.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Book">
+               <graphic>
+                  <ImageView fx:id="bookIcon" fitHeight="20" fitWidth="20">
+                     <image>
+                        <Image url="@../../../../Picture/book.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button fx:id="handleRequest" layoutY="197.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Handle Request" />
+            <Button fx:id="search" layoutY="238.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="42.0" prefWidth="206.0" styleClass="sidebar-button" text="Search Book" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
