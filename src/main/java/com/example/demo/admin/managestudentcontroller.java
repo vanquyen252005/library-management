@@ -88,6 +88,7 @@ public class managestudentcontroller extends menucontroller {
                         deleteButton.setOnAction(event -> {
                             Student student = getTableView().getItems().get(getIndex());
                             student.deleteStudent(student.getId()); // Gọi phương thức deleteStudent()
+                            searchStudent();
                         });
 
                         detailButton.getStyleClass().add("detail-button");
@@ -195,6 +196,7 @@ public class managestudentcontroller extends menucontroller {
         // Chạy Task trong một luồng riêng
         new Thread(task).start();
     }
+
     private List<String> getSearchSuggestions(String searchText) {
         List<String> suggestions = new ArrayList<>();
         List<Student> cur=  Student.getStudentBy(op, searchText);

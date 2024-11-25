@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.collections.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="com.example.demo.student.HandleRequestController"
-            prefHeight="400.0" prefWidth="600.0">
-    <VBox spacing="10.0" layoutX="20.0" layoutY="20.0" prefWidth="560.0">
-        <Label text="Danh Sách Sách" style="-fx-font-size: 18px; -fx-font-weight: bold;" />
-        <ListView fx:id="bookListView" prefHeight="300.0" prefWidth="560.0" />
-        <Button text="Trả Sách" onAction="#handleReturnAllBooks" />
+<AnchorPane prefHeight="439.0" prefWidth="739.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.HandleRequestController">
+    <VBox layoutX="20.0" layoutY="-9.0" prefHeight="571.0" prefWidth="853.0" spacing="10.0">
+        <Label style="-fx-font-size: 18px; -fx-font-weight: bold;" text="Danh Sách Sách" />
+        <ListView fx:id="bookListView" prefHeight="300.0" prefWidth="872.0" />
+        <Button  text="Trả Sách" />
+      <Button fx:id="Back_btn" mnemonicParsing="false" onAction="#BACK" text="BACK" />
     </VBox>
 </AnchorPane>

@@ -17,13 +17,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class HandleRequestController extends studentcontroller {
+import static java.lang.Integer.parseInt;
 
+public class HandleRequestController extends ProfileController {
+
+    public Button Back_btn;
     @FXML
     private ListView<Book_borrowed> bookListView;
 
 
-   Student user = new Student();
     @FXML
     public void initialize() {
         // Lấy danh sách sách từ cơ sở dữ liệu
@@ -43,15 +45,24 @@ public class HandleRequestController extends studentcontroller {
                 } else {
                     HBox hBox = new HBox(10);
                     Label bookLabel = new Label(book.getISBN());
-                    Button returnButton = new Button("Trả Sách");
+                    Label bookLabel1 = new Label(book.getTitle());
+                    Label bookLabel2 = new Label(book.getAuthor());
+                    Label bookLabel3 = new Label(book.getBorrow_date());
+                    Button returnButton = new Button("Return");
                     returnButton.setOnAction(event -> handleReturnBook(book));
-                    hBox.getChildren().addAll(bookLabel, returnButton);
+                    hBox.getChildren().addAll(bookLabel,bookLabel1,bookLabel2,bookLabel3,returnButton);
                     setGraphic(hBox);
                 }
             }
 
             private void handleReturnBook(Book_borrowed book) {
-
+                jdbc db = new jdbc();
+                boolean success = db.insertReturnRequest(book.getISBN(), parseInt(user.getId()));
+                if (success) {
+                    System.out.println("Yêu cầu trả sách đã được gửi thành công.");
+                } else {
+                    System.out.println("Có lỗi xảy ra khi gửi yêu cầu trả sách.");
+                }
             }
         });
     }
@@ -62,27 +73,11 @@ public class HandleRequestController extends studentcontroller {
         ArrayList<Book_borrowed> list = user.getBorrowingBook();
         for (Book_borrowed x : list) {
             books.add(new Book_borrowed(
+                    x.getTitle(),x.getPublisher(),x.getPublishYear(),x.getAuthor(),
                     x.getISBN(), x.getBorrow_date(), x.getReturn_date()
             ));
         }
         return books;
     }
 
-    private void deleteBookFromDatabase(String bookISBN) {
-        String jdbcURL = "jdbc:mysql://localhost:3306/LibraryDB";
-        String username = "root";
-        String password = "password";
-
-        try (Connection connection = DriverManager.getConnection(jdbcURL, username, password)) {
-            String sql = "DELETE FROM books WHERE isbn = ?";
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.setString(1, bookISBN);
-            statement.executeUpdate();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void handleReturnAllBooks(ActionEvent event) {
-    }
 }

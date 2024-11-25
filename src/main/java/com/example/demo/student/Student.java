@@ -18,14 +18,19 @@ public class Student extends User {
     public Student() {
         super();
     }
-    public Student(String id, String username, String password, String name, String role, String phone, String classname) {
-        super(id, username, password, name, role, phone);
+
+    public void setBorrowingBook(ArrayList<Book_borrowed> borrowingBook) {
+        BorrowingBook = borrowingBook;
+    }
+
+    public Student( String username, String password, String name, String role, String phone, String classname) {
+        super(username, password, name, role, phone);
         this.classname = classname;
-        this.BorrowingBook = Request.loadBorrowedBook(parseInt(id));
+       // this.BorrowingBook = Request.loadBorrowedBook(parseInt(this.getId()));
     }
     public Student(String id, String username, String name) {
         super(id, username, name);
-        this.BorrowingBook = Request.loadBorrowedBook(parseInt(id));
+       // this.BorrowingBook = Request.loadBorrowedBook(parseInt(id));
     }
     public void setClassname(String classname) {
         this.classname = classname;
@@ -56,12 +61,14 @@ public class Student extends User {
             }
             return false;
         } catch (Exception e) {
+            System.out.println("dell ket noi dc");
             throw new RuntimeException(e);
         }
     }
     public Student getStudent() {
         return this;
     }
+
     public static List<Student> getStudentBy(String op, String infor) {
         List<Student> arr = new ArrayList<>();
         try{
@@ -76,13 +83,12 @@ public class Student extends User {
                 cur.setRole(resultSet.getString("role"));
                 cur.setPhone(resultSet.getString("phone")); // Chuyển đổi kiểu nếu cần
                 cur.setClassname(resultSet.getString("classname"));
+                cur.setBorrowingBook(Request.loadBorrowedBook(parseInt(cur.getId())));
                 arr.add(cur);
             }
-//            for(Student a:arr) {
-//                System.out.println(a.getUsername() + " " + a.getName());
-//            }
             return arr;
         } catch (Exception e) {
+            System.out.println("found false here");
             throw new RuntimeException(e);
         }
     }
@@ -96,4 +102,9 @@ public class Student extends User {
     public void updateUserProfile(String userId, String username, String name, String phone, String userClass) {
         Request.updateUserProfile(userId,username,name,phone,userClass);
     }
+
+    public void TakeBorrowedBookList(Student student) {
+        this.BorrowingBook = Request.loadBorrowedBook(parseInt(student.getId()));
+    }
+
 }

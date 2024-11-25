@@ -1,23 +1,34 @@
 package com.example.demo.admin;
 
+import com.example.demo.HelloController;
 import com.example.demo.student.Student;
 import com.example.demo.user.User;
 
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Serializable;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.ResultSet;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
-public class admin extends User {
-    private jdbc Request = new jdbc();
+public class admin extends User  {
+    private static jdbc Request = new jdbc();
     //private Admin user = new Admin();
 
     public admin() {
-        super();
     }
-
+    public admin( String username, String password, String name, String role, String phone) {
+        super( username, password, name, role, phone);
+    }
     @Override
-    public boolean login(String username, String password){
-        try{
+    public boolean login(String username, String password) {
+        try {
             ResultSet resultSet = Request.getData(username, password);
             while (resultSet.next() != false) {
                 if (resultSet.getString("role").equals("admin")) {
@@ -37,34 +48,9 @@ public class admin extends User {
         }
 //        return false;
     }
-    public List<Student> getStudentBy(String op, String infor) {
-        List<Student> arr = new ArrayList<>();
-        try{
-            System.out.println(op);
-            ResultSet resultSet = Request.getStudentData(op, infor);
-            while (resultSet.next() != false) {
-                Student cur = new Student();
-                    cur.setID(resultSet.getString("id"));
-                    cur.setUsername(resultSet.getString("username"));
-                    cur.setPassword(resultSet.getString("password"));
-                    cur.setName(resultSet.getString("name"));
-                    cur.setRole(resultSet.getString("role"));
-                    cur.setPhone(resultSet.getString("phone")); // Chuyển đổi kiểu nếu cần
-                    cur.setClassname(resultSet.getString("classname"));
-                    arr.add(cur);
-            }
-//            for(Student a:arr) {
-//                System.out.println(a.getUsername() + " " + a.getName());
-//            }
-            return arr;
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public ArrayList<RequestBook> inQueue() {
+        ArrayList<RequestBook> ans = Request.getInQueue();
+        return ans;
     }
-    public void addStudent(Student newStudent) {
-        Request.addStudentData(newStudent);
-    }
-    public void deleteStudent(String id) {
-        Request.deleteStudent(id);
-    }
+
 }

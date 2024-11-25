@@ -1,5 +1,6 @@
 package com.example.demo.admin;
 
+import com.example.demo.book.Book;
 import com.example.demo.book.Book_borrowed;
 import com.example.demo.student.Student;
 import javafx.fxml.FXML;
@@ -12,7 +13,7 @@ import javafx.util.Callback;
 
 import java.util.ArrayList;
 
-public class detailstudentcontroller extends menucontroller {
+public class detailbookcontroller extends menucontroller {
     @FXML
     public Pane detailStudent;
     @FXML
@@ -57,9 +58,9 @@ public class detailstudentcontroller extends menucontroller {
 //        TableColumn<Book_borrowed, Void> actionColumn = new TableColumn<>("Action");
 
         column1.setCellValueFactory(
-                new PropertyValueFactory<>("ISBN"));
+                new PropertyValueFactory<>("book_id"));
         column2.setCellValueFactory(
-                new PropertyValueFactory<>("Title"));
+                new PropertyValueFactory<>("title"));
         column3.setCellValueFactory(
                 new PropertyValueFactory<>("borrow_date"));
         column4.setCellValueFactory(
@@ -152,7 +153,7 @@ public class detailstudentcontroller extends menucontroller {
         ArrayList<Book_borrowed> cur = curStudent.getBorrowingBook();
         for (Book_borrowed x:cur) {
             borrowingBook.getItems().add(x);
-            System.out.println(x.getTitle());
+            System.out.println(x.getISBN());
         }
     }
 

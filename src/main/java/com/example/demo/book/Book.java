@@ -9,18 +9,18 @@ public class Book {
     private String Author;
     private String Publisher;
     private String PublishYear;
-    private String image;
+    private String Image;
     private static ConnectDB Request = new ConnectDB();
     public Book() {
     }
 
-    public Book(String ISBN, String image, String publishYear, String publisher, String author, String title) {
+    public Book(String ISBN, String title, String author, String publisher, String publishYear, String image) {
         this.ISBN = ISBN;
-        this.image = image;
-        PublishYear = publishYear;
-        Publisher = publisher;
-        Author = author;
         Title = title;
+        Author = author;
+        Publisher = publisher;
+        PublishYear = publishYear;
+        this.Image = image;
     }
 
     public Book(String ISBN, String Title, String Author, String Publisher, String PublishYear) {
@@ -95,8 +95,12 @@ public class Book {
                 '}';
     }
 
-    public void setImage(String image) {
+    public String getImage() {
+        return Image;
+    }
 
+    public void setImage(String image) {
+        Image = image;
     }
 
     public void deleteBook() {

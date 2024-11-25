@@ -10,20 +10,24 @@ import javafx.stage.Stage;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import java.io.IOException;
-import java.util.Objects;
 
 public class HelloApplication extends Application {
+    private static Stage primaryStage;
     @Override
     public void start(Stage stage) throws IOException {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("student/StudentLogin.fxml")));
+        primaryStage = stage;
+        Parent root = FXMLLoader.load(getClass().getResource("student/studentLogin.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        Image icon = new Image(Objects.requireNonNull(getClass().getResourceAsStream("/Picture/icon.png")));
+        Image icon = new Image(getClass().getResourceAsStream("/Picture/icon.png"));
         stage.getIcons().add(icon);
         stage.show();
     }
 
     public static void main(String[] args) {
         launch();
+    }
+    public static Stage getPrimaryStage() {
+        return primaryStage;
     }
 }

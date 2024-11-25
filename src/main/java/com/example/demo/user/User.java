@@ -1,8 +1,9 @@
 package com.example.demo.user;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 
-public abstract class User {
+public abstract class User implements Serializable {
     private String id;
     private String username;
     private String password;
@@ -10,8 +11,8 @@ public abstract class User {
     private String role;
     private String phone;
     public User(){}
-    public User(String id, String username, String password, String name, String role, String phone) {
-        this.id = id;
+    public User( String username, String password, String name, String role, String phone) {
+
         this.username = username;
         this.password = password;
         this.name = name;
@@ -19,7 +20,6 @@ public abstract class User {
         this.phone = phone;
     }
     public User(String id, String username, String name) {
-        this.id = id;
         this.username = username;
         this.name = name;
 
@@ -77,4 +77,8 @@ public abstract class User {
     }
 
     public abstract boolean login(String username, String password) throws SQLException;
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }

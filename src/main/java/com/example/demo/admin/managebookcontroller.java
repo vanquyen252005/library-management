@@ -18,14 +18,11 @@ import java.util.List;
 
 public class managebookcontroller extends menucontroller {
     @FXML
-    private ComboBox<String> bookSearchType;
-    @FXML
     private TextField input;
     @FXML
     TableView<Book> bookTable;
     @FXML
     private ListView<String> suggestionList;
-    private String op;
     public static Book onClickBook = new Book();
     @Override
     @FXML
@@ -35,45 +32,25 @@ public class managebookcontroller extends menucontroller {
         manageBook.setOnAction(event -> handleManageBookAction(event));
         search.setOnAction(event -> handleSearchAction(event));
         handleRequest.setOnAction(event -> handleHandleRequestAction(event));
-
-        bookSearchType.getItems().addAll("ID", "Username", "Name");
-        bookSearchType.setOnAction(event -> {
-            op = bookSearchType.getValue();
-            System.out.println("Bạn đã chọn: " + op);
-            switch (op) {
-                case "ID":
-                    op = "id";
-                    break;
-                case "Username":
-                    op = "username";
-                    break;
-                case "Name":
-                    op = "name";
-                    break;
-            }
-        });
-
-        // Điều chỉnh chiều rộng của TreeView nếu cần
-
-
+        
         TableColumn<Book, String> column1 =
-                new TableColumn<>("ID");
+                new TableColumn<>("ISBN");
         TableColumn<Book, String> column2 =
-                new TableColumn<>("Username");
+                new TableColumn<>("Title");
         TableColumn<Book, String> column3 =
-                new TableColumn<>("Name");
+                new TableColumn<>("Author");
         TableColumn<Book, String> column4 =
-                new TableColumn<>("Classname");
+                new TableColumn<>("Publisher");
         TableColumn<Book, Void> actionColumn = new TableColumn<>("Action");
 
         column1.setCellValueFactory(
-                new PropertyValueFactory<>("id"));
+                new PropertyValueFactory<>("ISBN"));
         column2.setCellValueFactory(
-                new PropertyValueFactory<>("username"));
+                new PropertyValueFactory<>("Title"));
         column3.setCellValueFactory(
-                new PropertyValueFactory<>("name"));
+                new PropertyValueFactory<>("Author"));
         column4.setCellValueFactory(
-                new PropertyValueFactory<>("classname")
+                new PropertyValueFactory<>("Publisher")
         );
         Callback<TableColumn<Book, Void>, TableCell<Book, Void>> cellFactory = new Callback<>() {
             @Override
@@ -88,14 +65,15 @@ public class managebookcontroller extends menucontroller {
                         // Đặt sự kiện cho nút "Delete"
                         deleteButton.setOnAction(event -> {
                             Book book = getTableView().getItems().get(getIndex());
-                            book.deleteBook(); // Gọi phương thức deleteStudent()
+                            book.deleteBook();
+                            searchBook();
                         });
 
                         detailButton.getStyleClass().add("detail-button");
                         // Đặt sự kiện cho nút "Detail"
                         detailButton.setOnAction(event -> {
                             Book book = getTableView().getItems().get(getIndex());
-                            detailStudent(book.getBook(), event);
+                            detailBook(book.getBook(), event);
                         });
 
                         // Thêm các nút vào HBox
@@ -162,7 +140,7 @@ public class managebookcontroller extends menucontroller {
                 input.setText(suggestionList.getSelectionModel().getSelectedItem());
                 System.out.println("Clicked: " + input.getText());
                 suggestionList.setVisible(false);
-                searchStudent();
+                searchBook();
             }
         });
     }
@@ -199,21 +177,21 @@ public class managebookcontroller extends menucontroller {
         List<String> suggestions = new ArrayList<>();
         List<Book> cur=  Book.getBook(searchText);
         for (Book x:cur) {
-            if (x.getTitle().contains(searchText)) {
+            if (x.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
             suggestions.add(x.getTitle());}
-            if (x.getTitle().contains(searchText)) {
+            if (x.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
             suggestions.add(x.getISBN());}
-            if (x.getTitle().contains(searchText)) {
+            if (x.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
             suggestions.add(x.getAuthor());}
-            if (x.getTitle().contains(searchText)) {
+            if (x.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
             suggestions.add(x.getPublisher());}
-            if (x.getTitle().contains(searchText)) {
+            if (x.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
             suggestions.add(x.getPublishYear());}
         }
         return suggestions;
     }
     @FXML
-    public void searchStudent() {
+    public void searchBook() {
         List<Book> result = Book.getBook(input.getText());
         bookTable.setItems(FXCollections.observableArrayList());
         toggleTableViewVisibility(bookTable, true);
@@ -228,14 +206,14 @@ public class managebookcontroller extends menucontroller {
         tableView.setVisible(isVisible);
         tableView.setManaged(isVisible);
     }
-    public void detailStudent(Book cur, ActionEvent event) {
+    public void detailBook(Book cur, ActionEvent event) {
         bookTable.setItems(FXCollections.observableArrayList());
         System.out.println(event.getTarget());
         onClickBook = cur;
-        displayScene(event,"DetailStudent.fxml");
+        displayScene(event,"DetailBook.fxml");
     }
 
-    public void createStudent(ActionEvent event) {
+    public void createBook(ActionEvent event) {
         displayScene(event,"CreateStudent.fxml");
     }
 }

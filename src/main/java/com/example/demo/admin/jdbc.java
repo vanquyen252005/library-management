@@ -3,6 +3,7 @@ package com.example.demo.admin;
 import com.example.demo.student.Student;
 
 import java.sql.*;
+import java.util.ArrayList;
 
 public class jdbc {
     Connection connection;
@@ -52,77 +53,35 @@ public class jdbc {
         }
         return resultSet;
     }
-    public void addStudentData(Student newUser) {
-        String id = newUser.getId();                     // Gán id
-        String username_ = newUser.getUsername();         // Gán username
-        String password_ = newUser.getPassword();         // Gán password
-        String name = newUser.getName();                 // Gán name
-        String role = newUser.getRole();                 // Gán role
-        String phone = newUser.getPhone();               // Gán phone
-        String classname = newUser.getClassname();       // Gán classname
-        ResultSet resultSet = null;
-        try {
-            String query = "INSERT INTO userdata (id, username, password, name, role, phone, classname) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
 
-// Sử dụng PreparedStatement
+    public ArrayList<RequestBook> getInQueue() {
+        ArrayList<RequestBook> requestList = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM request_borrow_book WHERE status = 'pending' ORDER BY request_date ASC";
+
+            // Dùng PreparedStatement để tạo truy vấn
             PreparedStatement pstmt = connection.prepareStatement(query);
 
-// Gán giá trị cho các tham số
-            pstmt.setString(1, id);            // Gán giá trị cho id
-            pstmt.setString(2, username_);   // Gán giá trị cho username
-            pstmt.setString(3, password_);   // Gán giá trị cho password
-            pstmt.setString(4, name);       // Gán giá trị cho name
-            pstmt.setString(5, role);       // Gán giá trị cho role
-            pstmt.setString(6, phone);      // Gán giá trị cho phone
-            pstmt.setString(7, classname);  // Gán giá trị cho classname
-            // Thực thi câu lệnh
-           pstmt.executeUpdate();
+            // Thực thi truy vấn
+            ResultSet rs = pstmt.executeQuery();
 
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-    public ResultSet getStudentData(String op, String info) {
-        ResultSet resultSet = null;
-        try {
-            info = "'%" + info + "%'";
-            String query = "SELECT * FROM userdata WHERE " + op + " LIKE " + info + " and role = 'Student';";
-            System.out.println(query);
-            resultSet = statement.executeQuery(query);
-            if (resultSet != null)
-            {
-                System.out.println("OK");
+            // Duyệt qua kết quả và thêm vào danh sách
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String bookId = rs.getString("book_id");
+                int userId = rs.getInt("user_id");
+                String requestDate = rs.getTimestamp("request_date").toString();
+                String status = rs.getString("status");
+
+                // Tạo đối tượng RequestBook và thêm vào danh sách
+                RequestBook request = new RequestBook(id, bookId, userId, requestDate, status);
+                requestList.add(request);
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return resultSet;
-    }
-    public void deleteStudent(String id) {
-        String query = "DELETE FROM userdata WHERE id = ?";
 
-        try {
-            // Sử dụng PreparedStatement để xóa sinh viên theo ID
-            PreparedStatement pstmt = connection.prepareStatement(query);
-
-            // Gán giá trị ID cho tham số ?
-            pstmt.setString(1, id);
-
-            // Thực thi câu lệnh DELETE
-            int rowsAffected = pstmt.executeUpdate();
-
-            // Kiểm tra xem có bản ghi nào bị xóa hay không
-            if (rowsAffected > 0) {
-                System.out.println("Student with ID " + id + " deleted successfully.");
-            } else {
-                System.out.println("No student found with ID " + id + ".");
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        return requestList;
     }
 }

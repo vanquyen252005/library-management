@@ -89,6 +89,9 @@ public class ConnectDB {
                 ));
 
             }
+            for (Book a:books) {
+                System.out.println(a);
+            }
             System.out.println("Finishing getting book list");
 
         } catch (SQLException e) {
@@ -161,5 +164,8 @@ public class ConnectDB {
             e.printStackTrace();
         }
     }
+
+
+
 }
 
