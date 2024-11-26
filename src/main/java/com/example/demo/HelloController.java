@@ -23,7 +23,6 @@ public class HelloController{
     @FXML
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
-//            System.out.println("hehe"+getClass().getResource(fxmlLink));
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);

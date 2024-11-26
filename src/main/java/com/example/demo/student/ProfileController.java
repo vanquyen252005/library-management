@@ -45,7 +45,14 @@ public class ProfileController extends studentcontroller{
     private TableColumn<BookInfo, String> borrowedDateColumn;
     @FXML
     private TableColumn<BookInfo, String> returnDateColumn;
-
+    @FXML
+    private TableColumn<BookInfo, String> TitleColumn;
+    @FXML
+    private TableColumn<BookInfo, String> AuthorColumn;
+    @FXML
+    private TableColumn<BookInfo, String> PublishYearColumn;
+    @FXML
+    private TableColumn<BookInfo, String> PublisherColumn;
     public void initialize() {
         //rootPane.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("student/student.css")).toExternalForm());
         // Cài đặt cột cho bảng thông tin người dùng
@@ -54,6 +61,10 @@ public class ProfileController extends studentcontroller{
 
 
         bookIdColumn.setCellValueFactory(new PropertyValueFactory<>("bookId"));
+        TitleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        AuthorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
+        PublishYearColumn.setCellValueFactory(new PropertyValueFactory<>("publishYear"));
+        PublisherColumn.setCellValueFactory(new PropertyValueFactory<>("publisher"));
         borrowedDateColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedDate"));
         returnDateColumn.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
 
@@ -62,26 +73,25 @@ public class ProfileController extends studentcontroller{
         loadBorrowedBooks();
     }
 
-    private void loadUserInfo() {
+    public void loadUserInfo() {
         ObservableList<UserInfo> userInfoList = FXCollections.observableArrayList();
-//        try (Connection connection =ProfileDatabase.getConnection()) {
-//            String query = "SELECT username, password, name, role, phone, classname FROM userdata WHERE id = ?";
-//            PreparedStatement statement = connection.prepareStatement(query);
-//            statement.setInt(1, parseInt(user.getId()) );
-//            ResultSet resultSet = statement.executeQuery();
+        jdbc db = new jdbc(); // Tạo đối tượng JDBC để kết nối DB
 
-//            if (resultSet.next()) {
-        userInfoList.add(new UserInfo("Username", user.getUsername()));
-        userInfoList.add(new UserInfo("Name", user.getName()));
-        userInfoList.add(new UserInfo("Role",user.getRole()));
-        userInfoList.add(new UserInfo("Phone", user.getPhone()));
-        userInfoList.add(new UserInfo("Class", user.getClassname()));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-        userInfoTable.setItems(userInfoList);
+        // Lấy thông tin người dùng từ DB
+        Student userInfo = db.LoadUserInfor(Integer.parseInt(user.getId()));
+        if (userInfo != null) {
+            userInfoList.add(new UserInfo("Username", userInfo.getUsername()));
+            userInfoList.add(new UserInfo("Name", userInfo.getName()));
+            userInfoList.add(new UserInfo("Role", userInfo.getRole()));
+            userInfoList.add(new UserInfo("Phone", userInfo.getPhone()));
+            userInfoList.add(new UserInfo("Class", userInfo.getClassname()));
+        } else {
+            System.out.println("Không tìm thấy thông tin người dùng.");
+        }
+
+        userInfoTable.setItems(userInfoList); // Đặt dữ liệu vào bảng
     }
+
 
     private void loadBorrowedBooks() {
         ObservableList<BookInfo> bookInfoList = FXCollections.observableArrayList();
@@ -90,10 +100,9 @@ public class ProfileController extends studentcontroller{
         list = user.getBorrowingBook();
         for (Book_borrowed x:list) {
             bookInfoList.add(new BookInfo(
-                    x.getISBN(),x.getBorrow_date(),x.getReturn_date()
+                    x.getISBN(),x.getTitle(),x.getAuthor(),x.getPublishYear(),x.getPublisher(),x.getBorrow_date(),x.getReturn_date()
             ));
         }
-
 
         borrowedBooksTable.setItems(bookInfoList);
     }
@@ -125,14 +134,38 @@ public class ProfileController extends studentcontroller{
     }
 
     public static class BookInfo {
-        private final String bookId;
-        private final String borrowedDate;
-        private final String returnDate;
+        private  String bookId;
+        private  String borrowedDate;
+        private  String returnDate;
+        private  String title;
+        private String author;
+        private String publishYear;
+        private String publisher;
 
-        public BookInfo(String bookId, String borrowedDate, String returnDate) {
+        public BookInfo(String bookId, String title, String author, String publishYear, String publisher, String borrowDate, String returnDate) {
             this.bookId = bookId;
-            this.borrowedDate = borrowedDate;
+            this.title = title;
+            this.author = author;
+            this.publishYear= publishYear;
+            this.publisher = publisher;
+            this.borrowedDate = borrowDate;
             this.returnDate = returnDate;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public String getAuthor() {
+            return author;
+        }
+
+        public String getPublishYear() {
+            return publishYear;
+        }
+
+        public String getPublisher() {
+            return publisher;
         }
 
         public String getBookId() {

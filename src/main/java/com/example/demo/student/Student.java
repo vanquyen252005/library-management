@@ -26,11 +26,11 @@ public class Student extends User {
     public Student( String username, String password, String name, String role, String phone, String classname) {
         super(username, password, name, role, phone);
         this.classname = classname;
-       // this.BorrowingBook = Request.loadBorrowedBook(parseInt(this.getId()));
+        // this.BorrowingBook = Request.loadBorrowedBook(parseInt(this.getId()));
     }
     public Student(String id, String username, String name) {
         super(id, username, name);
-       // this.BorrowingBook = Request.loadBorrowedBook(parseInt(id));
+        // this.BorrowingBook = Request.loadBorrowedBook(parseInt(id));
     }
     public void setClassname(String classname) {
         this.classname = classname;
@@ -61,6 +61,7 @@ public class Student extends User {
             }
             return false;
         } catch (Exception e) {
+            System.out.println("dell ket noi dc");
             throw new RuntimeException(e);
         }
     }
@@ -85,9 +86,6 @@ public class Student extends User {
                 cur.setBorrowingBook(Request.loadBorrowedBook(parseInt(cur.getId())));
                 arr.add(cur);
             }
-//            for(Student a:arr) {
-//                System.out.println(a.getUsername() + " " + a.getName());
-//            }
             return arr;
         } catch (Exception e) {
             System.out.println("found false here");
@@ -105,7 +103,6 @@ public class Student extends User {
         Request.updateUserProfile(userId,username,name,phone,userClass);
     }
 
-    // retake the borrowed list
     public void TakeBorrowedBookList(Student student) {
         this.BorrowingBook = Request.loadBorrowedBook(parseInt(student.getId()));
     }
