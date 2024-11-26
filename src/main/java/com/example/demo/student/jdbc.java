@@ -4,7 +4,9 @@ import com.example.demo.book.Book;
 import com.example.demo.book.Book_borrowed;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static java.lang.Integer.parseInt;
 
@@ -15,7 +17,7 @@ public class jdbc {
     jdbc() {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/bookdb",
+                    "jdbc:mysql://localhost:3306/oop",
                     "root",
                     "123456"
             );
@@ -32,14 +34,14 @@ public class jdbc {
         try {
             String query = "SELECT * FROM userdata WHERE username = ? AND password = ?";
 
-            // Dùng PreparedStatement để tránh SQL Injection
+
             PreparedStatement pstmt = connection.prepareStatement(query);
 
-            // Gán giá trị cho tham số
-            pstmt.setString(1, username_);
-            pstmt.setString(2, (password_));
 
-            // Thực thi câu lệnh
+            pstmt.setString(1, username_);
+            pstmt.setString(2, password_);
+
+
             resultSet = pstmt.executeQuery();
             System.out.println(query);
             if (resultSet != null) {
@@ -67,7 +69,7 @@ public class jdbc {
                     "VALUES ( ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(query);
-           // Gán giá trị cho id
+
             pstmt.setString(1, username_);   // Gán giá trị cho username
             pstmt.setString(2, password_);   // Gán giá trị cho password
             pstmt.setString(3, name);       // Gán giá trị cho name
@@ -102,10 +104,10 @@ public class jdbc {
         String query = "DELETE FROM userdata WHERE id = ?";
 
         try {
-            // Sử dụng PreparedStatement để xóa sinh viên theo ID
+
             PreparedStatement pstmt = connection.prepareStatement(query);
 
-            // Gán giá trị ID cho tham số ?
+
             pstmt.setString(1, id);
 
 
@@ -125,17 +127,26 @@ public class jdbc {
 
     public ArrayList<Book_borrowed> loadBorrowedBook(int user_id) {
         ArrayList<Book_borrowed> listBook = new ArrayList<>();
-        String query = "SELECT bb.book_id,b.Title,bb.borrow_date, bb.return_date " +
-                "FROM book_borrowed bb " +
-                "LEFT JOIN books b ON bb.book_id = b.ISBN " +
-                "WHERE user_id = ?";
+        String query = "SELECT distinct  " +
+                "    bb.book_id, " +
+                "    b.Title, " +
+                "    bb.borrow_date,  " +
+                "    rr.request_date, " +
+                "    b.Author, " +
+                "    b.PublishYear, " +
+                "    b.Publisher " +
+                "FROM " +
+                "    book_borrowed bb " +
+                "LEFT JOIN  " +
+                "    books b ON bb.book_id = b.ISBN " +
+                "LEFT JOIN " +
+                "    request_return_book rr ON bb.book_id = rr.book_id AND bb.user_id = rr.user_id " +
+                "WHERE " +
+                "    bb.user_id = ? ";
 
         try {
-
             System.out.println(query);
             PreparedStatement pstmt = connection.prepareStatement(query);
-
-
             pstmt.setInt(1, user_id);
 
 
@@ -146,33 +157,79 @@ public class jdbc {
                 Book_borrowed book = new Book_borrowed();
 
                 book.setISBN(resultSet.getString("book_id"));
-                book.setBorrow_date(resultSet.getString("borrow_date"));
-                book.setReturn_date(resultSet.getString("return_date"));
                 book.setTitle(resultSet.getString("Title"));
+                book.setAuthor(resultSet.getString("Author"));
+                book.setPublishYear(resultSet.getString("PublishYear"));
+                book.setPublisher(resultSet.getString("Publisher"));
+                book.setBorrow_date(resultSet.getString("borrow_date"));
+                book.setReturn_date(resultSet.getString("request_date"));
                 listBook.add(book);
             }
 
         } catch (SQLException e) {
+            System.out.println("huhu");
             e.printStackTrace();
         }
         return listBook;
     }
 
     public void updateUserProfile(String userId, String username, String name, String phone, String userClass) {
-        // Câu lệnh SQL để cập nhật dữ liệu
-        String query = "UPDATE userdata SET username = ?, name = ?, phone = ?, classname = ? WHERE id = ?";
+        if (userId == null || userId.trim().isEmpty()) {
+            System.out.println("id nguoi dung no duoc rong");
+            return;
+        }
+
+
+        StringBuilder queryBuilder = new StringBuilder("UPDATE userdata SET ");
+        boolean hasUpdates = false;
+
+
+        if (username != null && !username.trim().isEmpty()) {
+            queryBuilder.append("username = ?, ");
+            hasUpdates = true;
+        }
+        if (name != null && !name.trim().isEmpty()) {
+            queryBuilder.append("name = ?, ");
+            hasUpdates = true;
+        }
+        if (phone != null && !phone.trim().isEmpty()) {
+            queryBuilder.append("phone = ?, ");
+            hasUpdates = true;
+        }
+        if (userClass != null && !userClass.trim().isEmpty()) {
+            queryBuilder.append("classname = ?, ");
+            hasUpdates = true;
+        }
+
+        if (!hasUpdates) {
+            System.out.println("Không có trường nào được cung cấp để cập nhật.");
+            return;
+        }
+
+
+        queryBuilder.setLength(queryBuilder.length() - 2); // Xóa dấu ", "
+        queryBuilder.append(" WHERE id = ?");
 
         try {
-            PreparedStatement stmt = connection.prepareStatement(query);
+            PreparedStatement stmt = connection.prepareStatement(queryBuilder.toString());
 
-            // Gán giá trị vào câu lệnh SQL
-            stmt.setString(1, username);
-            stmt.setString(2, name);
-            stmt.setString(3, phone);
-            stmt.setString(4, userClass);
-            stmt.setInt(5, parseInt(userId));
 
-            // Thực hiện câu lệnh
+            int index = 1;
+            if (username != null && !username.trim().isEmpty()) {
+                stmt.setString(index++, username);
+            }
+            if (name != null && !name.trim().isEmpty()) {
+                stmt.setString(index++, name);
+            }
+            if (phone != null && !phone.trim().isEmpty()) {
+                stmt.setString(index++, phone);
+            }
+            if (userClass != null && !userClass.trim().isEmpty()) {
+                stmt.setString(index++, userClass);
+            }
+            stmt.setInt(index, Integer.parseInt(userId));
+
+
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Cập nhật dữ liệu thành công!");
@@ -189,13 +246,13 @@ public class jdbc {
         String query = "SELECT COUNT(*) FROM userdata WHERE username = ?";
 
         try {
-            // Sử dụng PreparedStatement để xóa sinh viên theo ID
+
             PreparedStatement pstmt = connection.prepareStatement(query);
 
-            // Gán giá trị ID cho tham số ?
+
             pstmt.setString(1, data);
 
-            // Thực thi câu lệnh DELETE
+
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -212,13 +269,13 @@ public class jdbc {
         String query = "SELECT COUNT(*) FROM userdata email = ?";
 
         try {
-            // Sử dụng PreparedStatement để xóa sinh viên theo ID
+
             PreparedStatement pstmt = connection.prepareStatement(query);
 
-            // Gán giá trị ID cho tham số ?
+
             pstmt.setString(1, data);
 
-            // Thực thi câu lệnh DELETE
+
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -235,13 +292,13 @@ public class jdbc {
         String query = "SELECT COUNT(*) FROM userdata WHERE name = ?";
 
         try {
-            // Sử dụng PreparedStatement để xóa sinh viên theo ID
+
             PreparedStatement pstmt = connection.prepareStatement(query);
 
-            // Gán giá trị ID cho tham số ?
+
             pstmt.setString(1, data);
 
-            // Thực thi câu lệnh DELETE
+
             ResultSet rs = pstmt.executeQuery();
 
             if (rs.next()) {
@@ -255,4 +312,55 @@ public class jdbc {
         return false;
     }
 
+    public Student LoadUserInfor(int user_id) {
+        Student user = null;
+
+        String query = "SELECT id, username, password, name, role, phone, classname FROM userdata WHERE id = ?";
+        try {
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, user_id); // Gán giá trị cho tham số id
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+
+                user = new Student();
+                user.setID(resultSet.getString("id"));
+                user.setUsername(resultSet.getString("username"));
+                user.setPassword(resultSet.getString("password"));
+                user.setName(resultSet.getString("name"));
+                user.setRole(resultSet.getString("role"));
+                user.setPhone(resultSet.getString("phone"));
+                user.setClassname(resultSet.getString("classname"));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return user;
+    }
+
+    public boolean insertReturnRequest(String bookId, int userId) {
+        String query = "INSERT INTO request_return_book (book_id, user_id, request_date, status) VALUES (?, ?, ?, ?)";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(query);
+
+
+            pstmt.setString(1,bookId);
+            pstmt.setInt(2, userId);
+            pstmt.setString(3, getCurrentDate());
+            pstmt.setString(4, "Pending");
+
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    // Phương thức để lấy ngày hiện tại theo định dạng yyyy-MM-dd
+    private String getCurrentDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(new Date());
+    }
 }
+

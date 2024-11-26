@@ -11,7 +11,7 @@ public class jdbc {
     jdbc() {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/bookdb",
+                    "jdbc:mysql://localhost:3306/oop",
                     "root",
                     "123456"
             );

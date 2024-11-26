@@ -8,11 +8,10 @@ import javafx.scene.control.TextField;
 
 import java.util.Scanner;
 
-public class EditProfileController extends studentcontroller {
+public class EditProfileController extends ProfileController {
 
     @FXML
     private TextField usernameField;
-
     @FXML
     private TextField nameField;
 
@@ -72,5 +71,6 @@ public class EditProfileController extends studentcontroller {
 
     public void SaveProfile(ActionEvent event) {
         saveUserProfile();
+        displayScene(event,"Profile.fxml");
     }
 }
