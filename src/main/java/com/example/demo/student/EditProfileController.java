@@ -4,12 +4,16 @@ import com.example.demo.HelloController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.util.Scanner;
 
 public class EditProfileController extends ProfileController {
-
+    @FXML
+    public Label Notification;
+    @FXML
+    public Button ChangePassWord_lbn;
     @FXML
     private TextField usernameField;
     @FXML
@@ -28,18 +32,6 @@ public class EditProfileController extends ProfileController {
     private Button cancelButton;
 
     public void initialize() {
-        // Load existing user data into fields (example implementation)
-        loadUserProfile();
-
-        // Add event listeners
-    }
-
-    private void loadUserProfile() {
-        // Example: Load data from a database or static source
-        usernameField.setText(usernameField.getText());
-        nameField.setText(nameField.getText());
-        phoneField.setText(phoneField.getText());
-        classField.setText(classField.getText());
     }
 
     private void saveUserProfile() {
@@ -71,6 +63,25 @@ public class EditProfileController extends ProfileController {
 
     public void SaveProfile(ActionEvent event) {
         saveUserProfile();
-        displayScene(event,"Profile.fxml");
+        String username = usernameField.getText();
+        String name = nameField.getText();
+        String phone = phoneField.getText();
+        String className = classField.getText();
+        if(username.isEmpty() && name.isEmpty() && phone.isEmpty() && className.isEmpty())
+        {
+            Notification.setText("Khong co thay doi nao ca");
+        }
+      else  Notification.setText("Cap nhat du lieu thanh cong !");
     }
+
+    public void ChangePassWord(ActionEvent event) {
+        try {
+            displayScene(event, "ChangePassWord.fxml");
+        } catch (Exception e) {
+            System.out.println("Error loading ChangePassWord.fxml: " + e.getMessage());
+            Notification.setText("Không thể mở trang đổi mật khẩu.");
+            Notification.setStyle("-fx-text-fill: red;");
+        }
+    }
+
 }

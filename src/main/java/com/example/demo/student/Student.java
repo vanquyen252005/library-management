@@ -106,5 +106,7 @@ public class Student extends User {
     public void TakeBorrowedBookList(Student student) {
         this.BorrowingBook = Request.loadBorrowedBook(parseInt(student.getId()));
     }
-
+    public void updatePassWord(String userId, String password) {
+        Request.updatePassWord(userId, password);
+    }
 }

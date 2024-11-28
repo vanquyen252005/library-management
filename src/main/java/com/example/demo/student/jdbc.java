@@ -167,11 +167,32 @@ public class jdbc {
             }
 
         } catch (SQLException e) {
-            System.out.println("huhu");
+            System.out.println("khong load duoc BroowedBook");
             e.printStackTrace();
         }
         return listBook;
     }
+  public void updatePassWord(String userId,String passWord) {
+        String query = "UPDATE userdata SET password = ? WHERE id = ? ";
+      try {
+          System.out.println(query);
+          PreparedStatement pstmt = connection.prepareStatement(query);
+          pstmt.setString(1,passWord);
+          pstmt.setInt(2,parseInt(userId));
+          int rowsAffected = pstmt.executeUpdate();
+          if (rowsAffected > 0) {
+              System.out.println("Cập nhật mật khẩu thành công cho userId: " + userId);
+          } else {
+              System.out.println("Không tìm thấy userId: " + userId);
+          }
+          pstmt.close();
+
+      } catch (SQLException e) {
+          System.out.println("khong update duoc new PassWord");
+          e.printStackTrace();
+      }
+
+  }
 
     public void updateUserProfile(String userId, String username, String name, String phone, String userClass) {
         if (userId == null || userId.trim().isEmpty()) {
