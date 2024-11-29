@@ -7,7 +7,6 @@ import java.util.List;
 
 public class admin extends User  {
     private static jdbc Request = new jdbc();
-    //private Admin user = new Admin();
     public admin() {
     }
     public admin( String username, String password, String name, String role, String phone) {
