@@ -223,11 +223,9 @@ public class homeController extends menuController {
     private Button clear_button;
 
     private int currentPage = 1;
-<<<<<<< Updated upstream
-    private ConnectDB bookDatabase = ConnectDB.getInstance();
-=======
+
     private Database bookDatabase = Database.getInstance();
->>>>>>> Stashed changes
+
     private Map<String, List<Book>> cache = new HashMap<>();
 
     private VBox vbox = new VBox();
