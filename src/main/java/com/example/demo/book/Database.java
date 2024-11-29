@@ -63,10 +63,10 @@ public class Database {
 
         // If keyword is empty, fetch top-rated books
         if (keyword == null || keyword.trim().isEmpty()) {
-            sql = "SELECT * FROM books ORDER BY rating DESC LIMIT 10";
+            sql = "SELECT * FROM books ORDER BY rating DESC LIMIT 50";
         } else {
             // If keyword is provided, search by Title or Author, then order by rating
-            sql = "SELECT * FROM books WHERE Title LIKE ? ORDER BY rating DESC LIMIT 10";
+            sql = "SELECT * FROM books WHERE Title LIKE ? ORDER BY rating DESC LIMIT 50";
         }
 
         try (Connection conn = Database.getConnection();
@@ -253,28 +253,71 @@ public class Database {
         return commentList;
     }
 
+//    public void PostCommentForBook(String Content, String ISBN, int user_id) {
+//        String query = "INSERT INTO book_comments (book_id, user_id, content, parent_comment_id) VALUES (?, ?, ?, NULL)";
+//
+//        try (Connection connection = getConnection();
+//             PreparedStatement stmt = connection.prepareStatement(query)) {
+//
+//            // Gán giá trị cho các tham số trong câu truy vấn
+//            stmt.setString(1, ISBN); // Gán giá trị ISBN để tìm book_id
+//            stmt.setInt(2, user_id); // Gán user_id
+//            stmt.setString(3, Content); // Gán nội dung của bình luận (Content)
+//
+//            // Thực thi truy vấn
+//            int rowsInserted = stmt.executeUpdate();
+//            if (rowsInserted > 0) {
+//                System.out.println("Comment successfully added for ISBN: " + ISBN);
+//            } else {
+//                System.out.println("Failed to add comment for ISBN: " + ISBN);
+//            }
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//    }
+
     public void PostCommentForBook(String Content, String ISBN, int user_id) {
-        String query = "INSERT INTO book_comments (book_id, user_id, content, parent_comment_id) VALUES (?, ?, ?, NULL)";
+        // Step 1: Get the book_id corresponding to the ISBN
+        String getBookIdQuery = "SELECT ISBN FROM books WHERE ISBN = ?";
 
         try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+             PreparedStatement getBookIdStmt = connection.prepareStatement(getBookIdQuery)) {
 
-            // Gán giá trị cho các tham số trong câu truy vấn
-            stmt.setString(1, ISBN); // Gán giá trị ISBN để tìm book_id
-            stmt.setInt(2, user_id); // Gán user_id
-            stmt.setString(3, Content); // Gán nội dung của bình luận (Content)
+            getBookIdStmt.setString(1, ISBN); // Set the ISBN parameter
 
-            // Thực thi truy vấn
-            int rowsInserted = stmt.executeUpdate();
-            if (rowsInserted > 0) {
-                System.out.println("Comment successfully added for ISBN: " + ISBN);
+            ResultSet rs = getBookIdStmt.executeQuery();
+
+            // If the ISBN exists, fetch the book_id
+            if (rs.next()) {
+                String bookId = rs.getString("ISBN");
+
+                // Step 2: Insert the comment with the book_id
+                String insertCommentQuery = "INSERT INTO book_comments (book_id, user_id, content, parent_comment_id) VALUES (?, ?, ?, NULL)";
+
+                try (PreparedStatement stmt = connection.prepareStatement(insertCommentQuery)) {
+                    stmt.setString(1, ISBN);  // Set the book_id obtained from the first query
+                    stmt.setInt(2, user_id);    // Set the user_id
+                    stmt.setString(3, Content); // Set the comment content
+
+                    // Execute the insert query
+                    int rowsInserted = stmt.executeUpdate();
+                    if (rowsInserted > 0) {
+                        System.out.println("Comment successfully added for ISBN: " + ISBN);
+                    } else {
+                        System.out.println("Failed to add comment for ISBN: " + ISBN);
+                    }
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+
             } else {
-                System.out.println("Failed to add comment for ISBN: " + ISBN);
+                System.out.println("No book found with ISBN: " + ISBN);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
+
 
 
     public List<Comment> GetChildrenCommentList(int parent_id) {

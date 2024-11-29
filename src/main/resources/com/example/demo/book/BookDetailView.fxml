@@ -6,31 +6,54 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
 
-<AnchorPane prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.book.BookDetailController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.book.BookDetailController">
 
-    <!-- Book Image -->
-    <ImageView fx:id="bookImageView" fitHeight="279.0" fitWidth="323.0" layoutX="212.0" layoutY="166.0" />
+    <!-- Menu Side Panel -->
+    <Pane fx:id="menuPane" layoutX="14.0" layoutY="152.0" prefHeight="619.0" prefWidth="212.0" styleClass="side_ankerpane">
+        <Button fx:id="homeButton" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#home" prefHeight="41.0" prefWidth="188.0" styleClass=".btn_workbench" text="Home" />
+        <Button fx:id="profileButton" layoutX="12.0" layoutY="376.0" mnemonicParsing="false" onAction="#Profile" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Profile" />
+        <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handlerequest" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
+    </Pane>
 
-    <!-- Title Label -->
-    <Label fx:id="titleLabel" layoutX="373.0" layoutY="103.0" prefHeight="50.0" prefWidth="200.0" text="title" />
-    <Label fx:id="authorLabel" layoutX="633.0" layoutY="184.0" prefHeight="17.0" prefWidth="106.0" text="author" />
-    <Label fx:id="publisherLabel" layoutX="632.0" layoutY="227.0" prefHeight="17.0" prefWidth="115.0" text="publisher" />
-    <Label fx:id="yearLabel" layoutX="632.0" layoutY="276.0" prefHeight="17.0" prefWidth="100.0" text="year" />
-    <Button fx:id="back_home" layoutX="51.0" layoutY="28.0" mnemonicParsing="false" onAction="#BackToHome" text="Back" />
-    <Button fx:id="Borrow_book" layoutX="636.0" layoutY="337.0" mnemonicParsing="false" onAction="#ClickBorrowButton" text="Borrow" />
-    <Button fx:id="BookQR" layoutX="963.0" layoutY="113.0" mnemonicParsing="false" onAction="#ClickBookQR" text="Book QR" />
-    <ImageView fx:id="QRImageView" fitHeight="279.0" fitWidth="200.0" layoutX="894.0" layoutY="184.0" pickOnBounds="true" preserveRatio="true" />
-    <ScrollPane layoutX="92.0" layoutY="476.0" prefHeight="287.0" prefWidth="987.0">
-        <content>
-            <AnchorPane fx:id="CommentView" prefHeight="286.0" prefWidth="970.0">
-                <children>
-                    <TextField fx:id="CommentField" layoutX="164.0" layoutY="27.0" prefHeight="39.0" prefWidth="471.0" />
-                    <Button layoutX="684.0" layoutY="29.0" mnemonicParsing="false" onAction="#PostComment" prefHeight="35.0" prefWidth="77.0" text="Up" />
-                    <Label layoutX="45.0" layoutY="38.0" text="Post your comment" />
-                </children>
-            </AnchorPane>
-        </content></ScrollPane>
-    <Button fx:id="UndoRequestButton" layoutX="638.0" layoutY="387.0" mnemonicParsing="false" onAction="#clickUndoRequestButton" text="Undo request" visible="false" />
+    <!-- Content Area -->
+    <AnchorPane fx:id="contentArea" layoutX="226.0" layoutY="152.0" prefHeight="634.0" prefWidth="960.0">
 
+        <!-- Book Image -->
+        <ImageView fx:id="bookImageView" fitHeight="292.0" fitWidth="212.0" layoutX="83.0" layoutY="73.0" />
+
+        <!-- Title Label -->
+        <Label fx:id="titleLabel" layoutX="406.0" layoutY="37.0" prefHeight="50.0" prefWidth="177.0" styleClass="title-label" text="title" />
+
+        <!-- Author, Publisher, Year Labels -->
+        <Label fx:id="authorLabel" layoutX="406.0" layoutY="97.0" prefHeight="17.0" prefWidth="200.0" text="author" />
+        <Label fx:id="publisherLabel" layoutX="406.0" layoutY="142.0" prefHeight="17.0" prefWidth="200.0" text="publisher" />
+        <Label fx:id="yearLabel" layoutX="406.0" layoutY="178.0" prefHeight="17.0" prefWidth="200.0" text="year" />
+
+        <!-- Buttons -->
+        <Button fx:id="back_home" layoutX="14.0" layoutY="17.0" mnemonicParsing="false" onAction="#BackToHome" prefWidth="100.0" text="Back" />
+        <Button fx:id="Borrow_book" layoutX="398.0" layoutY="344.0" mnemonicParsing="false" onAction="#ClickBorrowButton" prefHeight="25.0" prefWidth="65.0" text="Borrow" />
+        <Button fx:id="BookQR" layoutX="699.0" layoutY="331.0" mnemonicParsing="false" onAction="#ClickBookQR" prefWidth="150.0" text="Book QR" />
+
+        <!-- QR Image -->
+        <ImageView fx:id="QRImageView" fitHeight="227.0" fitWidth="212.0" layoutX="668.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
+
+        <!-- Comment Section -->
+        <ScrollPane layoutX="40.0" layoutY="391.0" prefHeight="200.0" prefWidth="880.0">
+            <content>
+                <AnchorPane fx:id="CommentView" prefHeight="185.0" prefWidth="887.0">
+                    <children>
+                        <TextField fx:id="CommentField" layoutX="10.0" layoutY="15.0" prefHeight="40.0" prefWidth="750.0" />
+                        <Button layoutX="780.0" layoutY="15.0" mnemonicParsing="false" onAction="#PostComment" prefHeight="40.0" prefWidth="80.0" text="Post" />
+                        <Label layoutX="10.0" layoutY="55.0" styleClass="comment-label" text="Post your comment" />
+                    </children>
+                </AnchorPane>
+            </content>
+        </ScrollPane>
+
+        <!-- Undo Request Button -->
+        <Button fx:id="UndoRequestButton" layoutX="495.0" layoutY="344.0" mnemonicParsing="false" onAction="#clickUndoRequestButton" prefWidth="150.0" text="Undo request" visible="false" />
+
+    </AnchorPane>
 </AnchorPane>

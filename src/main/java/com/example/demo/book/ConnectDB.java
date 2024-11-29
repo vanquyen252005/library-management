@@ -142,10 +142,10 @@ public class ConnectDB {
 
         // If keyword is empty, fetch top-rated books
         if (keyword == null || keyword.trim().isEmpty()) {
-            sql = "SELECT * FROM books ORDER BY rating DESC LIMIT 80";
+            sql = "SELECT * FROM books ORDER BY rating DESC LIMIT 1000";
         } else {
             // If keyword is provided, search by Title or Author, then order by rating
-            sql = "SELECT * FROM books WHERE Title LIKE ? OR Author LIKE ? ORDER BY rating DESC LIMIT 80";
+            sql = "SELECT * FROM books WHERE Title LIKE ? OR Author LIKE ? ORDER BY rating DESC LIMIT 1000";
         }
 
         try (
@@ -170,9 +170,6 @@ public class ConnectDB {
                         rs.getString("Image-URL-M")
                 ));
 
-            }
-            for (Book a:books) {
-                System.out.println(a);
             }
             System.out.println("Finishing getting book list");
 

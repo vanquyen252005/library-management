@@ -1,6 +1,7 @@
 package com.example.demo.book;
 
 
+import com.example.demo.student.menuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BookDetailController {
+public class BookDetailController extends menuController{
 
     private Stage stage;
     private Scene homeScene; // Store the original home scene
@@ -65,7 +66,7 @@ public class BookDetailController {
     @FXML
     private  Button UndoRequestButton;
 
-    private String ISBN;
+    public static String ISBN;
 
     private Database BookDatabase = new Database();
 
@@ -93,7 +94,6 @@ public class BookDetailController {
         Book book = BookDatabase.getBookByISBN(ISBN);
 
         if (book != null) {
-            // Cập nhật các label và ảnh bìa sách
             titleLabel.setText(book.getTitle());
             authorLabel.setText(book.getAuthor());
             publisherLabel.setText(book.getPublisher());
@@ -128,25 +128,26 @@ public class BookDetailController {
 
     @FXML
     private void BackToHome(ActionEvent event) {
-        try {
-            // Debugging to ensure both stage and homeScene are set
-            if (stage == null) {
-                System.err.println("BookDetailController: Stage is null.");
-            }
-            if (homeScene == null) {
-                System.err.println("BookDetailController: Home scene is null.");
-            }
-
-            if (homeScene != null && stage != null) {
-                stage.setScene(homeScene); // Return to the stored home scene
-                stage.show();
-                System.out.println("BookDetailController: Returned to home scene.");
-            } else {
-                System.err.println("BookDetailController: Home scene or stage is null.");
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            // Debugging to ensure both stage and homeScene are set
+//            if (stage == null) {
+//                System.err.println("BookDetailController: Stage is null.");
+//            }
+//            if (homeScene == null) {
+//                System.err.println("BookDetailController: Home scene is null.");
+//            }
+//
+//            if (homeScene != null && stage != null) {
+//                stage.setScene(homeScene); // Return to the stored home scene
+//                stage.show();
+//                System.out.println("BookDetailController: Returned to home scene.");
+//            } else {
+//                System.err.println("BookDetailController: Home scene or stage is null.");
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
+        System.out.println("click on back to home button");
     }
 
     @FXML
@@ -157,7 +158,7 @@ public class BookDetailController {
             Student current_user = new Student();
             //String studentID = current_user.getId();
             //studentID = (studentID != null) ? current_user.getId() : "10101";
-            String bookISBN = this.ISBN;
+            String bookISBN = ISBN;
             boolean isSent = BookDatabase.sendBorrowRequest("3", bookISBN);
             if (isSent) {
                 Borrow_book.setText("Requested Borrowing");
@@ -202,7 +203,7 @@ public class BookDetailController {
         ParentComment = commentList.size();
         // CommentField.setText("");
 
-        if (commentList == null || commentList.isEmpty()) {
+        if (commentList.isEmpty()) {
             System.out.println("No comments found for ISBN: " + ISBN);
             return;
         }
@@ -247,30 +248,16 @@ public class BookDetailController {
         AnchorPane.setBottomAnchor(FormatComment, 10.0); // Cách cạnh dưới 10px
         AnchorPane.setLeftAnchor(FormatComment, 20.0);   // Cách cạnh trái 10px
         AnchorPane.setRightAnchor(FormatComment, 10.0);  // Cách cạnh phải 10px
-
-
-
     }
 
     @FXML
     public void PostComment(ActionEvent event) {
         String PostContent = CommentField.getText();
         BookDatabase.PostCommentForBook(PostContent,ISBN, 3);
-
         FormatComment.getChildren().clear();
         CommentView.getChildren().remove(FormatComment);
-
-
         loadComment();
-
-
         CommentField.clear();
-
-
-
     }
-
-
-
 }
 

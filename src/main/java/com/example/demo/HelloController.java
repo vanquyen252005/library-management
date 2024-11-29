@@ -23,6 +23,12 @@ public class HelloController{
     @FXML
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
+<<<<<<< Updated upstream
+=======
+            // Đảm bảo đường dẫn đầy đủ
+            System.out.println("curClass:" + getClass());
+            System.out.println("FXML Path: " + getClass().getResource(fxmlLink));
+>>>>>>> Stashed changes
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -32,6 +38,7 @@ public class HelloController{
             e.printStackTrace();
         }
     }
+
     @FXML
     public static void displayScene(Stage stage, String fxmlFile) {
         try {
@@ -88,10 +95,10 @@ public class HelloController{
     protected void AdminLogin(ActionEvent event) {
         if (user1 != null && user1 instanceof admin ) {
             System.out.println('#' + user1.getRole());
-                displayScene(event, "admin/menu.fxml");
+            displayScene(event, "admin/menu.fxml");
         } else {
-        displayScene(event,"admin/AdminLogin.fxml");
-    }
+            displayScene(event,"admin/AdminLogin.fxml");
+        }
     }
     @FXML
     protected void StudentLogin(ActionEvent event) {
@@ -103,3 +110,6 @@ public class HelloController{
         }
     }
 }
+
+
+
