@@ -1,11 +1,13 @@
 package com.example.demo.student;
 
 import com.example.demo.HelloController;
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.util.Duration;
 
 import java.util.Scanner;
 
@@ -62,7 +64,6 @@ public class EditProfileController extends ProfileController {
     }
 
     public void SaveProfile(ActionEvent event) {
-        saveUserProfile();
         String username = usernameField.getText();
         String name = nameField.getText();
         String phone = phoneField.getText();
@@ -71,7 +72,13 @@ public class EditProfileController extends ProfileController {
         {
             Notification.setText("Khong co thay doi nao ca");
         }
-      else  Notification.setText("Cap nhat du lieu thanh cong !");
+      else {
+          saveUserProfile();
+          Notification.setText("Cap nhat du lieu thanh cong !");
+        PauseTransition pause = new PauseTransition(Duration.seconds(1));
+        pause.setOnFinished(e -> displayScene(event, "Profile.fxml"));
+        pause.play();
+        }
     }
 
     public void ChangePassWord(ActionEvent event) {

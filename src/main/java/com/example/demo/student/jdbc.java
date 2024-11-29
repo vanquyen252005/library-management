@@ -11,10 +11,11 @@ import java.util.Date;
 import static java.lang.Integer.parseInt;
 
 public class jdbc {
-    Connection connection;
-    Statement statement;
+    private static jdbc instance;
+     private Connection connection;
+     private Statement statement;
 
-    jdbc() {
+     private jdbc() {
         try {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/oop",
@@ -26,6 +27,13 @@ public class jdbc {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static synchronized jdbc getInstance() {
+        if (instance == null) {
+            instance = new jdbc();
+        }
+        return instance;
     }
 
     public ResultSet getData(String username_, String password_) {

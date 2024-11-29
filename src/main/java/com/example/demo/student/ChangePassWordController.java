@@ -1,19 +1,20 @@
 package com.example.demo.student;
 
+import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.util.Duration;
 
 public class ChangePassWordController extends EditProfileController {
     public Label cfnewPassWord;
-
     public PasswordField oldPassWordField;
     public PasswordField newPassWordField;
     public PasswordField cfNewPassWordfield;
     public Label Notification;
-
     public Button submit_lbn;
+    public Button Cancel_btn;
 
     public void submit(ActionEvent event) {
         String oldPassWord = oldPassWordField.getText();
@@ -30,6 +31,15 @@ public class ChangePassWordController extends EditProfileController {
         }
         else {
             user.updatePassWord(user.getId(), newPassWord);
+            Notification.setText("New PassWord is updated successfully");
+            Notification.setStyle("-fx-font-size: 16px; -fx-text-fill: red;");
+            PauseTransition pause = new PauseTransition(Duration.seconds(1));
+            pause.setOnFinished(e -> displayScene(event, "editProfile.fxml"));
+            pause.play();
         }
+    }
+
+    public void cancel(ActionEvent event) {
+        displayScene(event,"editProfile.fxml");
     }
 }

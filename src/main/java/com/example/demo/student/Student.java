@@ -14,7 +14,7 @@ import static java.lang.Integer.parseInt;
 public class Student extends User {
     ArrayList<Book_borrowed> BorrowingBook = new ArrayList<>();
     private String classname;
-    private static jdbc Request = new jdbc();
+    private static jdbc Request =jdbc.getInstance();
     public Student() {
         super();
     }

@@ -10,7 +10,7 @@ public class Book {
     private String Publisher;
     private String PublishYear;
     private String Image;
-    private static ConnectDB Request = new ConnectDB();
+    private static ConnectDB Request = ConnectDB.getInstance();
     public Book() {
     }
 

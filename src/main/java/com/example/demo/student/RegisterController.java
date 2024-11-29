@@ -87,7 +87,7 @@ public class RegisterController extends HelloController {
     String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
     protected static Student user = new Student();
-    private static jdbc Database = new jdbc();
+    private static jdbc Database = jdbc.getInstance();
     private boolean ableToRegister = true;
 
 
