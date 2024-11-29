@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.admin.admin;
+import com.example.demo.admin.admincontroller;
 import com.example.demo.student.Student;
 import com.example.demo.user.User;
 import javafx.event.ActionEvent;
@@ -23,12 +24,7 @@ public class HelloController{
     @FXML
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
-<<<<<<< Updated upstream
-=======
-            // Đảm bảo đường dẫn đầy đủ
-            System.out.println("curClass:" + getClass());
-            System.out.println("FXML Path: " + getClass().getResource(fxmlLink));
->>>>>>> Stashed changes
+//            System.out.println("hehe"+getClass().getResource(fxmlLink));
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
@@ -38,7 +34,6 @@ public class HelloController{
             e.printStackTrace();
         }
     }
-
     @FXML
     public static void displayScene(Stage stage, String fxmlFile) {
         try {
@@ -88,6 +83,7 @@ public class HelloController{
         if (HelloController.readAdmin("log.txt") != null) {
             System.out.println("kdoaljdoids");
             user1 = HelloController.readAdmin("log.txt");
+            admincontroller.user = (admin) user1;
             System.out.println(user1.getRole());
         }
     }
@@ -110,6 +106,3 @@ public class HelloController{
         }
     }
 }
-
-
-
