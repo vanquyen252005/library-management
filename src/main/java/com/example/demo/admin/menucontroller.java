@@ -9,9 +9,10 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 
-public class menucontroller extends admincontroller {
+public class menucontroller extends HelloController {
     @FXML
     public TreeView<String> miniBar;
+    public Button back;
     @FXML
     protected Button home;
     @FXML
@@ -20,15 +21,16 @@ public class menucontroller extends admincontroller {
     protected Button manageBook;
     @FXML
     protected Button handleRequest;
-
+    public static admin user = admincontroller.user;
     @FXML
     public void initialize() {
         home.setOnAction(event -> handleHomeAction(event));
         manageStudent.setOnAction(event -> handleManageStudentAction(event));
         manageBook.setOnAction(event -> handleManageBookAction(event));
         handleRequest.setOnAction(event -> handleHandleRequestAction(event));
+        back.setOnAction(event -> handleBack(event));
         TreeItem<String> rootItem = new TreeItem<>("Hello " + user.getUsername() );
-        rootItem.setExpanded(true); // Mở rộng TreeView mặc định
+        rootItem.setExpanded(false); // Mở rộng TreeView mặc định
 
         // Tạo các mục con
         TreeItem<String> logoutItem = new TreeItem<>("Logout");
@@ -40,6 +42,8 @@ public class menucontroller extends admincontroller {
         // Tạo TreeView
 //        TreeView<String> miniBar = new TreeView<>(rootItem);
         miniBar.setRoot(rootItem);
+        miniBar.setShowRoot(true);
+        miniBar.getStyleClass().add("tree-view");
         // Thêm sự kiện khi click vào các mục
         miniBar.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
             if (newValue != null) {
@@ -81,4 +85,7 @@ public class menucontroller extends admincontroller {
         displayScene(event, "HandleRequest.fxml");
     }
 
+    public void handleBack(ActionEvent event) {
+        controller.undo();
+    }
 }

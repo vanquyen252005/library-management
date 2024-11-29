@@ -33,6 +33,7 @@
                <children>
                   <TableView fx:id="bookTable" prefHeight="349.0" prefWidth="826.0" styleClass="table-view" visible="false" />
                </children></VBox>
+            <Button fx:id="back" layoutX="73.0" layoutY="607.0" mnemonicParsing="false" onAction="#handleBack" text="Quay lại" />
          </children>
       </AnchorPane>
       <VBox layoutY="99.0" prefHeight="699.0" prefWidth="250" styleClass="sidebar" AnchorPane.bottomAnchor="-9.200000000000045">

@@ -240,8 +240,19 @@
 /* TreeView */
 .tree-view {
     -fx-font-size: 14px;
-    -fx-background-color: #ffffff;
-    -fx-border-color: #a5d6a7;
-    -fx-border-width: 1px;
-    -fx-padding: 10px;
+   -fx-background-color: transparent; /* Loại bỏ nền */
+   -fx-control-inner-background: transparent; /* Loại bỏ nền bên trong */
+   -fx-padding: 0; /* Bỏ padding (nếu cần) */
+}
+.tree-cell .tree-disclosure-node {
+    -fx-background-color: transparent; /* Làm nền của nút trong suốt */
+}
+
+.tree-cell .tree-disclosure-node > .arrow {
+    -fx-background-color: transparent; /* Làm trong suốt mũi tên */
+    -fx-stroke: #000; /* Màu của mũi tên */
+    -fx-stroke-width: 2; /* Độ dày mũi tên */
+}
+.tree-cell:expanded {
+    -fx-background-color: lightblue; /* Thêm nền màu khi mở rộng */
 }
