@@ -17,7 +17,7 @@
         <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
             <Button fx:id="homeButton" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#home" prefHeight="41.0" prefWidth="188.0" styleClass=".btn_workbench" text="Home" />
             <Button fx:id="profileButton" layoutX="12.0" layoutY="376.0" mnemonicParsing="false" onAction="#Profile" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Profile" />
-            <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handlerequest" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
+            <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleRequest" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
         </Pane>
       <ScrollPane fx:id="scrollPane" layoutX="276.0" layoutY="231.0" prefHeight="541.0" prefWidth="872.0">
         <content>

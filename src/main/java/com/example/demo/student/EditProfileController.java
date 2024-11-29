@@ -50,6 +50,7 @@ public class EditProfileController extends ProfileController {
         System.out.println("Class: " + className);
 
         // TODO: Implement database save logic
+        //user.updateUserProfile(user.getId(), username,name, phone,className);
         user.updateUserProfile(user.getId(), username,name, phone,className);
     }
 

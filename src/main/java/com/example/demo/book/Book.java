@@ -6,8 +6,6 @@ import javafx.scene.image.ImageView;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,7 +16,7 @@ public class Book {
     private String Publisher;
     private String PublishYear;
     private String Image;
-    private static ConnectDB Request = ConnectDB.getInstance();
+    private static Database Request = Database.getInstance();
     public Book() {
     }
 

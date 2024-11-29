@@ -4,7 +4,6 @@ package com.example.demo.book;
 import com.example.demo.student.menuController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -12,14 +11,12 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import com.example.demo.student.Student;
 
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 
 public class BookDetailController extends menuController{
@@ -68,7 +65,7 @@ public class BookDetailController extends menuController{
 
     public static String ISBN;
 
-    private Database BookDatabase = new Database();
+    private Database BookDatabase = Database.getInstance();
 
     private BookQR bookQR = new BookQR();
 

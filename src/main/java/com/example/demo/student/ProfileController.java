@@ -26,9 +26,10 @@ import java.util.Objects;
 import static java.lang.Integer.parseInt;
 
 
-public class ProfileController extends studentcontroller{
+public class ProfileController extends menuController {
     public AnchorPane rootPane;
     public Button back;
+    protected Student user = studentcontroller.getStudent();
     @FXML
     private Button editProfileButton;
     @FXML
@@ -87,11 +88,11 @@ public class ProfileController extends studentcontroller{
         userInfoTable.setItems(userInfoList);
     }
 
-
     private void loadBorrowedBooks() {
         ObservableList<BookInfo> bookInfoList = FXCollections.observableArrayList();
 
         ArrayList<Book_borrowed> list = new ArrayList<>();
+
         list = user.getBorrowingBook();
         for (Book_borrowed x:list) {
             bookInfoList.add(new BookInfo(
@@ -175,4 +176,5 @@ public class ProfileController extends studentcontroller{
             return returnDate;
         }
     }
+
 }

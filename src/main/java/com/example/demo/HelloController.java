@@ -24,7 +24,16 @@ public class HelloController{
     @FXML
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
+<<<<<<< Updated upstream
 //            System.out.println("hehe"+getClass().getResource(fxmlLink));
+=======
+//<<<<<<< Updated upstream
+//=======
+            // Đảm bảo đường dẫn đầy đủ
+            System.out.println("curClass:" + getClass());
+            System.out.println("FXML Path: " + getClass().getResource(fxmlLink));
+//>>>>>>> Stashed changes
+>>>>>>> Stashed changes
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
             stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);

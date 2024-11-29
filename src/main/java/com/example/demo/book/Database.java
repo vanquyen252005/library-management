@@ -1,97 +1,92 @@
 package com.example.demo.book;
 
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Database {
-
+    private static Database instance;
+    private Connection connection;
     private static final String URL = "jdbc:mysql://localhost:3306/bookdb";
     private static final String USER = "root";
     private static final String PASSWORD = "123456";
-    private ApiService API;
 
-    public static Connection getConnection() {
+    private Database() {
         try {
-            System.out.println("get connected success to database");
-            return DriverManager.getConnection(URL, USER, PASSWORD);
+            connection = DriverManager.getConnection(URL, USER, PASSWORD);
+            System.out.println("Connected to the database successfully!");
         } catch (SQLException e) {
             e.printStackTrace();
-            return null;
         }
     }
 
-    public boolean isExistImage(String Image_Link, ImageView imageView) {
-        try {
-            java.net.URL url = new URL(Image_Link);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36");
-            connection.connect();
-
-            int responseCode = connection.getResponseCode();
-            if (responseCode == HttpURLConnection.HTTP_OK) {
-                InputStream input = connection.getInputStream();
-                Image image = new Image(input);
-                imageView.setImage(image);
-
-                if(imageView.getImage() == null || ( imageView.getFitWidth() < 50 && imageView.getFitHeight() < 50)) {
-                    System.out.println("reject getting image");
-                    System.out.println(imageView.getFitWidth());
-                    return false;
-                }
-                return true;
-            } else {
-                System.err.println("Error loading image: Server returned HTTP response code: " + responseCode);
-            }
-        } catch (Exception e) {
-            System.err.println("Error loading image: " + e.getMessage());
+    public static synchronized Database getInstance() {
+        if (instance == null) {
+            instance = new Database();
         }
-
-        return true;
+        return instance;
     }
 
-    public List<Book> searchDocuments(String keyword) {
+    public Connection getConnection() {
+        return connection;
+    }
+
+    public String generateISBN() {
+        StringBuilder ISBN = new StringBuilder();
+        Random rand = new Random();
+        for (int i = 0; i < 10; i++) {
+            ISBN.append(rand.nextInt(10));
+        }
+        return ISBN.toString();
+    }
+
+    public boolean addDocument(String title, String author, String publishYear, String publisher, String imgUrl) {
+        String sql = "INSERT INTO books (ISBN, Title, Author, PublishYear, Publisher,`Image-URL-M`) VALUES (?, ?, ?, ?, ?, ?)";
+        String ISBN = generateISBN();
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, ISBN);
+            pstmt.setString(2, title);
+            pstmt.setString(3, author);
+            pstmt.setString(4, publishYear);
+            pstmt.setString(5, publisher);
+            pstmt.setString(6, imgUrl);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    public void addDocument(String title, String author, String publishYear, String publisher) {
+        String sql = "INSERT INTO books (ISBN, Title, Author, PublishYear, Publisher) VALUES (?, ?, ?, ?, ?)";
+        String ISBN = generateISBN();
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, ISBN);
+            pstmt.setString(2, title);
+            pstmt.setString(3, author);
+            pstmt.setString(4, publishYear);
+            pstmt.setString(5, publisher);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public List<Book> searchDocumentsDBSingleColumn(String column, String keyword) {
         List<Book> books = new ArrayList<>();
-        String sql;
+        String sql = "SELECT * FROM books WHERE " + column + " LIKE ? ORDER BY rating DESC LIMIT 80";
 
-        // If keyword is empty, fetch top-rated books
-        if (keyword == null || keyword.trim().isEmpty()) {
-            sql = "SELECT * FROM books ORDER BY rating DESC LIMIT 50";
-        } else {
-            // If keyword is provided, search by Title or Author, then order by rating
-            sql = "SELECT * FROM books WHERE Title LIKE ? ORDER BY rating DESC LIMIT 50";
-        }
+        try (
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
-        try (Connection conn = Database.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            // Set parameters only if keyword is not empty
-            if (keyword != null && !keyword.trim().isEmpty()) {
-                pstmt.setString(1, "%" + keyword + "%");
-            }
+            pstmt.setString(1, "%" + keyword + "%");
 
             System.out.println("Executing query: " + pstmt.toString());
 
             ResultSet rs = pstmt.executeQuery();
-            if (!rs.isBeforeFirst()) {
-                System.out.println("No data returned from database so trying to testing api source.");
-                List<Book> sample = API.searchBooks(keyword);
-                for(Book b : sample) books.add(b);
-                if(books.size() == 0) {
-                    System.out.println("No data returned from API");
-                }
-            }
-
             while (rs.next()) {
-                ImageView imageView = new ImageView();
-                //if(isExistImage(rs.getString("Image-URL-M"),  imageView)) {
                 books.add(new Book(
                         rs.getString("ISBN"),
                         rs.getString("Title"),
@@ -100,7 +95,81 @@ public class Database {
                         rs.getString("PublishYear"),
                         rs.getString("Image-URL-M")
                 ));
-                // }
+            }
+        } catch (SQLException e) {
+            System.out.println("SQL exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return books;
+    }
+    public List<Book> searchDocuments(String keyword) {
+        List<Book> books = new ArrayList<>();
+        String sql;
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            sql = "SELECT * FROM books ORDER BY rating DESC LIMIT 80";
+        } else {
+            sql = "SELECT * FROM books WHERE Title LIKE ? OR Author LIKE ? ORDER BY rating DESC LIMIT 80";
+        }
+
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                pstmt.setString(1, "%" + keyword + "%");
+                pstmt.setString(2, "%" + keyword + "%");
+            }
+
+            System.out.println("Executing query: " + pstmt);
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                books.add(new Book(
+                        rs.getString("ISBN"),
+                        rs.getString("Title"),
+                        rs.getString("Author"),
+                        rs.getString("Publisher"),
+                        rs.getString("PublishYear"),
+                        rs.getString("Image-URL-M")
+                ));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return books;
+    }
+    public List<Book> searchDocumentsDB(String keyword) {
+        List<Book> books = new ArrayList<>();
+        String sql;
+
+        // If keyword is empty, fetch top-rated books
+        if (keyword == null || keyword.trim().isEmpty()) {
+            sql = "SELECT * FROM books ORDER BY rating DESC LIMIT 1000";
+        } else {
+            // If keyword is provided, search by Title or Author, then order by rating
+            sql = "SELECT * FROM books WHERE Title LIKE ? OR Author LIKE ? ORDER BY rating DESC LIMIT 1000";
+        }
+
+        try (
+                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+            // Set parameters only if keyword is not empty
+            if (keyword != null && !keyword.trim().isEmpty()) {
+                pstmt.setString(1, "%" + keyword + "%");
+                pstmt.setString(2, "%" + keyword + "%");
+            }
+
+            System.out.println("Executing query: " + pstmt.toString());
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                books.add(new Book(
+                        rs.getString("ISBN"),
+                        rs.getString("Title"),
+                        rs.getString("Author"),
+                        rs.getString("Publisher"),
+                        rs.getString("PublishYear"),
+                        rs.getString("Image-URL-M")
+                ));
+
             }
             System.out.println("Finishing getting book list");
 
@@ -115,13 +184,111 @@ public class Database {
         System.out.println("Returning book list with size: " + books.size());
         return books;
     }
+    public List<Book> searchDocumentsAPI(String keyword) {
+        ArrayList<Book> books = new ArrayList<>();
+        System.out.println("No data returned from database so trying to testing api source.");
+        List<Book> sample = ApiService.searchBooks(keyword);
+        for(Book b : sample) books.add(b);
+        if(books.size() == 0) {
+            System.out.println("No data returned from API");
+        }
+        return books;
+    }
+    public boolean editDocument(String ISBN, String newTitle, String newAuthor, String newPublisher, String newPublishYear, String imgUrl) {
+        String selectSql = "SELECT title, author, publisher, publishYear, `Image-URL-M` FROM books WHERE ISBN = ?";
+        String updateSql = "UPDATE books SET title = ?, author = ?, publisher = ?, publishYear = ?, `Image-URL-M` = ?  WHERE ISBN = ?";
+        try (
+                PreparedStatement selectStmt = connection.prepareStatement(selectSql);
+                PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+
+            // Truy vấn dữ liệu hiện tại
+            selectStmt.setString(1, ISBN);
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                // Kiểm tra và giữ giá trị cũ nếu trường mới rỗng
+                String currentTitle = rs.getString("title");
+                String currentAuthor = rs.getString("author");
+                String currentPublisher = rs.getString("publisher");
+                String currentPublishYear = rs.getString("publishYear");
+
+                if (newTitle == null || newTitle.isEmpty()) {
+                    newTitle = currentTitle;
+                }
+                if (newAuthor == null || newAuthor.isEmpty()) {
+                    newAuthor = currentAuthor;
+                }
+                if (newPublisher == null || newPublisher.isEmpty()) {
+                    newPublisher = currentPublisher;
+                }
+                if (newPublishYear == null || newPublishYear.isEmpty()) {
+                    newPublishYear = currentPublishYear;
+                }
+
+                // Thực hiện cập nhật
+                updateStmt.setString(1, newTitle);
+                updateStmt.setString(2, newAuthor);
+                updateStmt.setString(3, newPublisher);
+                updateStmt.setString(4, newPublishYear);
+                updateStmt.setString(5, imgUrl);
+                updateStmt.setString(6, ISBN);
+
+                updateStmt.executeUpdate();
+                return true;
+            } else {
+                System.out.println("No record found with the provided ISBN.");
+            }
+
+        } catch (SQLException e) {
+            System.out.println("SQL exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
+    }
+    public void editDocument(String ISBN, String newTitle, String newAuthor, String newPublisher, String newPublishYear) {
+        String selectSql = "SELECT title, author, publisher, publishYear FROM books WHERE ISBN = ?";
+        String updateSql = "UPDATE books SET title = ?, author = ?, publisher = ?, publishYear = ? WHERE ISBN = ?";
+        try (PreparedStatement selectStmt = connection.prepareStatement(selectSql);
+             PreparedStatement updateStmt = connection.prepareStatement(updateSql)) {
+
+            selectStmt.setString(1, ISBN);
+            ResultSet rs = selectStmt.executeQuery();
+
+            if (rs.next()) {
+                newTitle = (newTitle == null || newTitle.isEmpty()) ? rs.getString("title") : newTitle;
+                newAuthor = (newAuthor == null || newAuthor.isEmpty()) ? rs.getString("author") : newAuthor;
+                newPublisher = (newPublisher == null || newPublisher.isEmpty()) ? rs.getString("publisher") : newPublisher;
+                newPublishYear = (newPublishYear == null || newPublishYear.isEmpty()) ? rs.getString("publishYear") : newPublishYear;
+
+                updateStmt.setString(1, newTitle);
+                updateStmt.setString(2, newAuthor);
+                updateStmt.setString(3, newPublisher);
+                updateStmt.setString(4, newPublishYear);
+                updateStmt.setString(5, ISBN);
+                updateStmt.executeUpdate();
+            } else {
+                System.out.println("No record found with the provided ISBN.");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public void deleteDocument(String ISBN) {
+        String sql = "DELETE FROM books WHERE ISBN = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, ISBN);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Book getBookByISBN(String isbn) {
         Book book = null;
         String sql = "SELECT * FROM books WHERE ISBN = ?";
 
-        try (Connection conn = Database.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try ( PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             pstmt.setString(1, isbn);
 
@@ -154,8 +321,7 @@ public class Database {
         String query = "INSERT INTO request_borrow_book (book_id, user_id, status) VALUES (?, ?, 'pending')";
 
         // Tạo kết nối cơ sở dữ liệu
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setString(1, ISBN);  // Gán giá trị cho book_id
             preparedStatement.setInt(2, Integer.parseInt(userID));  // Gán giá trị cho user_id
@@ -179,8 +345,7 @@ public class Database {
         String status = "";
         String query = "SELECT status FROM request_borrow_book WHERE user_id = ? AND book_id = ? ORDER BY request_date DESC LIMIT 1";
 
-        try (Connection connection = getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
 
             preparedStatement.setInt(1, userID); // Gán user_id
             preparedStatement.setString(2, ISBN); // Gán book_id (ISBN)
@@ -198,27 +363,6 @@ public class Database {
         return status;
     }
 
-//    public List<BookDetailController.Comment> getCommentsByISBN(String isbn) {
-//        List<BookDetailController.Comment> comments = new ArrayList<>();
-//        String query = "SELECT author, text FROM comments WHERE isbn = ?";
-//
-//        try (Connection connection = getConnection();
-//             PreparedStatement statement = connection.prepareStatement(query)) {
-//
-//            statement.setString(1, isbn);
-//            ResultSet resultSet = statement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                String author = resultSet.getString("author");
-//                String text = resultSet.getString("text");
-//                comments.add(new BookDetailController.Comment(text, author));
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return comments;
-//    }
 
     public List<Comment> GetCommentList(String ISBN) {
         List<Comment> commentList = new ArrayList<>();
@@ -226,8 +370,7 @@ public class Database {
         // Truy vấn để lấy danh sách các bình luận
         String query = "SELECT id, book_id, user_id, content, created_at FROM book_comments WHERE book_id = ? AND parent_comment_id is null ";
 
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
             // Thiết lập tham số bookId
             stmt.setString(1,ISBN);
@@ -253,72 +396,27 @@ public class Database {
         return commentList;
     }
 
-//    public void PostCommentForBook(String Content, String ISBN, int user_id) {
-//        String query = "INSERT INTO book_comments (book_id, user_id, content, parent_comment_id) VALUES (?, ?, ?, NULL)";
-//
-//        try (Connection connection = getConnection();
-//             PreparedStatement stmt = connection.prepareStatement(query)) {
-//
-//            // Gán giá trị cho các tham số trong câu truy vấn
-//            stmt.setString(1, ISBN); // Gán giá trị ISBN để tìm book_id
-//            stmt.setInt(2, user_id); // Gán user_id
-//            stmt.setString(3, Content); // Gán nội dung của bình luận (Content)
-//
-//            // Thực thi truy vấn
-//            int rowsInserted = stmt.executeUpdate();
-//            if (rowsInserted > 0) {
-//                System.out.println("Comment successfully added for ISBN: " + ISBN);
-//            } else {
-//                System.out.println("Failed to add comment for ISBN: " + ISBN);
-//            }
-//        } catch (SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     public void PostCommentForBook(String Content, String ISBN, int user_id) {
-        // Step 1: Get the book_id corresponding to the ISBN
-        String getBookIdQuery = "SELECT ISBN FROM books WHERE ISBN = ?";
+        String query = "INSERT INTO book_comments (book_id, user_id, content, parent_comment_id) VALUES (?, ?, ?, NULL)";
 
-        try (Connection connection = getConnection();
-             PreparedStatement getBookIdStmt = connection.prepareStatement(getBookIdQuery)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
-            getBookIdStmt.setString(1, ISBN); // Set the ISBN parameter
+            // Gán giá trị cho các tham số trong câu truy vấn
+            stmt.setString(1, ISBN); // Gán giá trị ISBN để tìm book_id
+            stmt.setInt(2, user_id); // Gán user_id
+            stmt.setString(3, Content); // Gán nội dung của bình luận (Content)
 
-            ResultSet rs = getBookIdStmt.executeQuery();
-
-            // If the ISBN exists, fetch the book_id
-            if (rs.next()) {
-                String bookId = rs.getString("ISBN");
-
-                // Step 2: Insert the comment with the book_id
-                String insertCommentQuery = "INSERT INTO book_comments (book_id, user_id, content, parent_comment_id) VALUES (?, ?, ?, NULL)";
-
-                try (PreparedStatement stmt = connection.prepareStatement(insertCommentQuery)) {
-                    stmt.setString(1, ISBN);  // Set the book_id obtained from the first query
-                    stmt.setInt(2, user_id);    // Set the user_id
-                    stmt.setString(3, Content); // Set the comment content
-
-                    // Execute the insert query
-                    int rowsInserted = stmt.executeUpdate();
-                    if (rowsInserted > 0) {
-                        System.out.println("Comment successfully added for ISBN: " + ISBN);
-                    } else {
-                        System.out.println("Failed to add comment for ISBN: " + ISBN);
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-
+            // Thực thi truy vấn
+            int rowsInserted = stmt.executeUpdate();
+            if (rowsInserted > 0) {
+                System.out.println("Comment successfully added for ISBN: " + ISBN);
             } else {
-                System.out.println("No book found with ISBN: " + ISBN);
+                System.out.println("Failed to add comment for ISBN: " + ISBN);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
     }
-
-
 
     public List<Comment> GetChildrenCommentList(int parent_id) {
         List<Comment> commentList = new ArrayList<>();
@@ -326,8 +424,7 @@ public class Database {
         // Truy vấn để lấy danh sách các bình luận
         String query = "SELECT id, book_id, user_id, content, created_at FROM book_comments WHERE parent_comment_id = ? ";
 
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
             // Thiết lập tham số bookId
             stmt.setInt(1,parent_id);
@@ -357,7 +454,7 @@ public class Database {
 
         String query = "SELECT COUNT(*) FROM book_borrowed WHERE user_id = ? AND book_id = ? ";
 
-        try (Connection connection = getConnection(); PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
             // Thiết lập tham số bookId
             stmt.setInt(1, user_id);
@@ -380,8 +477,7 @@ public class Database {
         // Define the SQL query to delete the request
         String query = "DELETE FROM request_borrow_book WHERE user_id = ? AND book_id = ?";
 
-        try (Connection connection = getConnection();
-             PreparedStatement stmt = connection.prepareStatement(query)) {
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
 
             // Set the parameters for the query
             stmt.setInt(1, user_id);
@@ -403,6 +499,7 @@ public class Database {
     }
 
 
-}
 
+
+}
 
