@@ -23,7 +23,7 @@ public class admin extends User  {
                     super.setPassword(resultSet.getString("password"));
                     super.setName(resultSet.getString("name"));
                     super.setRole(resultSet.getString("role"));
-                    super.setPhone(resultSet.getString("phone")); // Chuyển đổi kiểu nếu cần
+                    super.setPhone(resultSet.getString("phone"));
                     return true;
                 }
 

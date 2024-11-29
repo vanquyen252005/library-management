@@ -18,6 +18,7 @@
             <Label fx:id="authorLabel" layoutX="346.0" layoutY="138.0" prefHeight="18.0" prefWidth="63.0" text="Author:" />
             <Button fx:id="BookQR" layoutX="712.0" layoutY="79.0" mnemonicParsing="false" onAction="#ClickBookQR" text="Book QR" />
             <Label fx:id="titleLabel" layoutX="346.0" layoutY="76.0" prefHeight="50.0" prefWidth="123.0" text="Title:" />
+            <Button fx:id="back" layoutX="73.0" layoutY="638.0" mnemonicParsing="false" onAction="#handleBack" text="Quay lại" />
          </children>
       </AnchorPane>
       <VBox layoutY="99.0" prefHeight="699.0" prefWidth="250" styleClass="sidebar" AnchorPane.bottomAnchor="-9.200000000000045">
@@ -32,7 +33,7 @@
       <TreeView fx:id="miniBar" layoutX="1010.0" layoutY="30.0" prefHeight="100.0" prefWidth="160.0" />
       <ImageView fx:id="bookImageView" fitHeight="279.0" fitWidth="241.0" layoutX="304.0" layoutY="176.0" />
       <ImageView fx:id="QRImageView" fitHeight="279.0" fitWidth="200.0" layoutX="904.0" layoutY="194.0" pickOnBounds="true" preserveRatio="true" />
-      <ScrollPane layoutX="303.0" layoutY="482.0" prefHeight="296.0" prefWidth="882.0">
+      <ScrollPane layoutX="304.0" layoutY="400.0" prefHeight="296.0" prefWidth="882.0">
          <content>
             <AnchorPane fx:id="CommentView" prefHeight="286.0" prefWidth="970.0">
                <children>

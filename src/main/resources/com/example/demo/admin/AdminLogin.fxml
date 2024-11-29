@@ -15,7 +15,7 @@
       <Label layoutX="381.0" layoutY="185.0" text="Username:" />
       <Label layoutX="383.0" layoutY="226.0" text="Password:" />
       <Button layoutX="617.0" layoutY="287.0" mnemonicParsing="false" onAction="#login" text="Submit" />
-      <Hyperlink layoutX="497.0" layoutY="287.0" text="Return main " />
+      <Hyperlink layoutX="497.0" layoutY="287.0" onAction="#handleBack" text="Return main " />
       <Label fx:id="loginFailLabel" contentDisplay="CENTER" layoutX="488.0" layoutY="329.0" text="Wrong username or password!" textFill="#ec1b1b" visible="false" />
    </children>
 </AnchorPane>

@@ -1,5 +1,9 @@
 package com.example.demo;
 
+import com.example.demo.DesignPattern.Command.Command;
+import com.example.demo.DesignPattern.Command.ConcreteCommand;
+import com.example.demo.DesignPattern.Command.NavigationController;
+import com.example.demo.DesignPattern.Command.NavigationSystem;
 import com.example.demo.admin.admin;
 import com.example.demo.admin.admincontroller;
 import com.example.demo.student.Student;
@@ -7,29 +11,36 @@ import com.example.demo.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.*;
-import java.util.Objects;
 
 public class HelloController{
     protected Stage stage;
     protected Scene scene;
     protected AnchorPane root;
     protected static User user1 = null;
+    protected NavigationSystem navigationSystem = new NavigationSystem(HelloApplication.getPrimaryStage());
+    protected static NavigationController controller = new NavigationController();
     @FXML
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
-//            System.out.println("hehe"+getClass().getResource(fxmlLink));
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
-            stage = (Stage)((Node)event.getSource()).getScene().getWindow();
             scene = new Scene(root);
-            stage.setScene(scene);
-            stage.show();
+
+            Command switchToScence = new ConcreteCommand(navigationSystem, scene);
+            controller.executeCommand(switchToScence);
+//            System.out.println("hehe"+getClass().getResource(fxmlLink));
+//            root = FXMLLoader.load(getClass().getResource(fxmlLink));
+//            stage = HelloApplication.getPrimaryStage();
+//            scene = new Scene(root);
+//            Command switchToScence = new ConcreteCommand(navigationSystem, scene);
+//            controller.executeCommand(switchToScence);
+//            stage.setScene(scene);
+//            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -84,16 +95,24 @@ public class HelloController{
             System.out.println("kdoaljdoids");
             user1 = HelloController.readAdmin("log.txt");
             admincontroller.user = (admin) user1;
-            System.out.println(user1.getRole());
+//            System.out.println(user1.getRole());
         }
     }
     @FXML
     protected void AdminLogin(ActionEvent event) {
-        if (user1 != null && user1 instanceof admin ) {
-            System.out.println('#' + user1.getRole());
+        try{
+            if (user1 != null && user1 instanceof admin ) {
+//                System.out.println('#' + user1.getRole());
+//                root = FXMLLoader.load(getClass().getResource("admin/menu.fxml"));
+//                scene = new Scene(root);
+//                Command switchToScence = new ConcreteCommand(navigationSystem, scene);
+//                controller.executeCommand(switchToScence);
             displayScene(event, "admin/menu.fxml");
-        } else {
-            displayScene(event,"admin/AdminLogin.fxml");
+            } else {
+                displayScene(event,"admin/AdminLogin.fxml");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
     @FXML

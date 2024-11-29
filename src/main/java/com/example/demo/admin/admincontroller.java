@@ -14,22 +14,17 @@ public class admincontroller extends HelloController {
     private PasswordField password;
     @FXML
     private Label loginFailLabel;
-    public static admin user = null;
+    public static admin user = new admin();
 
     @FXML
     @Override
     public void initialize() {
         super.initialize();
-        user = new admin();
-        if (user1 != null) {
-            user = (admin)user1;
-        }
     }
 
     public void login(ActionEvent event) {
         //System.out.println(username);
        if (user.login(username.getText(), password.getText())) {
-//           user = (admin)user1;
             HelloController.writeAdmin( user,"log.txt");
             displayScene(event, "menu.fxml");
         }
@@ -38,5 +33,9 @@ public class admincontroller extends HelloController {
 //            displayScene(event, "Admin/StudentLogin.fxml");
 //            System.out.println("nah");
         }
+    }
+
+    public void handleBack(ActionEvent event) {
+        controller.undo();
     }
 }

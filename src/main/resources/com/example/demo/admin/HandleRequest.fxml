@@ -24,6 +24,7 @@
             </VBox>
             <Button fx:id="accept" layoutX="557.0" layoutY="618.0" mnemonicParsing="false" onAction="#acceptRequest" text="Accept" />
             <Button layoutX="671.0" layoutY="618.0" mnemonicParsing="false" onAction="#declineRequest" text="Decline" />
+            <Button fx:id="back" layoutX="73.0" layoutY="607.0" mnemonicParsing="false" onAction="#handleBack" text="Quay lại" />
          </children></AnchorPane>
       <VBox layoutY="99.0" prefHeight="699.0" prefWidth="250" styleClass="sidebar" AnchorPane.bottomAnchor="-9.200000000000045">
          <children>
