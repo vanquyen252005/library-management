@@ -20,25 +20,15 @@ public class menucontroller extends admincontroller {
     @FXML
     protected Button manageBook;
     @FXML
-    protected Button search;
-    @FXML
     protected Button handleRequest;
 
     @FXML
     public void initialize() {
-        // Thiết lập ActionListener cho các nút
-        if (user1 != null) {
-            user = new admin(user1.getId(), user1.getUsername(),
-                    user1.getPassword(), user1.getName(),
-                    user1.getRole(), user1.getPhone());
-        }
         home.setOnAction(event -> handleHomeAction(event));
         manageStudent.setOnAction(event -> handleManageStudentAction(event));
         manageBook.setOnAction(event -> handleManageBookAction(event));
-        search.setOnAction(event -> handleSearchAction(event));
         handleRequest.setOnAction(event -> handleHandleRequestAction(event));
-
-        TreeItem<String> rootItem = new TreeItem<>("Hello " );
+        TreeItem<String> rootItem = new TreeItem<>("Hello " + user.getUsername() );
         rootItem.setExpanded(true); // Mở rộng TreeView mặc định
 
         // Tạo các mục con
@@ -88,12 +78,8 @@ public class menucontroller extends admincontroller {
         displayScene(event, "ManageBook.fxml");
     }
 
-    public void handleSearchAction(ActionEvent event) {
-        displayScene(event, "menu.fxml");
-    }
-
     public void handleHandleRequestAction(ActionEvent event) {
-        displayScene(event, "menu.fxml");
+        displayScene(event, "HandleRequest.fxml");
     }
 
 }

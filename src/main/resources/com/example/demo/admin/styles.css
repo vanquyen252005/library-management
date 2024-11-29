@@ -1,0 +1,247 @@
+/* Header */
+.header {
+    -fx-background-color: #81C784; /* Màu nền header xanh lá sáng */
+    -fx-padding: 10px;
+    -fx-background-radius: 10px 10px 0 0; /* Bo tròn các góc trên */
+}
+
+.header-title {
+    -fx-font-size: 24px;
+    -fx-text-fill: #ffffff; /* Màu chữ trắng */
+    -fx-font-weight: bold;
+}
+
+.header-button {
+    -fx-background-color: #66BB6A; /* Màu nền nút xanh lá sáng */
+    -fx-text-fill: #ffffff; /* Màu chữ trắng */
+    -fx-border-color: transparent;
+    -fx-font-size: 14px;
+    -fx-padding: 5px 15px;
+    -fx-background-radius: 5px; /* Bo tròn các góc */
+}
+
+.header-button:hover {
+    -fx-background-color: #81C784; /* Màu nền khi hover (xanh lá sáng) */
+}
+
+/* Sidebar */
+.sidebar {
+    -fx-background-color: #C8E6C9; /* Nền xanh lá nhạt */
+    -fx-spacing: 10px;
+    -fx-padding: 20px;
+    -fx-background-radius: 15px 0 0 15px; /* Bo tròn các góc bên trái */
+}
+
+/* Các nút trong sidebar */
+.sidebar-button {
+    -fx-background-color: #81C784; /* Nền xanh lá sáng */
+    -fx-text-fill: #ffffff; /* Màu chữ trắng */
+    -fx-font-size: 16px;
+    -fx-pref-width: 200px;
+    -fx-padding: 10px 20px;
+    -fx-border-width: 0;
+    -fx-background-radius: 10px; /* Bo tròn các góc */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 2, 2);
+}
+
+.sidebar-button:hover {
+    -fx-background-color: #66BB6A; /* Màu nền khi hover (xanh lá nhạt) */
+}
+
+/* Styling for selected sidebar button */
+.sidebar-button:selected {
+    -fx-background-color: #66BB6A; /* Màu nền khi nút được chọn */
+}
+
+/* Styling cho Sidebar khi tác vụ đang thực thi */
+.sidebar-button:focused {
+    -fx-background-color: #66BB6A; /* Màu nền khi tác vụ đang được chọn */
+    -fx-font-weight: bold;
+}
+
+/* Khi sidebar có nút được chọn */
+.sidebar-button:active {
+    -fx-background-color: #66BB6A; /* Màu nền khi nút đang hoạt động */
+    -fx-font-weight: bold;
+}
+
+/* Main Content */
+.content {
+    -fx-background-color: #F1F8E9; /* Nền sáng cho khu vực nội dung */
+    -fx-padding: 20px;
+    -fx-background-radius: 0 15px 15px 0; /* Bo tròn các góc dưới bên phải */
+}
+
+.content-title {
+    -fx-font-size: 20px;
+    -fx-text-fill: #333333; /* Màu chữ tối */
+    -fx-font-weight: bold;
+}
+
+/* TableView */
+.content-table {
+    -fx-background-color: #ffffff; /* Nền trắng cho bảng */
+    -fx-border-color: #C8E6C9; /* Màu viền nhẹ */
+    -fx-border-width: 1px;
+    -fx-spacing: 5px;
+    -fx-background-radius: 10px; /* Bo tròn các góc bảng */
+}
+
+.content-table .table-column-header {
+    -fx-background-color: #66BB6A; /* Màu nền tiêu đề bảng (xanh lá sáng) */
+    -fx-text-fill: #ffffff; /* Màu chữ trắng */
+    -fx-font-size: 16px;
+}
+
+.content-table .table-cell {
+    -fx-font-size: 14px;
+    -fx-text-fill: #333333; /* Màu chữ tối cho bảng */
+    -fx-padding: 10px;
+}
+
+/* Styling TableView */
+.table-view {
+    -fx-background-color: #F1F8E9; /* Nền sáng cho bảng */
+    -fx-border-color: #C8E6C9; /* Màu viền nhẹ */
+    -fx-border-width: 1px;
+    -fx-selection-bar: #81C784; /* Màu sắc thanh chọn của bảng */
+    -fx-background-radius: 10px; /* Bo tròn các góc bảng */
+}
+
+/* Custom Scroll Bars for TableView */
+.table-view .scroll-bar {
+    -fx-background-color: #F1F8E9; /* Nền sáng cho thanh cuộn */
+}
+
+.table-view .scroll-bar .thumb {
+    -fx-background-color: #81C784; /* Màu của thanh cuộn */
+}
+
+/* Màu sắc khi nút được chọn */
+.sidebar-button.selected {
+    -fx-background-color: #66BB6A; /* Màu nền khi nút được chọn (xanh lá nhạt) */
+    -fx-font-weight: bold; /* Làm chữ đậm khi chọn */
+}
+.create-button {
+    -fx-background-color: #FFD700; /* Màu vàng */
+    -fx-text-fill: #333333; /* Màu chữ tối để dễ đọc */
+    -fx-font-size: 14px;    /* Kích thước font chữ */
+    -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+    -fx-pref-height: 30;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+    -fx-border-color: transparent; /* Xóa viền mặc định */
+    -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
+}
+
+/* Đổi màu nền khi hover */
+.create-button:hover {
+    -fx-background-color: #FFC107; /* Màu vàng nhạt hơn khi hover */
+}
+
+.search-button {
+    -fx-background-color: #4CAF50; /* Màu vàng */
+    -fx-text-fill: #ffffff; /* Màu chữ tối để dễ đọc */
+    -fx-font-size: 14px;    /* Kích thước font chữ */
+    -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+    -fx-pref-height: 30;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+    -fx-border-color: transparent; /* Xóa viền mặc định */
+    -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
+}
+
+/* Đổi màu nền khi hover */
+.search-button:hover {
+    -fx-background-color: #45a049; /* Màu vàng nhạt hơn khi hover */
+}
+/* Đặt màu nền và kiểu cho VBox */
+.vbox {
+    -fx-background-color: #ffffff;  /* Nền trắng cho VBox */
+    -fx-border-color: #cccccc;      /* Màu viền xám nhẹ */
+    -fx-border-width: 1px;          /* Độ dày viền */
+    -fx-padding: 10px;               /* Khoảng cách giữa nội dung và viền */
+    -fx-spacing: 10px;               /* Khoảng cách giữa các phần tử trong VBox */
+}
+
+/* Đặt kiểu cho TableView */
+.table-view {
+    -fx-background-color: #ffffff;  /* Màu nền trắng cho TableView */
+    -fx-border-color: #cccccc;      /* Màu viền xám nhẹ */
+    -fx-border-width: 1px;          /* Độ dày viền */
+    -fx-pref-width:700px;         /* Chiều rộng cố định cho TableView */
+    -fx-selection-bar: #2196F3;     /* Màu của thanh chọn khi chọn dòng */
+}
+
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-id-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:50px;
+}
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-username-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:100px;
+}
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-name-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:150px;
+}
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-class-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:150px;
+}
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-detail-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:250px;
+}
+
+/* Ẩn TableView khi cần */
+.table-view[visible="false"] {
+    -fx-opacity: 0; /* Ẩn TableView */
+}
+/* Đặt màu nền đỏ và chữ trắng cho nút "Delete" */
+.delete-button {
+    -fx-background-color: #FF4C4C; /* Màu nền đỏ */
+    -fx-text-fill: #ffffff;        /* Màu chữ trắng */
+  -fx-font-size: 14px;    /* Kích thước font chữ */
+     -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+     -fx-pref-height: 30;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+     -fx-border-color: transparent; /* Xóa viền mặc định */
+     -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
+}
+
+/* Đổi màu khi hover */
+.delete-button:hover {
+    -fx-background-color: #b30000; /* Màu đỏ đậm khi hover */
+}
+
+/* Đặt màu nền đỏ và chữ trắng cho nút "Delete" */
+.detail-button {
+    -fx-background-color: #4da6ff; /* Màu nền đỏ */
+    -fx-text-fill: #ffffff;        /* Màu chữ trắng */
+  -fx-font-size: 14px;    /* Kích thước font chữ */
+     -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+     -fx-pref-height: 30;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+     -fx-border-color: transparent; /* Xóa viền mặc định */
+     -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
+}
+
+/* Đặt màu nền đỏ và chữ trắng cho nút "Delete" */
+
+/* Đổi màu khi hover */
+.detail-button:hover {
+    -fx-background-color: #004080; /* Màu đỏ đậm khi hover */
+}
+/* TreeView */
+.tree-view {
+    -fx-font-size: 14px;
+    -fx-background-color: #ffffff;
+    -fx-border-color: #a5d6a7;
+    -fx-border-width: 1px;
+    -fx-padding: 10px;
+}

@@ -18,13 +18,13 @@ public class createstudentcontroller extends menucontroller {
     @FXML
     private TextField phone;
     @FXML
-    private TextField id;
-//    @FXML
-//    public TreeView<String> miniBar;
-
+    public void initialize() {
+        super.initialize();
+        super.manageStudent.getStyleClass().add("selected");
+    }
     @FXML
     public void addStudent(ActionEvent event) {
-        Student newStudent = new Student(id.getText(),
+        Student newStudent = new Student(//id.getText(),
                 username.getText(),
                 Password.getText(),
                 name.getText(),

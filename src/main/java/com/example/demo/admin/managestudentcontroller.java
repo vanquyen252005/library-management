@@ -23,18 +23,19 @@ public class managestudentcontroller extends menucontroller {
     @FXML
     TableView<Student> studentTable;
     @FXML
+    private Button backButton;
+
+    @FXML
+    private Button forwardButton;
+
+    @FXML
     private ListView<String> suggestionList;
     private String op;
     public static Student onClickStudent = new Student();
     @Override
     @FXML
     public void initialize() {
-        home.setOnAction(event -> handleHomeAction(event));
-        manageStudent.setOnAction(event -> handleManageStudentAction(event));
-        manageBook.setOnAction(event -> handleManageBookAction(event));
-        search.setOnAction(event -> handleSearchAction(event));
-        handleRequest.setOnAction(event -> handleHandleRequestAction(event));
-
+        super.initialize();
         studentSearchType.getItems().addAll("ID", "Username", "Name");
         studentSearchType.setOnAction(event -> {
             op = studentSearchType.getValue();
@@ -51,10 +52,9 @@ public class managestudentcontroller extends menucontroller {
                     break;
             }
         });
-
-         // Điều chỉnh chiều rộng của TreeView nếu cần
-
-
+        super.manageStudent.getStyleClass().add("selected");
+//        backButton.setOnAction(this::handleBackAction);
+//        forwardButton.setOnAction(this::handleForwardAction);
         TableColumn<Student, String> column1 =
                 new TableColumn<>("ID");
         TableColumn<Student, String> column2 =
@@ -154,6 +154,7 @@ public class managestudentcontroller extends menucontroller {
         column2.getStyleClass().add("table-student-username-cell");
         column3.getStyleClass().add("table-student-name-cell");
         column4.getStyleClass().add("table-student-class-cell");
+        actionColumn.getStyleClass().add("table-student-detail-cell");
         studentTable.getColumns().addAll(column1, column2, column3, column4, actionColumn);
 
         suggestionList.setVisible(false); // Ẩn gợi ý ban đầu
@@ -196,6 +197,7 @@ public class managestudentcontroller extends menucontroller {
         // Chạy Task trong một luồng riêng
         new Thread(task).start();
     }
+
     private List<String> getSearchSuggestions(String searchText) {
         List<String> suggestions = new ArrayList<>();
         List<Student> cur=  Student.getStudentBy(op, searchText);

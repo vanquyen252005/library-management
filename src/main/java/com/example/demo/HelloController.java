@@ -1,6 +1,7 @@
 package com.example.demo;
 
 import com.example.demo.admin.admin;
+import com.example.demo.admin.admincontroller;
 import com.example.demo.student.Student;
 import com.example.demo.user.User;
 import javafx.event.ActionEvent;
@@ -82,6 +83,7 @@ public class HelloController{
         if (HelloController.readAdmin("log.txt") != null) {
             System.out.println("kdoaljdoids");
             user1 = HelloController.readAdmin("log.txt");
+            admincontroller.user = (admin) user1;
             System.out.println(user1.getRole());
         }
     }

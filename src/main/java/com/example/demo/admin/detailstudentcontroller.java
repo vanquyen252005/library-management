@@ -35,16 +35,8 @@ public class detailstudentcontroller extends menucontroller {
     @Override
     @FXML
     public void initialize() {
-        name.setText(curStudent.getName());
-        id.setText(curStudent.getId());
-        Class.setText(curStudent.getClassname());
-        phone.setText(curStudent.getPhone());
-        home.setOnAction(event -> handleHomeAction(event));
-        manageStudent.setOnAction(event -> handleManageStudentAction(event));
-        manageBook.setOnAction(event -> handleManageBookAction(event));
-        search.setOnAction(event -> handleSearchAction(event));
-        handleRequest.setOnAction(event -> handleHandleRequestAction(event));
-
+        super.initialize();
+        super.manageStudent.getStyleClass().add("selected");
 
         TableColumn<Book_borrowed, String> column1 =
                 new TableColumn<>("ISBN");

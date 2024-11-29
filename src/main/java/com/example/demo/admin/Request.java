@@ -1,21 +1,27 @@
 package com.example.demo.admin;
 
-public class RequestBook {
+import java.util.List;
+
+public class Request {
     private int id;
     private String bookId;
     private int userId;
     private String requestDate;
     private String status;
-
-    public RequestBook() {
+    private static jdbc RequestDB = new jdbc();
+    public Request() {
     }
 
-    public RequestBook(int id, String bookId, int userId, String requestDate, String status) {
+    public Request(int id, String bookId, int userId, String requestDate, String status) {
         this.id = id;
         this.bookId = bookId;
         this.userId = userId;
         this.requestDate = requestDate;
         this.status = status;
+    }
+
+    public static List<com.example.demo.admin.Request> getRequest() {
+        return RequestDB.getPendingRequests();
     }
 
     public int getId() {
@@ -38,6 +44,7 @@ public class RequestBook {
         return userId;
     }
 
+
     public void setUserId(int userId) {
         this.userId = userId;
     }
@@ -56,5 +63,9 @@ public class RequestBook {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public void updateRequestStatus() {
+        RequestDB.updateRequestStatus(id, status);
     }
 }

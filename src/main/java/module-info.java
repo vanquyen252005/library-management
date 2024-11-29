@@ -6,6 +6,8 @@ module com.example.demo {
     requires jdk.compiler;
     requires java.net.http;
     requires org.json;
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
 
 
     opens com.example.demo to javafx.fxml;

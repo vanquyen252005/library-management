@@ -6,61 +6,42 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.managestudentcontroller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="header" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.managestudentcontroller">
    <children>
-      <Label layoutX="361.0" layoutY="114.0" text="Search student by ">
-         <font>
-            <Font size="14.0" />
-         </font></Label>
-      <TextField fx:id="input" layoutX="721.0" layoutY="111.0" prefHeight="26.0" prefWidth="236.0" />
-      <Button layoutX="980.0" layoutY="109.0" mnemonicParsing="false" onAction="#searchStudent" styleClass="search-button" text="Search" />
-      <Button layoutX="390.0" layoutY="62.0" mnemonicParsing="false" onAction="#createStudent" styleClass="create-button" text="+Create" />
-      <VBox layoutX="390.0" layoutY="220.0" prefHeight="200.0" prefWidth="638.0">
+      <AnchorPane layoutX="250.0" layoutY="99.0" prefHeight="699.0" prefWidth="949.0" styleClass="content" AnchorPane.bottomAnchor="-9.200000000000045">
          <children>
-            <TableView fx:id="studentTable" prefHeight="200.0" prefWidth="200.0" styleClass="table-view" visible="false" />
+            <VBox layoutX="125.0" layoutY="161.0" prefHeight="482.0" prefWidth="700.0">
+               <children>
+                  <TableView fx:id="studentTable" prefHeight="380.0" prefWidth="200.0" styleClass="table-view" visible="false" />
+               </children>
+            </VBox>
+            <Label layoutX="203.0" layoutY="107.0" text="Search student by ">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="input" layoutX="536.0" layoutY="104.0" prefHeight="26.0" prefWidth="236.0" />
+            <Button layoutX="795.0" layoutY="104.0" mnemonicParsing="false" onAction="#searchStudent" styleClass="search-button" text="Search" />
+            <Button layoutX="224.0" layoutY="48.0" mnemonicParsing="false" onAction="#createStudent" styleClass="create-button" text="+Create" />
+            <ComboBox fx:id="studentSearchType" layoutX="362.0" layoutY="104.0" prefWidth="150.0" />
+            <ListView fx:id="suggestionList" layoutX="536.0" layoutY="130.0" prefHeight="78.0" prefWidth="236.0" />
+         </children>
+      </AnchorPane>
+      <VBox layoutY="99.0" prefHeight="699.0" prefWidth="250" styleClass="sidebar" AnchorPane.bottomAnchor="-9.200000000000045">
+         <children>
+            <Button fx:id="home" styleClass="sidebar-button" text="Home" />
+            <Button fx:id="manageStudent" styleClass="sidebar-button" text="Manage Students" />
+            <Button fx:id="manageBook" styleClass="sidebar-button" text="Manage Books" />
+            <Button fx:id="handleRequest" styleClass="sidebar-button" text="Handle request" />
          </children>
       </VBox>
-      <Pane prefHeight="594.0" prefWidth="192.0" styleClass="side_ankerpane">
-         <children>
-            <Button fx:id="home" layoutY="73.0" mnemonicParsing="false" prefHeight="42.0" prefWidth="188.0" styleClass="sidebar-button" text="Home">
-               <graphic>
-                  <ImageView fx:id="homeIcon" fitHeight="20" fitWidth="20">
-                     <image>
-                        <Image url="@../../../../Picture/home.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="manageStudent" layoutY="115.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Student">
-               <graphic>
-                  <ImageView fx:id="userIcon" fitHeight="20" fitWidth="20">
-                     <image>
-                        <Image url="@../../../../Picture/user.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="manageBook" layoutY="156.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Manage Book">
-               <graphic>
-                  <ImageView fx:id="bookIcon" fitHeight="20" fitWidth="20">
-                     <image>
-                        <Image url="@../../../../Picture/book.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button fx:id="handleRequest" layoutY="197.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="188.0" styleClass="sidebar-button" text="Handle Request" />
-            <Button fx:id="search" layoutY="238.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" prefHeight="42.0" prefWidth="206.0" styleClass="sidebar-button" text="Search Book" />
-         </children>
-      </Pane>
-      <ComboBox fx:id="studentSearchType" layoutX="510.0" layoutY="110.0" prefWidth="150.0" />
-      <ListView fx:id="suggestionList" layoutX="721.0" layoutY="138.0" prefHeight="78.0" prefWidth="236.0" />
+      <Label layoutX="30.0" layoutY="37.0" styleClass="header-title" text="Dashboard" />
+      <TreeView fx:id="miniBar" layoutX="1010.0" layoutY="30.0" prefHeight="100.0" prefWidth="160.0" />
+
    </children>
 </AnchorPane>

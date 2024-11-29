@@ -1,10 +1,8 @@
 package com.example.demo.student;
 
-import com.example.demo.book.Book;
 import com.example.demo.book.Book_borrowed;
 import com.example.demo.user.User;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,14 +21,14 @@ public class Student extends User {
         BorrowingBook = borrowingBook;
     }
 
-    public Student(String id, String username, String password, String name, String role, String phone, String classname) {
-        super(id, username, password, name, role, phone);
+    public Student( String username, String password, String name, String role, String phone, String classname) {
+        super(username, password, name, role, phone);
         this.classname = classname;
-        this.BorrowingBook = Request.loadBorrowedBook(parseInt(id));
+       // this.BorrowingBook = Request.loadBorrowedBook(parseInt(this.getId()));
     }
     public Student(String id, String username, String name) {
         super(id, username, name);
-        this.BorrowingBook = Request.loadBorrowedBook(parseInt(id));
+       // this.BorrowingBook = Request.loadBorrowedBook(parseInt(id));
     }
     public void setClassname(String classname) {
         this.classname = classname;
@@ -53,7 +51,7 @@ public class Student extends User {
                     super.setName(resultSet.getString("name"));
                     super.setRole(resultSet.getString("role"));
                     super.setPhone(resultSet.getString("phone"));
-                    this.setClassname("classname");
+                    this.setClassname(resultSet.getString("classname"));
                     this.BorrowingBook = Request.loadBorrowedBook(parseInt(this.getId()));
                     return true;
                 }
@@ -67,6 +65,7 @@ public class Student extends User {
     public Student getStudent() {
         return this;
     }
+
     public static List<Student> getStudentBy(String op, String infor) {
         List<Student> arr = new ArrayList<>();
         try{
@@ -89,6 +88,7 @@ public class Student extends User {
 //            }
             return arr;
         } catch (Exception e) {
+            System.out.println("found false here");
             throw new RuntimeException(e);
         }
     }
@@ -98,8 +98,13 @@ public class Student extends User {
     public void deleteStudent(String id) {
         Request.deleteStudent(id);
     }
-
     public void updateUserProfile(String userId, String username, String name, String phone, String userClass) {
         Request.updateUserProfile(userId,username,name,phone,userClass);
     }
+
+    // retake the borrowed list
+    public void TakeBorrowedBookList(Student student) {
+        this.BorrowingBook = Request.loadBorrowedBook(parseInt(student.getId()));
+    }
+
 }

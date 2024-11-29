@@ -1,6 +1,5 @@
 package com.example.demo.student;
 
-import com.example.demo.book.Book;
 import com.example.demo.book.Book_borrowed;
 
 import java.sql.*;
@@ -15,7 +14,7 @@ public class jdbc {
     jdbc() {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/lib",
+                    "jdbc:mysql://localhost:3306/bookdb",
                     "root",
                     "123456789"
             );
@@ -63,18 +62,17 @@ public class jdbc {
         String classname = newUser.getClassname();       // Gán classname
         ResultSet resultSet = null;
         try {
-            String query = "INSERT INTO userdata (id, username, password, name, role, phone, classname) " +
-                    "VALUES (?, ?, ?, ?, ?, ?, ?)";
+            String query = "INSERT INTO userdata ( username, password, name, role, phone, classname) " +
+                    "VALUES ( ?, ?, ?, ?, ?, ?)";
 
             PreparedStatement pstmt = connection.prepareStatement(query);
-
-            pstmt.setString(1, id);            // Gán giá trị cho id
-            pstmt.setString(2, username_);   // Gán giá trị cho username
-            pstmt.setString(3, password_);   // Gán giá trị cho password
-            pstmt.setString(4, name);       // Gán giá trị cho name
-            pstmt.setString(5, role);       // Gán giá trị cho role
-            pstmt.setString(6, phone);      // Gán giá trị cho phone
-            pstmt.setString(7, classname);  // Gán giá trị cho classname
+           // Gán giá trị cho id
+            pstmt.setString(1, username_);   // Gán giá trị cho username
+            pstmt.setString(2, password_);   // Gán giá trị cho password
+            pstmt.setString(3, name);       // Gán giá trị cho name
+            pstmt.setString(4, role);       // Gán giá trị cho role
+            pstmt.setString(5, phone);      // Gán giá trị cho phone
+            pstmt.setString(6, classname);  // Gán giá trị cho classname
 
             pstmt.executeUpdate();
 
@@ -184,4 +182,76 @@ public class jdbc {
             e.printStackTrace();
         }
     }
+
+
+    public boolean CheckExistedUsername(String data) {
+        String query = "SELECT COUNT(*) FROM userdata WHERE username = ?";
+
+        try {
+            // Sử dụng PreparedStatement để xóa sinh viên theo ID
+            PreparedStatement pstmt = connection.prepareStatement(query);
+
+            // Gán giá trị ID cho tham số ?
+            pstmt.setString(1, data);
+
+            // Thực thi câu lệnh DELETE
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+    public boolean CheckExistedEmail(String data) {
+        String query = "SELECT COUNT(*) FROM userdata email = ?";
+
+        try {
+            // Sử dụng PreparedStatement để xóa sinh viên theo ID
+            PreparedStatement pstmt = connection.prepareStatement(query);
+
+            // Gán giá trị ID cho tham số ?
+            pstmt.setString(1, data);
+
+            // Thực thi câu lệnh DELETE
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+    public boolean CheckExistedName(String data) {
+        String query = "SELECT COUNT(*) FROM userdata WHERE name = ?";
+
+        try {
+            // Sử dụng PreparedStatement để xóa sinh viên theo ID
+            PreparedStatement pstmt = connection.prepareStatement(query);
+
+            // Gán giá trị ID cho tham số ?
+            pstmt.setString(1, data);
+
+            // Thực thi câu lệnh DELETE
+            ResultSet rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                return rs.getInt(1) > 0;
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+        return false;
+    }
+
 }

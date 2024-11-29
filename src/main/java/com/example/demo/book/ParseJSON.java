@@ -1,6 +1,5 @@
 package com.example.demo.book;
 
-import javafx.scene.control.TextArea;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -9,8 +8,8 @@ import java.util.List;
 
 public class ParseJSON {
 
-    public List<Book> parseJSON(String json) {
-        List<Book> books = new ArrayList<>();
+    public List<RequestBook> parseJSON(String json) {
+        List<RequestBook> books = new ArrayList<>();
 
         JSONObject jsonObject = new JSONObject(json);
         JSONArray itemsArray = jsonObject.optJSONArray("items");
@@ -30,7 +29,7 @@ public class ParseJSON {
                 String quantity = "Unknown"; // Set quantity to a default value if it's not available from the API
 
                 // Create a new Book object and set its fields
-                Book book = new Book();
+                RequestBook book = new RequestBook();
                 book.setISBN(ISBN);
                 book.setTitle(title);
                 book.setAuthor(author);
