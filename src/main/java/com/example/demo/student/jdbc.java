@@ -20,7 +20,7 @@ public class jdbc {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/bookdb",
                     "root",
-                    "123456789"
+                    "123456"
             );
 
             statement = connection.createStatement();

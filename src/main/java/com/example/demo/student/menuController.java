@@ -1,5 +1,6 @@
 package com.example.demo.student;
 
+import com.example.demo.HelloApplication;
 import com.example.demo.HelloController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -29,7 +30,6 @@ public class menuController extends HelloController {
     @FXML
     protected Button logOut;
 
-    protected static Student user = new Student();
 
     public AnchorPane getAnchorPane() {return this.contentArea;}
 
@@ -50,18 +50,19 @@ public class menuController extends HelloController {
     }
 
     public void initialize() {
-        loadContent(contentArea,"home.fxml");
+        //loadContent(contentArea,"home.fxml");
     }
 
-    public void Profile(ActionEvent event) {
-        displayScene(event,"Profile.fxml");
+    @FXML
+    protected void Profile(ActionEvent event) {
+        displayScene(HelloApplication.getPrimaryStage(), "student/Profile.fxml");
     }
-
-    public void handlerequest(ActionEvent event) {
-        displayScene(event,"HandleRequest.fxml");
+    @FXML
+    protected void handleRequest(ActionEvent event) {
+        displayScene(HelloApplication.getPrimaryStage(), "student/HandleRequest.fxml");
     }
-
-    public void home(ActionEvent event) {
-        displayScene(event,"home.fxml");
+    @FXML
+    protected void home(ActionEvent event) {
+        displayScene(HelloApplication.getPrimaryStage(), "student/home.fxml");
     }
 }

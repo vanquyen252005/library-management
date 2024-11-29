@@ -28,6 +28,7 @@ public class HelloController{
     @FXML
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
+
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
             scene = new Scene(root);
 

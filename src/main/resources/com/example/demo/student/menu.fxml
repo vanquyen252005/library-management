@@ -5,7 +5,6 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.menuController">
@@ -14,18 +13,13 @@
    <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
       <Button fx:id="homeButton" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#home" prefHeight="41.0" prefWidth="188.0" styleClass=".btn_workbench" text="Home" />
       <Button fx:id="profileButton" layoutX="12.0" layoutY="376.0" mnemonicParsing="false" onAction="#Profile" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Profile" />
-      <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handlerequest" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
+      <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleRequest" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
    </Pane>
 
    <!-- Content Area -->
    <AnchorPane fx:id="contentArea" layoutX="251.0" layoutY="94.0" prefHeight="479.0" prefWidth="925.0" />
 
    <!-- Header Area (Logo, User info, Buttons) -->
-   <ImageView fitHeight="216.0" fitWidth="247.0" preserveRatio="true">
-      <image>
-         <Image url="@/Picture/icon.png" />  <!-- Đảm bảo bạn đã có file logo.png trong thư mục resources/images -->
-      </image>
-   </ImageView>
 
       <!-- Logout Button -->
    <Button fx:id="logOut" text="Logout" />

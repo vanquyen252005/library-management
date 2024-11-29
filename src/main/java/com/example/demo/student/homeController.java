@@ -190,7 +190,7 @@ import com.example.demo.DesignPattern.Proxy.Interface.BookCover;
 import com.example.demo.DesignPattern.Proxy.VirtualProxy.BookCoverProxy;
 import com.example.demo.HelloApplication;
 import com.example.demo.book.BookDetailController;
-import com.example.demo.book.ConnectDB;
+import com.example.demo.book.Database;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
@@ -223,7 +223,11 @@ public class homeController extends menuController {
     private Button clear_button;
 
     private int currentPage = 1;
+<<<<<<< Updated upstream
     private ConnectDB bookDatabase = ConnectDB.getInstance();
+=======
+    private Database bookDatabase = Database.getInstance();
+>>>>>>> Stashed changes
     private Map<String, List<Book>> cache = new HashMap<>();
 
     private VBox vbox = new VBox();
@@ -324,8 +328,6 @@ public class homeController extends menuController {
     private String generateCacheKey(int currentPage, String keyword) {
         return currentPage + "-" + keyword.toLowerCase();
     }
-
-
 
     // Phương thức tải sách từ proxy và cập nhật UI (now using Task for threading)
     private void loadTopRatedBooks(String keyword) {

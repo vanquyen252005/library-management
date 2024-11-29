@@ -19,9 +19,10 @@ import java.util.ArrayList;
 
 import static java.lang.Integer.parseInt;
 
-public class HandleRequestController extends ProfileController {
+public class HandleRequestController extends menuController {
 
     public Button Back_btn;
+    protected Student user = studentcontroller.getStudent();
     @FXML
     private ListView<Book_borrowed> bookListView;
 
