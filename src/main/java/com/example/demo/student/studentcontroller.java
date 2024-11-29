@@ -61,7 +61,6 @@ public class studentcontroller extends HelloController {
         }
     }
 
-<<<<<<< Updated upstream
     public void Profile(ActionEvent event) {
         System.out.println("truy cap thanh cong ProfileController");
         displayScene(event,"Profile.fxml");
@@ -69,9 +68,6 @@ public class studentcontroller extends HelloController {
 
 
     public void register(ActionEvent event) {
-=======
-        public void register(ActionEvent event) {
->>>>>>> Stashed changes
         displayScene(event, "StudentRegister.fxml");
     }
 

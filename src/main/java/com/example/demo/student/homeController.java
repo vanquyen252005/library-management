@@ -223,7 +223,7 @@ public class homeController extends menuController {
     private Button clear_button;
 
     private int currentPage = 1;
-    private ConnectDB bookDatabase = new ConnectDB();
+    private ConnectDB bookDatabase = ConnectDB.getInstance();
     private Map<String, List<Book>> cache = new HashMap<>();
 
     private VBox vbox = new VBox();
