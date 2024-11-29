@@ -1,17 +1,19 @@
 package com.example.demo.admin;
 
 import com.example.demo.book.Book;
-import com.example.demo.book.Book_borrowed;
-import com.example.demo.student.Student;
+import com.example.demo.book.BookQR;
+import com.example.demo.book.Comment;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class detailbookcontroller extends menucontroller {
     @FXML
@@ -31,130 +33,107 @@ public class detailbookcontroller extends menucontroller {
     @FXML
     public TreeView<String> miniBar;
     @FXML
-    private Student curStudent = managestudentcontroller.onClickStudent;
+    public ImageView QRImageView;
+    public TextField CommentField;
+    public AnchorPane CommentView;
+    @FXML
+    private GridPane FormatComment = new GridPane();
+    @FXML
+    private Book curBook = managebookcontroller.onClickBook;
+    @FXML
+    protected ImageView bookImageView;
+    private int ParentComment;
 
+//    private ConnectDB BookDatabase = ;
     @Override
     @FXML
     public void initialize() {
-        name.setText(curStudent.getName());
-        id.setText(curStudent.getId());
-        Class.setText(curStudent.getClassname());
-        phone.setText(curStudent.getPhone());
-        home.setOnAction(event -> handleHomeAction(event));
-        manageStudent.setOnAction(event -> handleManageStudentAction(event));
-        manageBook.setOnAction(event -> handleManageBookAction(event));
-        search.setOnAction(event -> handleSearchAction(event));
-        handleRequest.setOnAction(event -> handleHandleRequestAction(event));
-
-
-        TableColumn<Book_borrowed, String> column1 =
-                new TableColumn<>("ISBN");
-        TableColumn<Book_borrowed, String> column2 =
-                new TableColumn<>("Title");
-        TableColumn<Book_borrowed, String> column3 =
-                new TableColumn<>("borrow_date");
-        TableColumn<Book_borrowed, String> column4 =
-                new TableColumn<>("return_date");
-//        TableColumn<Book_borrowed, Void> actionColumn = new TableColumn<>("Action");
-
-        column1.setCellValueFactory(
-                new PropertyValueFactory<>("book_id"));
-        column2.setCellValueFactory(
-                new PropertyValueFactory<>("title"));
-        column3.setCellValueFactory(
-                new PropertyValueFactory<>("borrow_date"));
-        column4.setCellValueFactory(
-                new PropertyValueFactory<>("return_date")
-        );
-//        Callback<TableColumn<Book_borrowed, Void>, TableCell<Book_borrowed, Void>> cellFactory = new Callback<>() {
-//            @Override
-//            public TableCell<Book_borrowed, Void> call(final TableColumn<Book_borrowed, Void> param) {
-//                final TableCell<Book_borrowed, Void> cell = new TableCell<>() {
-//                    private Button deleteButton = new Button("Delete");
-//                    private Button detailButton = new Button("Detail");
-//                    private final HBox hbox = new HBox(10); // HBox để chứa các nút, khoảng cách giữa các nút là 10
-//
-//                    {
-//                        deleteButton.getStyleClass().add("delete-button");
-//                        // Đặt sự kiện cho nút "Delete"
-//                        deleteButton.setOnAction(event -> {
-//                            Book_borrowed student = getTableView().getItems().get(getIndex());
-//                            student.deleteStudent(student.getId()); // Gọi phương thức deleteStudent()
-//                        });
-//
-//                        detailButton.getStyleClass().add("detail-button");
-//                        // Đặt sự kiện cho nút "Detail"
-//                        detailButton.setOnAction(event -> {
-//                            Book_borrowed student = getTableView().getItems().get(getIndex());
-//
-//                        });
-//
-//                        // Thêm các nút vào HBox
-//                        hbox.getChildren().addAll(deleteButton, detailButton);
-//                    }
-//
-//                    @Override
-//                    protected void updateItem(Void item, boolean empty) {
-//                        super.updateItem(item, empty);
-//                        if (empty) {
-//                            setGraphic(null);
-//                        } else {
-//                            setGraphic(hbox); // Hiển thị HBox chứa các nút trong ô
-//                        }
-//                    }
-//                };
-//                cell.getStyleClass().add("table-student-detail-cell");
-//                return cell;
-//            }
-//        };
-        column1.setCellFactory(param -> new TableCell<Book_borrowed, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(item);
-                getStyleClass().add("table-student-id-cell");
-            }
-        });
-        column2.setCellFactory(param -> new TableCell<Book_borrowed, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(item);
-                getStyleClass().add("table-student-username-cell");
-            }
-        });
-        column3.setCellFactory(param -> new TableCell<Book_borrowed, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(item);
-                getStyleClass().add("table-student-name-cell");
-            }
-        });
-        column4.setCellFactory(param -> new TableCell<Book_borrowed, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                setText(item);
-                getStyleClass().add("table-student-class-cell");
-            }
-        });
-        // Đặt cellFactory cho cột actions
-//        actionColumn.setCellFactory(cellFactory);
-        column1.getStyleClass().add("table-student-id-cell");
-        column2.getStyleClass().add("table-student-username-cell");
-        column3.getStyleClass().add("table-student-name-cell");
-        column4.getStyleClass().add("table-student-class-cell");
-        borrowingBook.getColumns().addAll(column1, column2, column3, column4);
-        loadBook();
+        super.initialize();
+        super.manageBook.getStyleClass().add("selected");
+//        bookImageView = curBook.loadImage();
+        bookImageView.setFitWidth(200); // Chiều rộng (px)
+        bookImageView.setFitHeight(300);
+        bookImageView.setPreserveRatio(true);
+        bookImageView.setImage(curBook.loadImage().getImage());
     }
 
-    private void loadBook() {
-        ArrayList<Book_borrowed> cur = curStudent.getBorrowingBook();
-        for (Book_borrowed x:cur) {
-            borrowingBook.getItems().add(x);
-            System.out.println(x.getISBN());
+    public void ClickBookQR(ActionEvent event) {
+        ImageView QRView = BookQR.createQRCodeImageView(curBook.toString());
+        QRImageView.setImage(QRView.getImage());
+        System.out.println("hehe1");
+    }
+
+
+    public void loadComment() {
+        //List<Comment> commentList = BookDatabase.GetCommentList(ISBN);
+        List<Comment> commentList = curBook.getCommentList();
+
+        ParentComment = commentList.size();
+        // CommentField.setText("");
+
+        if (commentList == null || commentList.isEmpty()) {
+            System.out.println("No comments found for ISBN: " + curBook.getISBN());
+            return;
         }
+
+
+        FormatComment.setHgap(10); // Khoảng cách giữa các cột
+        FormatComment.setVgap(10); // Khoảng cách giữa các hàng
+        FormatComment.setPadding(new Insets(10)); // Padding xung quanh GridPane
+
+
+        // Duyệt qua danh sách bình luận và thêm vào GridPane
+        int row = 0;
+        for (Comment comment : commentList) {
+            // Tạo Label hiển thị User ID
+            Label userLabel = new Label("User: " + comment.getUserId());
+            Label dateLabel = new Label("User: " + comment.getDate());
+            FormatComment.add(userLabel, 0, row);
+            FormatComment.add(dateLabel, 1, row); // Thêm Label vào cột 0, hàng `row`
+            // Cột 0, Hàng `row`
+
+            TextArea commentTextArea = new TextArea(comment.getContent());
+            commentTextArea.setWrapText(true); // Tự xuống dòng nếu nội dung dài
+            commentTextArea.setEditable(false); // Chỉ đọc
+            commentTextArea.setPrefHeight(50); // Chiều cao cố định
+            FormatComment.add(commentTextArea, 1, row+1);// Cột 1, Hàng `row`
+
+
+            TreeView<String> treeView = new TreeView<>();
+            treeView.setPrefWidth(50); // Đặt chiều rộng cố định 300px
+            treeView.setPrefHeight(50); // Đặt chiều cao cố định 400px
+
+//            loadChildrenComment(treeView,comment);
+//            FormatComment.add(treeView,0,row+2);
+
+
+            row+=2; // Chuyển sang hàng tiếp theo
+        }
+
+        CommentView.getChildren().add(FormatComment);
+
+        AnchorPane.setTopAnchor(FormatComment, 80.0);    // Cách cạnh trên 10px
+        AnchorPane.setBottomAnchor(FormatComment, 10.0); // Cách cạnh dưới 10px
+        AnchorPane.setLeftAnchor(FormatComment, 20.0);   // Cách cạnh trái 10px
+        AnchorPane.setRightAnchor(FormatComment, 10.0);  // Cách cạnh phải 10px
+
+
+
     }
+
+    @FXML
+    public void PostComment(ActionEvent event) {
+        String PostContent = CommentField.getText();
+        //BookDatabase.PostCommentForBook(PostContent,curBook.getISBN(), 3);
+//        curBook.getNewComment(PostContent,user.getId());
+//        FormatComment.getChildren().clear();
+//        CommentView.getChildren().remove(FormatComment);
+//        loadComment();
+//        CommentField.clear();
+
+
+
+    }
+
 
 }

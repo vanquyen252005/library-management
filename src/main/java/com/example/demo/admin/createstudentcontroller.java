@@ -4,7 +4,6 @@ import com.example.demo.student.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
-import javafx.scene.control.TreeView;
 
 public class createstudentcontroller extends menucontroller {
     @FXML
@@ -17,9 +16,11 @@ public class createstudentcontroller extends menucontroller {
     private TextField Class;
     @FXML
     private TextField phone;
-//    @FXML
-//    public TreeView<String> miniBar;
-
+    @FXML
+    public void initialize() {
+        super.initialize();
+        super.manageStudent.getStyleClass().add("selected");
+    }
     @FXML
     public void addStudent(ActionEvent event) {
         Student newStudent = new Student(//id.getText(),

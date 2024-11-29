@@ -3,12 +3,13 @@ package com.example.demo.admin;
 import com.example.demo.book.Book_borrowed;
 import com.example.demo.student.Student;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.TreeView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
-import javafx.util.Callback;
 
 import java.util.ArrayList;
 
@@ -35,16 +36,8 @@ public class detailstudentcontroller extends menucontroller {
     @Override
     @FXML
     public void initialize() {
-        name.setText(curStudent.getName());
-        id.setText(curStudent.getId());
-        Class.setText(curStudent.getClassname());
-        phone.setText(curStudent.getPhone());
-        home.setOnAction(event -> handleHomeAction(event));
-        manageStudent.setOnAction(event -> handleManageStudentAction(event));
-        manageBook.setOnAction(event -> handleManageBookAction(event));
-        search.setOnAction(event -> handleSearchAction(event));
-        handleRequest.setOnAction(event -> handleHandleRequestAction(event));
-
+        super.initialize();
+        super.manageStudent.getStyleClass().add("selected");
 
         TableColumn<Book_borrowed, String> column1 =
                 new TableColumn<>("ISBN");
