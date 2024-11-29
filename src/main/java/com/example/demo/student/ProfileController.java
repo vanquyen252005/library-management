@@ -54,8 +54,6 @@ public class ProfileController extends studentcontroller{
     @FXML
     private TableColumn<BookInfo, String> PublisherColumn;
     public void initialize() {
-        //rootPane.getScene().getStylesheets().add(Objects.requireNonNull(getClass().getResource("student/student.css")).toExternalForm());
-        // Cài đặt cột cho bảng thông tin người dùng
         fieldColumn.setCellValueFactory(new PropertyValueFactory<>("field"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
 
@@ -68,16 +66,13 @@ public class ProfileController extends studentcontroller{
         borrowedDateColumn.setCellValueFactory(new PropertyValueFactory<>("borrowedDate"));
         returnDateColumn.setCellValueFactory(new PropertyValueFactory<>("returnDate"));
 
-        // Load dữ liệu
         loadUserInfo();
         loadBorrowedBooks();
     }
 
     public void loadUserInfo() {
         ObservableList<UserInfo> userInfoList = FXCollections.observableArrayList();
-        jdbc db = new jdbc(); // Tạo đối tượng JDBC để kết nối DB
-
-        // Lấy thông tin người dùng từ DB
+        jdbc db = jdbc.getInstance();
         Student userInfo = db.LoadUserInfor(Integer.parseInt(user.getId()));
         if (userInfo != null) {
             userInfoList.add(new UserInfo("Username", userInfo.getUsername()));
@@ -89,7 +84,7 @@ public class ProfileController extends studentcontroller{
             System.out.println("Không tìm thấy thông tin người dùng.");
         }
 
-        userInfoTable.setItems(userInfoList); // Đặt dữ liệu vào bảng
+        userInfoTable.setItems(userInfoList);
     }
 
 

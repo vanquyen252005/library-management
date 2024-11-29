@@ -56,7 +56,7 @@ public class HandleRequestController extends ProfileController {
             }
 
             private void handleReturnBook(Book_borrowed book) {
-                jdbc db = new jdbc();
+                jdbc db = jdbc.getInstance();
                 boolean success = db.insertReturnRequest(book.getISBN(), parseInt(user.getId()));
                 if (success) {
                     System.out.println("Yêu cầu trả sách đã được gửi thành công.");
