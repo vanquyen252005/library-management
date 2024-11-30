@@ -20,7 +20,7 @@ public class jdbc {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/bookdb",
                     "root",
-                    "123456"
+                    "123456789"
             );
 
             statement = connection.createStatement();
@@ -63,7 +63,7 @@ public class jdbc {
         return resultSet;
     }
 
-    public void addStudentData(Student newUser) {
+    public boolean addStudentData(Student newUser) {
         String id = newUser.getId();                     // Gán id
         String username_ = newUser.getUsername();         // Gán username
         String password_ = newUser.getPassword();         // Gán password
@@ -86,10 +86,12 @@ public class jdbc {
             pstmt.setString(6, classname);  // Gán giá trị cho classname
 
             pstmt.executeUpdate();
+            return true;
 
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public ResultSet getStudentData(String op, String info) {
@@ -108,7 +110,7 @@ public class jdbc {
         return resultSet;
     }
 
-    public void deleteStudent(String id) {
+    public boolean deleteStudent(String id) {
         String query = "DELETE FROM userdata WHERE id = ?";
 
         try {
@@ -127,10 +129,12 @@ public class jdbc {
             } else {
                 System.out.println("No student found with ID " + id + ".");
             }
+            return true;
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        return false;
     }
 
     public ArrayList<Book_borrowed> loadBorrowedBook(int user_id) {
@@ -202,10 +206,10 @@ public class jdbc {
 
   }
 
-    public void updateUserProfile(String userId, String username, String name, String phone, String userClass) {
+    public boolean updateUserProfile(String userId, String username, String name, String phone, String userClass) {
         if (userId == null || userId.trim().isEmpty()) {
             System.out.println("id nguoi dung no duoc rong");
-            return;
+            return false;
         }
 
 
@@ -232,7 +236,7 @@ public class jdbc {
 
         if (!hasUpdates) {
             System.out.println("Không có trường nào được cung cấp để cập nhật.");
-            return;
+            return false;
         }
 
 
@@ -262,12 +266,15 @@ public class jdbc {
             int rowsAffected = stmt.executeUpdate();
             if (rowsAffected > 0) {
                 System.out.println("Cập nhật dữ liệu thành công!");
+                return true;
             } else {
                 System.out.println("Không tìm thấy người dùng với ID: " + userId);
+                return false;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return false;
     }
 
 

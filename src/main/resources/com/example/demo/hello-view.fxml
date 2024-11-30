@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
    <children>
       <Label layoutX="577.0" layoutY="157.0" prefHeight="18.0" prefWidth="154.0" text="Welcome to library" AnchorPane.leftAnchor="577.0" AnchorPane.rightAnchor="469.0" />
       <Label layoutX="577.0" layoutY="193.0" prefHeight="18.0" prefWidth="94.0" text="Login as:" AnchorPane.leftAnchor="577.0" AnchorPane.rightAnchor="529.0" />

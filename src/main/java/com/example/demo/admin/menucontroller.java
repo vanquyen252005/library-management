@@ -21,9 +21,13 @@ public class menucontroller extends HelloController {
     protected Button manageBook;
     @FXML
     protected Button handleRequest;
-    public static admin user = admincontroller.user;
+    public admin user = admincontroller.user;
     @FXML
     public void initialize() {
+        home.getStyleClass().add("selected");
+        manageBook.getStyleClass().remove("selected");
+       manageStudent.getStyleClass().remove("selected");
+       handleRequest.getStyleClass().remove("selected");
         home.setOnAction(event -> handleHomeAction(event));
         manageStudent.setOnAction(event -> handleManageStudentAction(event));
         manageBook.setOnAction(event -> handleManageBookAction(event));
@@ -87,5 +91,6 @@ public class menucontroller extends HelloController {
 
     public void handleBack(ActionEvent event) {
         controller.undo();
+        System.out.println("heeh");
     }
 }

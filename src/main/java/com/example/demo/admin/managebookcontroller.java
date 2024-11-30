@@ -32,6 +32,10 @@ public class managebookcontroller extends menucontroller {
     @FXML
     public void initialize() {
         super.initialize();
+        super.manageBook.getStyleClass().add("selected");
+        super.home.getStyleClass().remove("selected");
+        super.manageStudent.getStyleClass().remove("selected");
+        super.handleRequest.getStyleClass().remove("selected");
         TableColumn<Book, String> column1 =
                 new TableColumn<>("ISBN");
         TableColumn<Book, String> column2 =

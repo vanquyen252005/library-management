@@ -19,7 +19,11 @@ public class createstudentcontroller extends menucontroller {
     @FXML
     public void initialize() {
         super.initialize();
+        super.manageBook.getStyleClass().remove("selected");
+        super.home.getStyleClass().remove("selected");
         super.manageStudent.getStyleClass().add("selected");
+        super.handleRequest.getStyleClass().remove("selected");
+
     }
     @FXML
     public void addStudent(ActionEvent event) {

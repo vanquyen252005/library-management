@@ -19,6 +19,8 @@ public class HandleRequestController extends menucontroller{
     @FXML
     public void initialize() {
         super.initialize();
+        super.handleRequest.getStyleClass().add("selected");
+        super.home.getStyleClass().remove("selected");
 //        System.out.println(user.getRole());
         TableColumn<Request, String> column1 =
                 new TableColumn<>("ID");

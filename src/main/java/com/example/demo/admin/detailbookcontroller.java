@@ -49,8 +49,7 @@ public class detailbookcontroller extends menucontroller {
     @FXML
     public void initialize() {
         super.initialize();
-        super.manageBook.getStyleClass().add("selected");
-//        bookImageView = curBook.loadImage();
+
         bookImageView.setFitWidth(200); // Chiều rộng (px)
         bookImageView.setFitHeight(300);
         bookImageView.setPreserveRatio(true);
@@ -60,7 +59,7 @@ public class detailbookcontroller extends menucontroller {
     public void ClickBookQR(ActionEvent event) {
         ImageView QRView = BookQR.createQRCodeImageView(curBook.toString());
         QRImageView.setImage(QRView.getImage());
-        System.out.println("hehe1");
+//        System.out.println("hehe1");
     }
 
 

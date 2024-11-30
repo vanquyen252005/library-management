@@ -52,7 +52,10 @@ public class managestudentcontroller extends menucontroller {
                     break;
             }
         });
+        super.manageBook.getStyleClass().remove("selected");
+        super.home.getStyleClass().remove("selected");
         super.manageStudent.getStyleClass().add("selected");
+        super.handleRequest.getStyleClass().remove("selected");
 //        backButton.setOnAction(this::handleBackAction);
 //        forwardButton.setOnAction(this::handleForwardAction);
         TableColumn<Student, String> column1 =
@@ -80,6 +83,7 @@ public class managestudentcontroller extends menucontroller {
                 final TableCell<Student, Void> cell = new TableCell<>() {
                     private Button deleteButton = new Button("Delete");
                     private Button detailButton = new Button("Detail");
+                    private Button updateButton = new Button("Update");
                     private final HBox hbox = new HBox(10); // HBox để chứa các nút, khoảng cách giữa các nút là 10
 
                     {
@@ -97,9 +101,15 @@ public class managestudentcontroller extends menucontroller {
                             Student student = getTableView().getItems().get(getIndex());
                             detailStudent(student.getStudent(), event);
                         });
+                        updateButton.getStyleClass().add("update-button");
+                        // Đặt sự kiện cho nút "Detail"
+                        updateButton.setOnAction(event -> {
+                            Student student = getTableView().getItems().get(getIndex());
+                            updateStudent(student.getStudent(), event);
+                        });
 
                         // Thêm các nút vào HBox
-                        hbox.getChildren().addAll(deleteButton, detailButton);
+                        hbox.getChildren().addAll(deleteButton, detailButton, updateButton);
                     }
 
                     @Override
@@ -245,5 +255,11 @@ public class managestudentcontroller extends menucontroller {
     }
     public void createStudent(ActionEvent event) {
         displayScene(event,"CreateStudent.fxml");
+    }
+    public void updateStudent(Student cur, ActionEvent event){
+        studentTable.setItems(FXCollections.observableArrayList());
+        System.out.println(event.getTarget());
+        onClickStudent = cur;
+        displayScene(event,"UpdateStudent.fxml");
     }
 }

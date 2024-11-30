@@ -37,5 +37,5 @@
 
 <!-- User Info (User ID) -->
 <Label layoutX="81.0" layoutY="231.0" text="User ID: 12345" />
-
+    <Button fx:id="back" layoutX="44.0" layoutY="652.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
 </AnchorPane>

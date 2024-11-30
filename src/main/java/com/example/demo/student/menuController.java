@@ -65,4 +65,8 @@ public class menuController extends HelloController {
     protected void home(ActionEvent event) {
         displayScene(HelloApplication.getPrimaryStage(), "student/home.fxml");
     }
+
+    public void handleBack(ActionEvent event) {
+        controller.undo();
+    }
 }
