@@ -7,7 +7,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.HandleRequestController">
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.HandleRequestController">
 
 <!-- Menu Panel -->
 <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
@@ -31,9 +33,13 @@
 <!-- Logout Button -->
 <Button fx:id="logOut" text="Logout" />
 <!-- Change Theme Button -->
-<Button text="Change Theme" />
-<!-- Logo Image -->
 
+<!-- Logo Image -->
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../Picture/icon.png" />
+        </image>
+    </ImageView>
 
 <!-- User Info (User ID) -->
 <Label layoutX="81.0" layoutY="231.0" text="User ID: 12345" />

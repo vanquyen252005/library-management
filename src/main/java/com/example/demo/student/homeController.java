@@ -224,6 +224,11 @@ public class homeController extends menuController {
 
     private int currentPage = 1;
 
+<<<<<<< Updated upstream
+=======
+    //private ConnectDB bookDatabase = ConnectDB.getInstance();
+
+>>>>>>> Stashed changes
     private Database bookDatabase = Database.getInstance();
 
     private Map<String, List<Book>> cache = new HashMap<>();

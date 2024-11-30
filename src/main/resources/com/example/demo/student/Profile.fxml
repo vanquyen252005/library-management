@@ -8,7 +8,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+<<<<<<< Updated upstream
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.ProfileController">
+=======
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.ProfileController">
+>>>>>>> Stashed changes
 
 <!-- Menu Panel -->
     <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
@@ -19,7 +23,11 @@
 
 <!-- Header Area (Logo, User info, Buttons) -->
 
-
+    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+        <image>
+            <Image url="@../../../../Picture/icon.png" />
+        </image>
+    </ImageView>
 <!-- Logout Button -->
 <Button fx:id="logOut" text="Logout" />
 <!-- Change Theme Button -->
@@ -28,7 +36,7 @@
 
 <!-- User Info (User ID) -->
 <Label layoutX="81.0" layoutY="231.0" text="User ID: 12345" />
-    <AnchorPane fx:id="rootPane" layoutX="271.0" layoutY="108.0" prefHeight="667.0" prefWidth="867.0">
+    <AnchorPane fx:id="rootPane" layoutX="271.0" layoutY="108.0" prefHeight="667.0" prefWidth="867.0" stylesheets="@home.css">
         <!-- Container -->
         <VBox alignment="TOP_CENTER" layoutX="8.0" layoutY="49.0" prefHeight="603.0" prefWidth="859.0" spacing="20" styleClass="root" stylesheets="@student.css">
 

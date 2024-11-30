@@ -29,6 +29,14 @@ public class HelloController{
     @FXML
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
+<<<<<<< Updated upstream
+=======
+          System.out.println("hehe"+getClass().getResource(fxmlLink));
+
+            // Đảm bảo đường dẫn đầy đủ
+            System.out.println("curClass:" + getClass());
+            System.out.println("FXML Path: " + getClass().getResource(fxmlLink));
+>>>>>>> Stashed changes
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
             scene = new Scene(root);
             Command switchToScence = new ConcreteCommand(navigationSystem, scene);

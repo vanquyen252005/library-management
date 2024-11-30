@@ -1,0 +1,286 @@
+/* ---- General Styles ---- */
+
+/* Apply modern font, neutral background and adjust layout */
+* {
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-font-size: 14px;
+    -fx-base: #f5f5f5; /* Light background for most of the UI */
+    -fx-color-scheme: light;
+}
+
+/* Overall layout */
+AnchorPane {
+    -fx-background-color: #e3f2fd; /* Light Blue background for main container */
+    -fx-padding: 30px;
+    -fx-min-width: 1200px;
+    -fx-min-height: 800px;
+}
+
+/* ---- Menu Pane Styling ---- */
+#menuPane {
+    -fx-background-color: #c8e6c9; /* Soft green background for side menu */
+    -fx-background-radius: 10px;
+    -fx-padding: 30px;
+    -fx-spacing: 20px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #a5d6a7; /* Light green border */
+}
+
+/* ---- Button Styles ---- */
+
+/* Base Button Style */
+.button {
+    -fx-background-color: #81c784; /* Light green background */
+    -fx-text-fill: #ffffff; /* White text */
+    -fx-font-weight: bold;
+    -fx-padding: 12px 20px;
+    -fx-background-radius: 8px;
+    -fx-border-radius: 8px;
+    -fx-border-color: #66bb6a;
+    -fx-font-size: 16px;
+    -fx-min-width: 140px;
+    -fx-min-height: 50px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.2), 10, 0.5, 0, 3); /* Light shadow effect */
+}
+
+/* Hover Effect for Buttons */
+.button:hover {
+    -fx-background-color: #66bb6a; /* Darker green on hover */
+    -fx-border-color: #388e3c;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.7, 0, 3);
+}
+
+/* Active Button */
+.button:pressed {
+    -fx-background-color: #388e3c; /* Even darker green when pressed */
+    -fx-border-color: #2c6e2f;
+    -fx-effect: inset(1px 1px 3px rgba(0, 0, 0, 0.3));
+}
+
+/* Special Styling for Search Button */
+#search_button {
+    -fx-background-color: #4caf50; /* Fresh green background */
+    -fx-border-color: #388e3c;
+}
+
+/* Hover for Search Button */
+#search_button:hover {
+    -fx-background-color: #388e3c;
+    -fx-border-color: #388e3c;
+}
+
+/* Special Styling for Clear Button */
+#clear_button {
+    -fx-background-color: #ffeb3b; /* Yellow background */
+    -fx-border-color: #fbc02d;
+}
+
+/* Hover for Clear Button */
+#clear_button:hover {
+    -fx-background-color: #fbc02d;
+    -fx-border-color: #fbc02d;
+}
+
+#clear_button:pressed {
+    -fx-background-color: #f9a825;
+    -fx-border-color: #f57f17;
+}
+
+/* ---- Label Styles ---- */
+.label {
+    -fx-font-size: 16px;
+    -fx-text-fill: #424242; /* Dark grey text for labels */
+    -fx-font-weight: bold;
+    -fx-padding: 8px;
+}
+
+/* Specific label for search result */
+#labelSearchResult {
+    -fx-text-fill: #2e7d32; /* Dark green text for search results */
+    -fx-font-size: 18px;
+    -fx-font-weight: bold;
+    -fx-padding: 12px;
+    -fx-background-color: #a5d6a7; /* Light green background */
+    -fx-background-radius: 5px;
+}
+
+/* ---- TextField Styles ---- */
+.text-field {
+    -fx-background-color: #ffffff; /* White background for input fields */
+    -fx-border-color: #bdbdbd; /* Light grey border */
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-pref-width: 350px;
+    -fx-text-fill: #212121;
+}
+
+.text-field:focused {
+    -fx-border-color: #81c784; /* Focus border light green */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 4, 0.6, 0, 0);
+}
+
+/* ---- ListView Styles ---- */
+.list-view {
+    -fx-background-color: #ffffff; /* White background for list */
+    -fx-border-color: #e0e0e0;
+    -fx-border-radius: 5px;
+    -fx-font-size: 14px;
+    -fx-padding: 10px;
+    -fx-pref-width: 250px;
+}
+
+/* ListView cell */
+.list-view .cell {
+    -fx-background-color: #ffffff;
+    -fx-padding: 10px;
+    -fx-font-size: 14px;
+    -fx-alignment: center-left;
+}
+
+/* Hover effect on ListView item */
+.list-view .cell:hover {
+    -fx-background-color: #f5f5f5; /* Slight grey on hover */
+}
+
+/* ---- ScrollPane Styles ---- */
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-border-color: #81c784;
+    -fx-border-radius: 10px;
+    -fx-padding: 10px;
+}
+
+/* ScrollBar customization */
+.scroll-pane .scroll-bar {
+    -fx-background-color: #eeeeee;
+}
+
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: #81c784;
+}
+
+.scroll-pane .scroll-bar .thumb:hover {
+    -fx-background-color: #66bb6a;
+}
+
+/* ---- Pane Styles (Side Menu and Navigation) ---- */
+#menuPane {
+    -fx-background-color: #c8e6c9; /* Soft green background for side menu */
+    -fx-background-radius: 10px;
+    -fx-padding: 30px;
+    -fx-spacing: 20px;
+    -fx-border-radius: 10px;
+    -fx-border-color: #a5d6a7; /* Light green border */
+}
+
+#menuPane .button {
+    -fx-background-color: #b0bec5; /* Light grey */
+    -fx-text-fill: #424242;
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 15px 25px;
+    -fx-background-radius: 5px;
+    -fx-border-radius: 5px;
+}
+
+#menuPane .button:hover {
+    -fx-background-color: #90a4ae;
+}
+
+/* Specific Button styling for Home, Profile, etc. */
+#homeButton {
+    -fx-background-color: #66bb6a; /* Green background */
+}
+
+#profileButton {
+    -fx-background-color: #ffb74d; /* Light orange */
+}
+
+#returnBookButton {
+    -fx-background-color: #81d4fa; /* Light blue */
+}
+
+/* Hover effects for specific buttons */
+#homeButton:hover {
+    -fx-background-color: #388e3c;
+}
+
+#profileButton:hover {
+    -fx-background-color: #ff9800; /* Darker orange */
+}
+
+#returnBookButton:hover {
+    -fx-background-color: #4fc3f7; /* Blue background */
+}
+
+/* ---- ImageView Styles (for Book images) ---- */
+.image-view {
+    -fx-preserve-ratio: true;
+    -fx-fit-width: 150px;
+    -fx-fit-height: 150px;
+    -fx-border-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 2, 2);
+    -fx-background-color: #fafafa;
+    -fx-border-color: #bdbdbd;
+    -fx-padding: 5px;
+}
+
+/* Hover effect for images (zoom effect on hover) */
+.image-view:hover {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 15, 0.7, 3, 3);
+    -fx-scale-x: 1.05;
+    -fx-scale-y: 1.05;
+}
+
+/* ---- Layouts and Containers ---- */
+.vbox {
+    -fx-spacing: 15px;
+    -fx-alignment: top-center;
+}
+
+.vbox .text-field {
+    -fx-pref-width: 350px;
+}
+
+.vbox .list-view {
+    -fx-pref-width: 250px;
+}
+
+/* ---- Icon and Logo Styling ---- */
+#logoImage {
+    -fx-alignment: center;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.3), 10, 0.5, 0, 0);
+}
+
+/* ---- Home Pane Background ---- */
+#homePane {
+    -fx-background-image: url("file:resources/background-light.jpg");
+    -fx-background-size: cover;
+    -fx-background-position: center center;
+    -fx-background-repeat: no-repeat;
+}
+
+/* ---- Tooltip Styles ---- */
+.tooltip {
+    -fx-background-color: #81c784;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-background-radius: 5px;
+}
+
+/* ---- Transition Effects for Animated Elements ---- */
+.button {
+    -fx-transition: all 0.3s ease-in-out;
+}
+
+.image-view {
+    -fx-transition: transform 0.3s ease-in-out;
+}
+
+/* ---- Miscellaneous Effects ---- */
+
+/* Shadows around key areas */
+.pane {
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 10, 0.5, 0, 0);
+}
