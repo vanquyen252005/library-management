@@ -7,12 +7,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 public class menucontroller extends HelloController {
     @FXML
     public TreeView<String> miniBar;
     public Button back;
+    public Pane pane1;
+    public Pane pane2;
     @FXML
     protected Button home;
     @FXML
@@ -25,9 +28,7 @@ public class menucontroller extends HelloController {
     @FXML
     public void initialize() {
         home.getStyleClass().add("selected");
-        manageBook.getStyleClass().remove("selected");
-       manageStudent.getStyleClass().remove("selected");
-       handleRequest.getStyleClass().remove("selected");
+        manageStudent.getStyleClass().add("after");
         home.setOnAction(event -> handleHomeAction(event));
         manageStudent.setOnAction(event -> handleManageStudentAction(event));
         manageBook.setOnAction(event -> handleManageBookAction(event));
@@ -74,6 +75,7 @@ public class menucontroller extends HelloController {
     }
 
     public void handleHomeAction(ActionEvent event) {
+
         displayScene(event, "menu.fxml");
     }
 
@@ -91,6 +93,5 @@ public class menucontroller extends HelloController {
 
     public void handleBack(ActionEvent event) {
         controller.undo();
-        System.out.println("heeh");
     }
 }
