@@ -23,4 +23,9 @@ public class RealBookCover implements BookCover {
     public String getISBN() {
         return ISBN;
     }
+
+    @Override
+    public String getTitle() {
+        return bookTitle;
+    }
 }

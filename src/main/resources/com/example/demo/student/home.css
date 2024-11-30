@@ -54,8 +54,9 @@ AnchorPane {
 .button:pressed {
     -fx-background-color: #388e3c; /* Even darker green when pressed */
     -fx-border-color: #2c6e2f;
-    -fx-effect: inset(1px 1px 3px rgba(0, 0, 0, 0.3));
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.3), 3, 0.5, 1, 1); /* Inner shadow */
 }
+
 
 /* Special Styling for Search Button */
 #search_button {
