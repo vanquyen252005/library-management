@@ -32,10 +32,10 @@
         <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="-14.0" prefHeight="800.0" prefWidth="988.0" spacing="20" styleClass="root" stylesheets="@student.css">
 
             <!-- Header -->
-            <Label style="-fx-font-size: 24; -fx-font-weight: bold;" stylesheets="@student.css" text="User Profile" />
+            <Label style="-fx-font-size: 24; -fx-font-weight: bold;" stylesheets="@student.css" text="User Profile" translateY="70.0" />
 
             <!-- Edit Profile Button -->
-            <Button fx:id="editProfileButton" onAction="#editProfile" stylesheets="@student.css" text="Edit Profile" />
+            <Button fx:id="editProfileButton" onAction="#editProfile" stylesheets="@student.css" text="Edit Profile" translateX="350.0" />
 
             <!-- Table for User Info -->
             <TableView fx:id="userInfoTable" prefHeight="200.0" prefWidth="882.0" stylesheets="@student.css">
