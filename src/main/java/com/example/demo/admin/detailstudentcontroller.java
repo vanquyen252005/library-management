@@ -37,7 +37,10 @@ public class detailstudentcontroller extends menucontroller {
     @FXML
     public void initialize() {
         super.initialize();
+        super.manageBook.getStyleClass().remove("selected");
+        super.home.getStyleClass().remove("selected");
         super.manageStudent.getStyleClass().add("selected");
+        super.handleRequest.getStyleClass().remove("selected");
 
         TableColumn<Book_borrowed, String> column1 =
                 new TableColumn<>("ISBN");
@@ -145,7 +148,7 @@ public class detailstudentcontroller extends menucontroller {
         ArrayList<Book_borrowed> cur = curStudent.getBorrowingBook();
         for (Book_borrowed x:cur) {
             borrowingBook.getItems().add(x);
-            System.out.println(x.getTitle());
+//            System.out.println(x.getTitle());
         }
     }
 

@@ -92,15 +92,15 @@ public class Student extends User {
             throw new RuntimeException(e);
         }
     }
-    public static void addStudent(Student newStudent) {
-        Request.addStudentData(newStudent);
+    public static boolean addStudent(Student newStudent) {
+        return Request.addStudentData(newStudent);
     }
-    public void deleteStudent(String id) {
-        Request.deleteStudent(id);
+    public boolean deleteStudent(String id) {
+        return Request.deleteStudent(id);
     }
 
-    public void updateUserProfile(String userId, String username, String name, String phone, String userClass) {
-        Request.updateUserProfile(userId,username,name,phone,userClass);
+    public boolean updateUserProfile(String userId, String username, String name, String phone, String userClass) {
+        return Request.updateUserProfile(userId,username,name,phone,userClass);
     }
 
     public void TakeBorrowedBookList(Student student) {

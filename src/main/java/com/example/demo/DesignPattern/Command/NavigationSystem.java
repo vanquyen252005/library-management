@@ -1,6 +1,7 @@
 package com.example.demo.DesignPattern.Command;
 
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.stage.Stage;
 
 public class NavigationSystem {
@@ -24,6 +25,8 @@ public class NavigationSystem {
             previousScene = currentScene;  // Lưu cảnh hiện tại trước khi chuyển
         }
         currentScene = scene;
+//        scene = previousScene;
+
 //        System.out.println("switchToScene in navSys " + currentScene + " " + previousScene);
         stage.setScene(scene);
     }

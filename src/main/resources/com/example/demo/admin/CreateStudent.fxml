@@ -5,29 +5,53 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="header" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.createstudentcontroller">
    <children>
       <AnchorPane layoutX="250.0" layoutY="99.0" prefHeight="699.0" prefWidth="949.0" styleClass="content" AnchorPane.bottomAnchor="-9.200000000000045">
          <children>
-            <Pane fx:id="detailStudent" layoutX="135.0" layoutY="195.0" prefHeight="288.0" prefWidth="679.0">
+            <Button fx:id="back" layoutX="92.0" layoutY="617.0" mnemonicParsing="false" onAction="#handleBack" text="Quay lại" />
+            <AnchorPane layoutX="273.0" layoutY="156.0" prefHeight="386.0" prefWidth="402.0" styleClass="content-box">
                <children>
-                  <Label layoutX="252.0" layoutY="61.0" text="Username:" />
-                  <Label layoutX="253.0" layoutY="91.0" text="Password:" />
-                  <Label layoutX="252.0" layoutY="33.0" text="Name:" />
-                  <Label layoutX="252.0" layoutY="113.0" prefHeight="30.0" prefWidth="34.0" text="Class:" />
-                  <Label layoutX="252.0" layoutY="144.0" prefHeight="41.0" prefWidth="56.0" text="Phone:" />
-                  <TextField fx:id="name" layoutX="345.0" layoutY="29.0" />
-                  <TextField fx:id="username" layoutX="345.0" layoutY="57.0" />
-                  <TextField fx:id="Password" layoutX="345.0" layoutY="87.0" />
-                  <TextField fx:id="Class" layoutX="345.0" layoutY="116.0" />
-                  <TextField fx:id="phone" layoutX="346.0" layoutY="152.0" />
-                  <Button layoutX="442.0" layoutY="233.0" mnemonicParsing="false" onAction="#addStudent" text="Button" />
+                  <Label layoutX="56.0" layoutY="96.0" text="Username:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="57.0" layoutY="126.0" text="Password:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="56.0" layoutY="68.0" text="Name:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="59.0" layoutY="150.0" prefHeight="30.0" prefWidth="34.0" text="Class:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="60.0" layoutY="185.0" prefHeight="41.0" prefWidth="56.0" text="Phone:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="name" layoutX="158.0" layoutY="62.0" prefHeight="26.0" prefWidth="209.0" />
+                  <TextField fx:id="username" layoutX="158.0" layoutY="90.0" prefHeight="26.0" prefWidth="210.0" />
+                  <TextField fx:id="Password" layoutX="158.0" layoutY="120.0" prefHeight="26.0" prefWidth="210.0" />
+                  <TextField fx:id="Class" layoutX="157.0" layoutY="150.0" prefHeight="26.0" prefWidth="210.0" />
+                  <TextField fx:id="phone" layoutX="157.0" layoutY="192.0" prefHeight="26.0" prefWidth="210.0" />
+                  <Button layoutX="299.0" layoutY="273.0" mnemonicParsing="false" onAction="#addStudent" text="+Create">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
                </children>
-            </Pane>
-            <Button fx:id="back" layoutX="98.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleBack" text="Quay lại" />
+            </AnchorPane>
          </children>
       </AnchorPane>
       <VBox layoutY="99.0" prefHeight="699.0" prefWidth="250" styleClass="sidebar" AnchorPane.bottomAnchor="-9.200000000000045">

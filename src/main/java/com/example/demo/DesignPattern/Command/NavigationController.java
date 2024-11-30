@@ -9,14 +9,14 @@ public class NavigationController {
 
         command.execute();
         commandHistory.push(command);
-        System.out.println(command);
-        System.out.println(commandHistory.size());
+//        System.out.println(command);
+//        System.out.println(commandHistory.size());
     }
 
     public void undo() {
         if (!commandHistory.isEmpty()) {
             Command lastCommand = commandHistory.pop();
-            System.out.println(lastCommand);
+//            System.out.println(lastCommand);
             lastCommand.undo();
         }
     }

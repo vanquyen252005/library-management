@@ -23,6 +23,9 @@ public class CreateBookController extends menucontroller {
     public void initialize() {
         super.initialize();
         super.manageBook.getStyleClass().add("selected");
+        super.home.getStyleClass().remove("selected");
+        super.manageStudent.getStyleClass().remove("selected");
+        super.handleRequest.getStyleClass().remove("selected");
     }
     @FXML
     public void addBook(ActionEvent event) {

@@ -10,7 +10,7 @@ import javafx.scene.layout.AnchorPane;
 
 import java.io.IOException;
 
-public class studentcontroller extends HelloController {
+public class studentcontroller extends menuController {
     public Button home;
     public Button Profile;
     public Button handleRequest;
@@ -24,7 +24,7 @@ public class studentcontroller extends HelloController {
     private Button registerRoute;
     @FXML
     private AnchorPane contentArea;
-    protected static Student user = new Student();
+    public static Student user = new Student();
 
     public static Student getStudent() {return user;}
 
@@ -53,6 +53,7 @@ public class studentcontroller extends HelloController {
 
     public void login(ActionEvent event) {
         if (user.login(username.getText(), password.getText())) {
+            HelloController.writeAdmin( user,"log.txt");
             displayScene(event, "home.fxml");
 
 
@@ -74,6 +75,9 @@ public class studentcontroller extends HelloController {
         displayScene(event, "StudentRegister.fxml");
     }
 
+    public void handleBack(ActionEvent event) {
+        controller.undo();
+    }
 
 
 //    public void Profile(ActionEvent event) {

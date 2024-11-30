@@ -26,6 +26,9 @@ public class UpdateBookController extends menucontroller {
     public void initialize() {
         super.initialize();
         super.manageBook.getStyleClass().add("selected");
+        super.home.getStyleClass().remove("selected");
+        super.manageStudent.getStyleClass().remove("selected");
+        super.handleRequest.getStyleClass().remove("selected");
         isbn.setText(curBook.getISBN());
         title.setText(curBook.getTitle());
         author.setText(curBook.getAuthor());

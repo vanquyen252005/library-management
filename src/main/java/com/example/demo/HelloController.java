@@ -7,6 +7,7 @@ import com.example.demo.DesignPattern.Command.NavigationSystem;
 import com.example.demo.admin.admin;
 import com.example.demo.admin.admincontroller;
 import com.example.demo.student.Student;
+import com.example.demo.student.studentcontroller;
 import com.example.demo.user.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -28,20 +29,10 @@ public class HelloController{
     @FXML
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
-
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
             scene = new Scene(root);
-
             Command switchToScence = new ConcreteCommand(navigationSystem, scene);
             controller.executeCommand(switchToScence);
-//            System.out.println("hehe"+getClass().getResource(fxmlLink));
-//            root = FXMLLoader.load(getClass().getResource(fxmlLink));
-//            stage = HelloApplication.getPrimaryStage();
-//            scene = new Scene(root);
-//            Command switchToScence = new ConcreteCommand(navigationSystem, scene);
-//            controller.executeCommand(switchToScence);
-//            stage.setScene(scene);
-//            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -95,7 +86,11 @@ public class HelloController{
         if (HelloController.readAdmin("log.txt") != null) {
             System.out.println("kdoaljdoids");
             user1 = HelloController.readAdmin("log.txt");
-            admincontroller.user = (admin) user1;
+            if (user1 instanceof admin) {
+            admincontroller.user = (admin) user1;}
+            else if (user1 instanceof Student) {
+                studentcontroller.user = (Student)user1;
+            }
 //            System.out.println(user1.getRole());
         }
     }

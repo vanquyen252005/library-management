@@ -5,35 +5,74 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="header" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.CreateBookController">
    <children>
       <AnchorPane layoutX="250.0" layoutY="99.0" prefHeight="699.0" prefWidth="949.0" styleClass="content" AnchorPane.bottomAnchor="-9.200000000000045">
          <children>
-            <Pane fx:id="detailStudent" layoutX="148.0" layoutY="132.0" prefHeight="436.0" prefWidth="679.0" AnchorPane.leftAnchor="148.0" AnchorPane.rightAnchor="113.39999999999998">
+            <Button fx:id="back" layoutX="81.0" layoutY="616.0" mnemonicParsing="false" onAction="#handleBack" text="Quay lại">
+               <font>
+                  <Font size="14.0" />
+               </font></Button>
+            <AnchorPane layoutX="271.0" layoutY="92.0" prefHeight="446.0" prefWidth="406.0" styleClass="content-box">
                <children>
-                  <Label layoutX="253.0" layoutY="143.0" prefHeight="30.0" prefWidth="76.0" text="Publisher" />
-                  <Label layoutX="252.0" layoutY="61.0" prefHeight="17.0" prefWidth="34.0" text="Title:" />
-                  <Label layoutX="253.0" layoutY="91.0" text="Author:" />
-                  <Label layoutX="252.0" layoutY="33.0" prefHeight="17.0" prefWidth="39.0" text="ISBN:" />
-                  <Label layoutX="252.0" layoutY="113.0" prefHeight="30.0" prefWidth="76.0" text="PublishYear:" />
-                  <Label layoutX="251.0" layoutY="173.0" prefHeight="41.0" prefWidth="76.0" text="Image-URL-S" />
-                  <TextField fx:id="isbn" layoutX="367.0" layoutY="30.0" />
-                  <TextField fx:id="title" layoutX="367.0" layoutY="58.0" />
-                  <TextField fx:id="author" layoutX="367.0" layoutY="88.0" />
-                  <TextField fx:id="publisyear" layoutX="367.0" layoutY="117.0" text="none" />
-                  <TextField fx:id="publisher" layoutX="367.0" layoutY="147.0" text="none" />
-                  <TextField fx:id="imgUrlS" layoutX="367.0" layoutY="182.0" text="none" />
-                  <Button layoutX="442.0" layoutY="327.0" mnemonicParsing="false" onAction="#addBook" text="+Create" />
-                  <Label layoutX="253.0" layoutY="222.0" prefHeight="30.0" prefWidth="82.0" text="Image-URL-M:" />
-                  <Label layoutX="251.0" layoutY="252.0" prefHeight="41.0" prefWidth="76.0" text="Image-URL-L:" />
-                  <TextField fx:id="imgUrl" layoutX="367.0" layoutY="219.0" text="none" />
-                  <TextField fx:id="imgUrlL" layoutX="367.0" layoutY="261.0" text="none" />
-                  <Button fx:id="back" layoutX="73.0" layoutY="607.0" mnemonicParsing="false" onAction="#handleBack" text="Quay lại" />
+                  <Label layoutX="42.0" layoutY="195.0" prefHeight="30.0" prefWidth="76.0" text="Publisher">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="41.0" layoutY="113.0" prefHeight="17.0" prefWidth="34.0" text="Title:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="42.0" layoutY="143.0" text="Author:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="41.0" layoutY="85.0" prefHeight="17.0" prefWidth="39.0" text="ISBN:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="41.0" layoutY="165.0" prefHeight="30.0" prefWidth="76.0" text="PublishYear:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="40.0" layoutY="225.0" prefHeight="42.0" prefWidth="99.0" text="Image-URL-S">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="isbn" layoutX="195.0" layoutY="82.0" />
+                  <TextField fx:id="title" layoutX="195.0" layoutY="110.0" />
+                  <TextField fx:id="author" layoutX="195.0" layoutY="140.0" />
+                  <TextField fx:id="publisyear" layoutX="195.0" layoutY="167.0" text="none" />
+                  <TextField fx:id="publisher" layoutX="195.0" layoutY="197.0" text="none" />
+                  <TextField fx:id="imgUrlS" layoutX="195.0" layoutY="233.0" text="none" />
+                  <Button layoutX="246.0" layoutY="376.0" mnemonicParsing="false" onAction="#addBook" text="+Create">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Button>
+                  <Label layoutX="42.0" layoutY="274.0" prefHeight="30.0" prefWidth="99.0" text="Image-URL-M:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <Label layoutX="40.0" layoutY="304.0" prefHeight="42.0" prefWidth="99.0" text="Image-URL-L:">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="imgUrl" layoutX="195.0" layoutY="276.0" text="none" />
+                  <TextField fx:id="imgUrlL" layoutX="195.0" layoutY="312.0" text="none" />
                </children>
-            </Pane>
+            </AnchorPane>
          </children>
       </AnchorPane>
       <VBox layoutY="99.0" prefHeight="699.0" prefWidth="250" styleClass="sidebar" AnchorPane.bottomAnchor="-9.200000000000045">
