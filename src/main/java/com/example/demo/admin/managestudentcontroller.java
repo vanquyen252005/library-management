@@ -36,6 +36,24 @@ public class managestudentcontroller extends menucontroller {
     @FXML
     public void initialize() {
         super.initialize();
+        home.getStyleClass().remove("selected");
+        manageStudent.getStyleClass().remove("select");
+        manageBook.getStyleClass().remove("selected");
+        handleRequest.getStyleClass().remove("selected");
+
+        home.getStyleClass().remove("pre");
+        manageStudent.getStyleClass().remove("pre");
+        manageBook.getStyleClass().remove("pre");
+        handleRequest.getStyleClass().remove("pre");
+
+        home.getStyleClass().remove("after");
+        manageStudent.getStyleClass().remove("after");
+        manageBook.getStyleClass().remove("after");
+        handleRequest.getStyleClass().remove("after");
+
+        home.getStyleClass().add("pre");
+        manageStudent.getStyleClass().add("selected");
+        manageBook.getStyleClass().add("after");
         studentSearchType.getItems().addAll("ID", "Username", "Name");
         studentSearchType.setOnAction(event -> {
             op = studentSearchType.getValue();

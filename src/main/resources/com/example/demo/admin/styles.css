@@ -1,77 +1,103 @@
-/* Header */
-.header {
-    -fx-background-color: #81C784; /* Màu nền header xanh lá sáng */
-    -fx-padding: 10px;
-    -fx-background-radius: 10px 10px 0 0; /* Bo tròn các góc trên */
+/* Tổng quát */
+.root {
+    -fx-font-family: 'Poppins', sans-serif;
+    -fx-background-color: #ffffff;
+
 }
 
+/* Header */
 .header-title {
     -fx-font-size: 24px;
-    -fx-text-fill: #ffffff; /* Màu chữ trắng */
     -fx-font-weight: bold;
-}
+    -fx-text-fill: #4a4a4a;
 
-.header-button {
-    -fx-background-color: #66BB6A; /* Màu nền nút xanh lá sáng */
-    -fx-text-fill: #ffffff; /* Màu chữ trắng */
-    -fx-border-color: transparent;
-    -fx-font-size: 14px;
-    -fx-padding: 5px 15px;
-    -fx-background-radius: 5px; /* Bo tròn các góc */
-}
-
-.header-button:hover {
-    -fx-background-color: #81C784; /* Màu nền khi hover (xanh lá sáng) */
 }
 
 /* Sidebar */
 .sidebar {
-    -fx-background-color: #C8E6C9; /* Nền xanh lá nhạt */
+    -fx-background-color: #ffffff;
+    -fx-padding: 20px;
     -fx-spacing: 10px;
-    -fx-padding: 20px;
-    -fx-background-radius: 15px 0 0 15px; /* Bo tròn các góc bên trái */
+    -fx-border-width: 0 1px 0 0;
+    -fx-border-color: #e0e0e0;
+    -fx-border-style: solid;
+    -fx-border-radius: 0px;
 }
 
-/* Các nút trong sidebar */
 .sidebar-button {
-    -fx-background-color: #81C784; /* Nền xanh lá sáng */
-    -fx-text-fill: #ffffff; /* Màu chữ trắng */
+ -fx-background-color:#ffffff;
+    -fx-text-fill:#acabd1;
     -fx-font-size: 16px;
-    -fx-pref-width: 200px;
-    -fx-padding: 10px 20px;
-    -fx-border-width: 0;
-    -fx-background-radius: 10px; /* Bo tròn các góc */
-    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 5, 0.5, 2, 2);
+    -fx-padding: 10px;
+     /* Độ rộng viền */
+    -fx-background-radius:70px 0px 0px 70px;
+    /*tl tr lr ll*/
+    -fx-alignment: center-left;
 }
-
-.sidebar-button:hover {
-    -fx-background-color: #66BB6A; /* Màu nền khi hover (xanh lá nhạt) */
-}
-
-/* Styling for selected sidebar button */
-.sidebar-button:selected {
-    -fx-background-color: #66BB6A; /* Màu nền khi nút được chọn */
-}
-
-/* Styling cho Sidebar khi tác vụ đang thực thi */
-
-
-/* Khi sidebar có nút được chọn */
-
-
-/* Main Content */
-.content {
-    -fx-background-color: #F1F8E9; /* Nền sáng cho khu vực nội dung */
-    -fx-padding: 20px;
-    -fx-background-radius: 0 15px 15px 0; /* Bo tròn các góc dưới bên phải */
-}
-
-.content-title {
-    -fx-font-size: 20px;
-    -fx-text-fill: #333333; /* Màu chữ tối */
+.sidebar-button.selected {
+    -fx-background-color:#e9e9f1;
+    -fx-text-fill: #6a74c9;
     -fx-font-weight: bold;
+     /* Độ rộng viền */
+}
+.sidebar-button.pre {
+-fx-background-color:#ffffff;
+-fx-background-radius:70px 0px 100px 70px;
+    -fx-alignment: center-left;
+
+}
+.sidebar-button.after {
+-fx-background-color: #ffffff;
+      /* Độ rộng viền */
+-fx-background-radius:70px 100px 0px 70px;
+    /*tl tr lr ll*/
+    -fx-alignment: center-left;
+}
+.sidebar-button-pre {
+-fx-background-color:#ffffff;
+-fx-background-radius:70px 0px 100px 70px;
+    -fx-alignment: center-left;
+
+}
+.sidebar-button-after {
+-fx-background-color: #ffffff;
+      /* Độ rộng viền */
+-fx-background-radius:70px 100px 0px 70px;
+    /*tl tr lr ll*/
+    -fx-alignment: center-left;
 }
 
+.background-nav-pre{
+-fx-background-color: #ffffff;
+ /*tl tr lr ll*/
+ -fx-background-radius: 0px 0px 10px 0px;
+  -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 2);
+}
+.background-nav-after{
+-fx-background-color: #ffffff;
+ /*tl tr lr ll*/
+ -fx-background-radius: 0px 10px 0px 0px;
+}
+.background-nav-pre-below{
+-fx-background-color: #e9e9f1;
+}
+/* Content */
+.content {
+    -fx-background-color: #e9e9f1;
+    -fx-padding: 20px;
+    -fx-background-radius: 30px;
+    -fx-border-radius: 30px;
+
+}
+
+/* TreeView */
+.tree-view {
+    -fx-background-color: #ffffff;
+    -fx-border-color: transparent;
+    -fx-padding: 10px;
+    -fx-background-radius: 10px;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.1), 2, 0, 0, 2);
+}
 /* TableView */
 .content-table {
     -fx-background-color: #ffffff; /* Nền trắng cho bảng */
@@ -111,11 +137,6 @@
     -fx-background-color: #81C784; /* Màu của thanh cuộn */
 }
 
-/* Màu sắc khi nút được chọn */
-.sidebar-button.selected {
-    -fx-background-color: #66BB6A; /* Màu nền khi nút được chọn (xanh lá nhạt) */
-    -fx-font-weight: bold; /* Làm chữ đậm khi chọn */
-}
 .create-button {
     -fx-background-color: #FFD700; /* Màu vàng */
     -fx-text-fill: #333333; /* Màu chữ tối để dễ đọc */
