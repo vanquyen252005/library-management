@@ -29,6 +29,8 @@ public class menuController extends HelloController {
     protected Button returnBookButton;
     @FXML
     protected Button logOut;
+    @FXML
+    protected Button notificationButton;
 
 
     public AnchorPane getAnchorPane() {return this.contentArea;}
@@ -64,6 +66,10 @@ public class menuController extends HelloController {
     @FXML
     protected void home(ActionEvent event) {
         displayScene(HelloApplication.getPrimaryStage(), "student/home.fxml");
+    }
+    @FXML
+    protected void notification(ActionEvent event) {
+        displayScene(HelloApplication.getPrimaryStage(), "student/notification.fxml");
     }
 
     public void handleBack(ActionEvent event) {

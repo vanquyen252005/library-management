@@ -1,5 +1,6 @@
 package com.example.demo.book;
 
+import com.example.demo.DesignPattern.Singleton.Notification;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
@@ -21,7 +22,7 @@ import java.sql.*;
 public class Database {
     private static Database instance;
     private Connection connection;
-    private static final String URL = "jdbc:mysql://localhost:3306/bookdb";
+    private static final String URL = "jdbc:mysql://localhost:3306/bookdbb";
     private static final String USER = "root";
     private static final String PASSWORD = "123456";
 
@@ -152,9 +153,9 @@ public class Database {
         String sql;
 
         if (keyword == null || keyword.trim().isEmpty()) {
-            sql = "SELECT * FROM books ORDER BY rating DESC LIMIT 80";
+            sql = "SELECT * FROM books ORDER BY rating DESC LIMIT 300";
         } else {
-            sql = "SELECT * FROM books WHERE Title LIKE ? OR Author LIKE ? ORDER BY rating DESC LIMIT 80";
+            sql = "SELECT * FROM books WHERE Title LIKE ? OR Author LIKE ? ORDER BY rating DESC LIMIT 300";
         }
 
         try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -194,8 +195,7 @@ public class Database {
             sql = "SELECT * FROM books WHERE Title LIKE ? OR Author LIKE ? ORDER BY rating DESC LIMIT 1000";
         }
 
-        try (
-                PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
 
             // Set parameters only if keyword is not empty
             if (keyword != null && !keyword.trim().isEmpty()) {
@@ -347,7 +347,8 @@ public class Database {
                         rs.getString("Author"),
                         rs.getString("Publisher"),
                         rs.getString("PublishYear"),
-                        rs.getString("Image-URL-M")
+                        rs.getString("Image-URL-M"),
+                        rs.getInt("quantity")
                 );
             } else {
                 System.out.println("No book found with ISBN: " + isbn);
@@ -544,6 +545,109 @@ public class Database {
         }
     }
 
+    public List<Notification> getNotificationList() {
+        List<Notification> result = new ArrayList<>();
+        String sql = "SELECT * FROM notification";
+
+        try ( PreparedStatement pstmt = connection.prepareStatement(sql)) {
+
+
+            ResultSet rs = pstmt.executeQuery();
+
+            int res = 0;
+            while (rs.next()) {
+                res++;
+                result.add(new Notification(
+                        rs.getString("content"),
+                        rs.getInt("user_id"),
+                        rs.getString("notify_date"),
+                        rs.getInt("id"),
+                        rs.getInt("admin_id")
+                ));
+            }
+            System.out.println("total notify in database is " + res);
+        } catch (SQLException e) {
+            System.out.println("SQL exception: " + e.getMessage());
+            e.printStackTrace();
+        } catch (Exception e) {
+            System.out.println("Unexpected exception: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return result;
+    }
+
+    public boolean userNotify(int user_id, int type, String ISBN) {
+        //1 change profile info
+        //2 change password
+        //3 request borrow
+        //4 request return
+        //5 undo borrow
+
+        String content = "";
+
+        if(ISBN.equals("")) {
+            if(type == 1) {
+                content = "You have made change to your profile information, please have a check";
+            } else if(type == 2) {
+                content = "Your password have been changed lately";
+            }
+        } else if(type == 3) {
+            content = "you requested borrowing book with id: " + ISBN;
+        } else if(type == 4) {
+            content = "you requested returning book with id: " + ISBN;
+        }
+        else if(type == 5) {
+            content = "you just undo borrowing book with id: " + ISBN;
+        }
+
+        int admin_id = 519;
+
+        String query = "INSERT INTO notification (admin_id, user_id, content) VALUES (?, ?, ?)";
+
+        // Tạo kết nối cơ sở dữ liệu
+        try (PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+
+            preparedStatement.setInt(1, admin_id);
+            preparedStatement.setInt(2, user_id);
+            preparedStatement.setString(3, content);
+
+            int rowsAffected = preparedStatement.executeUpdate();
+
+            if (rowsAffected > 0) {
+                System.out.println("Creating notification has been sent successfully.");
+                return true;
+            } else {
+                System.out.println("Failed to create notification.");
+                return false;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void clearUserNotify(int user_id) {
+        String query = "DELETE FROM notification WHERE user_id = ?";
+
+        try (PreparedStatement stmt = connection.prepareStatement(query)) {
+
+            // Set the parameters for the query
+            stmt.setInt(1, user_id);
+
+            // Execute the update
+            int rowsAffected = stmt.executeUpdate();
+
+            // Check if a request was successfully undone
+            if (rowsAffected > 0) {
+                System.out.println("Request undone successfully for user_id: " + user_id);
+            } else {
+                System.out.println("No matching request found to undo for user_id: " + user_id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.err.println("An error occurred while undoing the request.");
+        }
+    }
 
 
 

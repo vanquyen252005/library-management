@@ -1,5 +1,6 @@
 package com.example.demo.student;
 
+import com.example.demo.DesignPattern.Singleton.NotificationManager;
 import com.example.demo.HelloController;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
@@ -65,6 +66,10 @@ public class EditProfileController extends ProfileController {
     }
 
     public void SaveProfile(ActionEvent event) {
+        boolean isNotified = NotificationManager.getInstance().userNotify(Integer.parseInt(user.getId()),1,"");
+        if(!isNotified) {
+            System.out.println("#1 unable to notify borrowing book");
+        }
         String username = usernameField.getText();
         String name = nameField.getText();
         String phone = phoneField.getText();

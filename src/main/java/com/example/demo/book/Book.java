@@ -16,6 +16,7 @@ public class Book {
     private String Publisher;
     private String PublishYear;
     private String Image;
+    private int Quantity;
     private static Database Request = Database.getInstance();
     public Book() {
     }
@@ -28,6 +29,15 @@ public class Book {
         PublishYear = publishYear;
         this.Image = image;
     }
+    public Book(String ISBN, String title, String author, String publisher, String publishYear, String image, int Quantity) {
+        this.ISBN = ISBN;
+        Title = title;
+        Author = author;
+        Publisher = publisher;
+        PublishYear = publishYear;
+        this.Image = image;
+        this.Quantity = Quantity;
+    }
 
     public Book(String ISBN, String Title, String Author, String Publisher, String PublishYear) {
         this.ISBN = ISBN;
@@ -35,6 +45,14 @@ public class Book {
         this.Author = Author;
         this.Publisher = Publisher;
         this.PublishYear = PublishYear;
+    }
+
+    public int getQuantity() {
+        return Quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        Quantity = quantity;
     }
 
     public static List<Book> getBook(String searchText) {

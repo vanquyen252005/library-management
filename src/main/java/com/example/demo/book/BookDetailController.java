@@ -1,7 +1,9 @@
 package com.example.demo.book;
 
 
+import com.example.demo.DesignPattern.Singleton.NotificationManager;
 import com.example.demo.student.menuController;
+import com.example.demo.student.studentcontroller;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -21,19 +23,8 @@ import java.util.List;
 
 public class BookDetailController extends menuController{
 
-    private Stage stage;
-    private Scene homeScene; // Store the original home scene
     protected Scene scene;
     protected AnchorPane root;
-
-    public void setStage(Stage stage) {
-        this.stage = stage;
-    }
-
-
-    public void setHomeScene(Scene homeScene) {
-        this.homeScene = homeScene;
-    }
 
 
     @FXML
@@ -62,6 +53,8 @@ public class BookDetailController extends menuController{
     private GridPane FormatComment = new GridPane();
     @FXML
     private  Button UndoRequestButton;
+    @FXML
+    private Label bookQuantity;
 
     public static String ISBN;
 
@@ -69,7 +62,10 @@ public class BookDetailController extends menuController{
 
     private BookQR bookQR = new BookQR();
 
+    private Student user = studentcontroller.getStudent();
+
     private int ParentComment;
+
 
     // Phương thức để nhận ISBN từ controller khác
     public void setISBN(String isbn) {
@@ -95,6 +91,7 @@ public class BookDetailController extends menuController{
             authorLabel.setText(book.getAuthor());
             publisherLabel.setText(book.getPublisher());
             yearLabel.setText(book.getPublishYear());
+            bookQuantity.setText(String.valueOf(book.getQuantity()));
             loadImage(book.getImage(), bookImageView);
         }
     }
@@ -125,30 +122,15 @@ public class BookDetailController extends menuController{
 
     @FXML
     private void BackToHome(ActionEvent event) {
-//        try {
-//            // Debugging to ensure both stage and homeScene are set
-//            if (stage == null) {
-//                System.err.println("BookDetailController: Stage is null.");
-//            }
-//            if (homeScene == null) {
-//                System.err.println("BookDetailController: Home scene is null.");
-//            }
-//
-//            if (homeScene != null && stage != null) {
-//                stage.setScene(homeScene); // Return to the stored home scene
-//                stage.show();
-//                System.out.println("BookDetailController: Returned to home scene.");
-//            } else {
-//                System.err.println("BookDetailController: Home scene or stage is null.");
-//            }
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
         System.out.println("click on back to home button");
     }
 
     @FXML
     private void ClickBorrowButton(ActionEvent event) {
+        boolean isNotified = NotificationManager.getInstance().userNotify(Integer.parseInt(user.getId()),3,ISBN);
+        if(!isNotified) {
+            System.out.println("#3 unable to notify borrowing book");
+        }
         System.out.println("beign in borrow button");
         System.out.println(Borrow_book.getText());
         if (Borrow_book.getText().equals("Borrow")) {
@@ -156,7 +138,7 @@ public class BookDetailController extends menuController{
             //String studentID = current_user.getId();
             //studentID = (studentID != null) ? current_user.getId() : "10101";
             String bookISBN = ISBN;
-            boolean isSent = BookDatabase.sendBorrowRequest("3", bookISBN);
+            boolean isSent = BookDatabase.sendBorrowRequest(user.getId(), bookISBN);
             if (isSent) {
                 Borrow_book.setText("Requested Borrowing");
                 UndoRequestButton.setVisible(true);
@@ -176,8 +158,8 @@ public class BookDetailController extends menuController{
     }
 
     public void check_Isbn_And_User() {
-        String status_of_request = BookDatabase.RequestStatus(3, ISBN); // check if you have requested borrowing
-        boolean isBorrowed = BookDatabase.isBookBorrowed(3,ISBN); // check if is book borrowed
+        String status_of_request = BookDatabase.RequestStatus(Integer.parseInt(user.getId()), ISBN); // check if you have requested borrowing
+        boolean isBorrowed = BookDatabase.isBookBorrowed(Integer.parseInt(user.getId()),ISBN); // check if is book borrowed
         if (status_of_request.equals("pending")) {
             Borrow_book.setText("Requested Borrow");
             UndoRequestButton.setVisible(true);
@@ -190,7 +172,11 @@ public class BookDetailController extends menuController{
 
     @FXML
     public void clickUndoRequestButton(ActionEvent event) {
-        BookDatabase.UndoRequest(3,ISBN);
+        boolean isNotified = NotificationManager.getInstance().userNotify(Integer.parseInt(user.getId()),5,ISBN);
+        if(!isNotified) {
+            System.out.println("#5 unable to notify borrowing book");
+        }
+        BookDatabase.UndoRequest(Integer.parseInt(user.getId()),ISBN);
         UndoRequestButton.setVisible(false);
         Borrow_book.setText("Borrow");
     }
@@ -227,15 +213,6 @@ public class BookDetailController extends menuController{
             commentTextArea.setPrefHeight(50); // Chiều cao cố định
             FormatComment.add(commentTextArea, 1, row+1);// Cột 1, Hàng `row`
 
-
-            TreeView<String> treeView = new TreeView<>();
-            treeView.setPrefWidth(50); // Đặt chiều rộng cố định 300px
-            treeView.setPrefHeight(50); // Đặt chiều cao cố định 400px
-
-//            loadChildrenComment(treeView,comment);
-//            FormatComment.add(treeView,0,row+2);
-
-
             row+=2; // Chuyển sang hàng tiếp theo
         }
 
@@ -250,7 +227,7 @@ public class BookDetailController extends menuController{
     @FXML
     public void PostComment(ActionEvent event) {
         String PostContent = CommentField.getText();
-        BookDatabase.PostCommentForBook(PostContent,ISBN, 3);
+        BookDatabase.PostCommentForBook(PostContent,ISBN, Integer.parseInt(user.getId()));
         FormatComment.getChildren().clear();
         CommentView.getChildren().remove(FormatComment);
         loadComment();
