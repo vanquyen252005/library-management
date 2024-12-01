@@ -196,6 +196,7 @@ import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
@@ -223,6 +224,8 @@ public class homeController extends menuController {
     private Button clear_button;
 
     private int currentPage = 1;
+
+    //private ConnectDB bookDatabase = ConnectDB.getInstance();
 
     private Database bookDatabase = Database.getInstance();
 
@@ -369,6 +372,47 @@ public class homeController extends menuController {
         // Run the task in a background thread
         new Thread(task).start();
     }
+//
+//    private void updateUIWithBooks(List<BookCover> books, String keyword) {
+//        if (keyword.isEmpty()) {
+//            labelSearchResult.setText("Top rated books for you");
+//        } else if (!books.isEmpty()) {
+//            labelSearchResult.setText("Searched books for: " + keyword);
+//        } else {
+//            labelSearchResult.setText("No books found with your query");
+//        }
+//
+//        // Clear existing content before adding new content
+//        GridPane gridPane = new GridPane();
+//        gridPane.setHgap(10);  // Horizontal gap between book covers
+//        gridPane.setVgap(10);
+//        gridPane.setPrefHeight(300);
+//        gridPane.setPrefWidth(300);  // Set a preferred width for the GridPane
+//
+//        // Add book covers to the GridPane
+//        for (int i = 0; i < books.size(); i++) {
+//            BookCover book = books.get(i);
+//
+//            // Create ImageView for book cover
+//            ImageView imageView = new ImageView();
+//            book.display(imageView);
+//
+//            imageView.setFitWidth(180);  // Set width for the image
+//            imageView.setFitHeight(200);  // Optionally, set height for the image
+//            imageView.setPreserveRatio(true);  // Keep aspect ratio of the image
+//            imageView.setOnMouseClicked(event -> openDetailBook(book.getISBN()));
+//
+//            // Add book cover to GridPane at the appropriate position
+//            int column = i % BOOKS_PER_ROW;
+//            int row = i / BOOKS_PER_ROW;
+//            gridPane.add(imageView, column, row);
+//        }
+//
+//        // Clear previous content and add new grid to VBox
+//        VBox.setMargin(gridPane, new Insets(0, 0, 0, 50));
+//        vbox.getChildren().clear();
+//        vbox.getChildren().add(gridPane);
+//    }
 
     private void updateUIWithBooks(List<BookCover> books, String keyword) {
         if (keyword.isEmpty()) {
@@ -379,36 +423,51 @@ public class homeController extends menuController {
             labelSearchResult.setText("No books found with your query");
         }
 
-        // Clear existing content before adding new content
+        // Xóa nội dung cũ trước khi thêm nội dung mới
         GridPane gridPane = new GridPane();
-        gridPane.setHgap(10);  // Horizontal gap between book covers
-        gridPane.setVgap(10);
+        gridPane.setHgap(10);  // Khoảng cách ngang giữa các bìa sách
+        gridPane.setVgap(10);  // Khoảng cách dọc giữa các bìa sách
         gridPane.setPrefHeight(300);
-        gridPane.setPrefWidth(300);  // Set a preferred width for the GridPane
+        gridPane.setPrefWidth(300);  // Đặt chiều rộng ưa thích cho GridPane
 
-        // Add book covers to the GridPane
+        // Thêm các bìa sách vào GridPane
         for (int i = 0; i < books.size(); i++) {
             BookCover book = books.get(i);
 
-            // Create ImageView for book cover
+            // Tạo ImageView cho bìa sách
             ImageView imageView = new ImageView();
             book.display(imageView);
 
-            imageView.setFitWidth(100);  // Set width for the image
-            imageView.setFitHeight(150);  // Optionally, set height for the image
-            imageView.setPreserveRatio(true);  // Keep aspect ratio of the image
+            imageView.setFitWidth(180);  // Đặt chiều rộng cho ảnh
+            imageView.setFitHeight(200);  // Đặt chiều cao cho ảnh (tùy chọn)
+            imageView.setPreserveRatio(true);  // Giữ tỷ lệ ảnh khi thay đổi kích thước
+
+            // Tạo Label cho tên sách
+            Label bookTitleLabel = new Label(book.getTitle());  // Lấy tên sách từ đối tượng BookCover
+            bookTitleLabel.setStyle("-fx-text-fill: black; -fx-font-size: 14px;");  // Đặt kiểu cho label (màu chữ, kích thước)
+
+            // Tạo một VBox chứa cả ImageView và Label
+            VBox bookVBox = new VBox(5);  // Khoảng cách giữa các phần tử là 5px
+            bookVBox.getChildren().addAll(imageView, bookTitleLabel);  // Thêm ảnh và tên sách vào VBox
+
+            // Sự kiện khi nhấn vào ảnh
             imageView.setOnMouseClicked(event -> openDetailBook(book.getISBN()));
 
-            // Add book cover to GridPane at the appropriate position
+            // Thêm VBox vào GridPane tại vị trí phù hợp
             int column = i % BOOKS_PER_ROW;
             int row = i / BOOKS_PER_ROW;
-            gridPane.add(imageView, column, row);
+            gridPane.add(bookVBox, column, row);  // Thêm VBox vào GridPane
         }
 
-        // Clear previous content and add new grid to VBox
+        // Xóa nội dung cũ và thêm GridPane mới vào VBox
         vbox.getChildren().clear();
+
+        // Thêm margin 50px cho GridPane để tạo khoảng cách với lề trái của VBox
+        VBox.setMargin(gridPane, new Insets(0, 0, 0, 50));  // Lề trái 50px, lề trên, dưới, phải là 0px
+
         vbox.getChildren().add(gridPane);
     }
+
 
     private void openDetailBook(String ISBN) {
         BookDetailController.ISBN = ISBN;

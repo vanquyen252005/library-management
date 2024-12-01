@@ -55,12 +55,9 @@ public class studentcontroller extends menuController {
         if (user.login(username.getText(), password.getText())) {
             HelloController.writeAdmin( user,"log.txt");
             displayScene(event, "home.fxml");
-
-
         }
         else {
             loginFailLabel.setVisible(true);
-
         }
     }
 

@@ -1,16 +1,31 @@
 package com.example.demo.book;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.*;
+
+import java.util.concurrent.Future;
+import java.util.List;
+import java.util.ArrayList;
+import java.sql.*;
+
 
 public class Database {
     private static Database instance;
     private Connection connection;
     private static final String URL = "jdbc:mysql://localhost:3306/bookdb";
     private static final String USER = "root";
-    private static final String PASSWORD = "123456789";
+    private static final String PASSWORD = "123456";
+
+    private static final ExecutorService executorService = Executors.newCachedThreadPool();
 
     private Database() {
         try {
@@ -40,6 +55,9 @@ public class Database {
         }
         return ISBN.toString();
     }
+
+
+
 
     public boolean addDocument(String title, String author, String publishYear, String publisher, String imgUrl) {
         String sql = "INSERT INTO books (ISBN, Title, Author, PublishYear, Publisher,`Image-URL-M`) VALUES (?, ?, ?, ?, ?, ?)";
@@ -103,6 +121,32 @@ public class Database {
 
         return books;
     }
+
+    private void loadImage(String imageUrl, ImageView imageView) {
+        try {
+            // Tạo URL và kết nối
+            java.net.URL url = new URL(imageUrl);
+            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+            connection.setDoInput(true);
+            connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36");
+            connection.connect();
+
+            int responseCode = connection.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                // Lấy hình ảnh và gán cho ImageView
+                InputStream input = connection.getInputStream();
+                Image image = new Image(input);
+                imageView.setImage(image);
+            } else {
+                System.err.println("Error loading image: Server returned HTTP response code: " + responseCode + " for URL: " + imageUrl);
+            }
+        } catch (Exception e) {
+            System.err.println("Error loading image: " + e.getMessage());
+        }
+    }
+
+
+
     public List<Book> searchDocuments(String keyword) {
         List<Book> books = new ArrayList<>();
         String sql;
@@ -136,6 +180,8 @@ public class Database {
         }
         return books;
     }
+
+
     public List<Book> searchDocumentsDB(String keyword) {
         List<Book> books = new ArrayList<>();
         String sql;

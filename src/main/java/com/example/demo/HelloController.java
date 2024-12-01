@@ -29,6 +29,13 @@ public class HelloController{
     @FXML
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
+
+          System.out.println("hehe"+getClass().getResource(fxmlLink));
+
+            // Đảm bảo đường dẫn đầy đủ
+            System.out.println("curClass:" + getClass());
+            System.out.println("FXML Path: " + getClass().getResource(fxmlLink));
+
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
             scene = new Scene(root);
             Command switchToScence = new ConcreteCommand(navigationSystem, scene);
@@ -115,7 +122,7 @@ public class HelloController{
     protected void StudentLogin(ActionEvent event) {
         if (user1 != null && user1 instanceof Student) {
             System.out.println('#' + ((Student) user1).getClassname());
-            displayScene(event, "student/menu.fxml");
+            displayScene(event, "student/home.fxml");
         } else {
             displayScene(event,"student/StudentLogin.fxml");
         }

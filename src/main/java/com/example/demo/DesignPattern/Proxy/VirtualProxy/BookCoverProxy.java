@@ -22,6 +22,11 @@ public class BookCoverProxy implements BookCover {
     @Override
     public String getISBN() {return ISBN;}
 
+    @Override
+    public String getTitle() {
+        return bookTitle;
+    }
+
     public BookCoverProxy(String ISBN, String bookTitle, String bookImage) {
         this.bookTitle = bookTitle;
         this.bookImage = bookImage;
