@@ -1,16 +1,21 @@
 package com.example.demo.admin;
 
 import com.example.demo.book.Book;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
 import javafx.util.Callback;
 
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
@@ -28,11 +33,12 @@ public class managebookcontroller extends menucontroller {
     @FXML
     private ProgressIndicator loadingSpinner;
     public static Book onClickBook = new Book();
+//    private static final ExecutorService executorService = Executors.newFixedThreadPool(3);
     @Override
     @FXML
     public void initialize() {
         super.initialize();
-        home.getStyleClass().remove("selected");
+        {home.getStyleClass().remove("selected");
         manageStudent.getStyleClass().remove("select");
         manageBook.getStyleClass().remove("selected");
         handleRequest.getStyleClass().remove("selected");
@@ -49,7 +55,7 @@ public class managebookcontroller extends menucontroller {
 
         manageStudent.getStyleClass().add("pre");
         manageBook.getStyleClass().add("selected");
-        handleRequest.getStyleClass().add("after");
+        handleRequest.getStyleClass().add("after");}
         TableColumn<Book, String> column1 =
                 new TableColumn<>("ISBN");
         TableColumn<Book, String> column2 =
@@ -59,6 +65,7 @@ public class managebookcontroller extends menucontroller {
         TableColumn<Book, String> column4 =
                 new TableColumn<>("Publisher");
         TableColumn<Book, Void> actionColumn = new TableColumn<>("Action");
+        TableColumn<Book, String> imageColumn = new TableColumn<>("Image");
 
         column1.setCellValueFactory(
                 new PropertyValueFactory<>("ISBN"));
@@ -69,6 +76,44 @@ public class managebookcontroller extends menucontroller {
         column4.setCellValueFactory(
                 new PropertyValueFactory<>("Publisher")
         );
+        imageColumn.setCellValueFactory(new PropertyValueFactory<>("Image")); // Thuộc tính "Image" phải trỏ đến URL hoặc đối tượng hợp lệ
+
+        imageColumn.setCellFactory(param -> new TableCell<Book, String>() {
+
+            @Override
+            protected void updateItem(String imageUrl, boolean empty) {
+                super.updateItem(imageUrl, empty);
+
+                if (empty || imageUrl == null) {
+                    setGraphic(null); // Nếu không có dữ liệu, không hiển thị gì
+                } else {
+                    try {
+                        // Gọi hàm loadImage() từ đối tượng Book để tạo ImageView
+                        Book book = getTableView().getItems().get(getIndex());
+                        multiThread.getExecutorService().submit(() -> {
+                            try {
+                                // Load the image in the background
+                                ImageView imageView = book.loadImage(); // Phương thức trả về ImageView đã được cấu hình
+                                imageView.setFitHeight(50); // Chiều cao ảnh
+                                imageView.setFitWidth(50);  // Chiều rộng ảnh
+                                imageView.setPreserveRatio(true); // Duy trì tỷ lệ ảnh
+
+                                // Update the UI (setGraphic) on the JavaFX Application thread
+                                Platform.runLater(() -> setGraphic(imageView)); // Gắn ImageView vào ô
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                                Platform.runLater(() -> setGraphic(null)); // In case of error, clear the graphic
+                            }
+                        });
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        Platform.runLater(() -> setGraphic(null)); // In case of error, clear the graphic
+                    }
+                }
+            }
+        });
+
+
         Callback<TableColumn<Book, Void>, TableCell<Book, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Book, Void> call(final TableColumn<Book, Void> param) {
@@ -157,7 +202,7 @@ public class managebookcontroller extends menucontroller {
         column2.getStyleClass().add("table-student-username-cell");
         column3.getStyleClass().add("table-student-name-cell");
         column4.getStyleClass().add("table-student-class-cell");
-        bookTable.getColumns().addAll(column1, column2, column3, column4, actionColumn);
+        bookTable.getColumns().addAll(column1, column2, column3, column4, actionColumn, imageColumn);
         suggestionList.setVisible(false); // Ẩn gợi ý ban đầu
         input.setOnKeyTyped(this::onKeyTyped); // Lắng nghe sự kiện khi gõ
         suggestionList.setOnMouseClicked(event -> {
@@ -172,85 +217,84 @@ public class managebookcontroller extends menucontroller {
     private List<String> getSearchSuggestions(String searchText) {
         List<String> suggestions = new ArrayList<>();
         List<Book> books = Book.getBookDB(searchText);
-
-        // Tạo ExecutorService với số luồng cố định
-        ExecutorService executorService = Executors.newFixedThreadPool(4);
-
-        // Tạo danh sách các tác vụ
-        List<Callable<List<String>>> tasks = new ArrayList<>();
-
-        // Tác vụ kiểm tra Title
-        tasks.add(() -> {
-            List<String> results = new ArrayList<>();
-            for (Book book : books) {
-                if (book.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
-                    results.add(book.getTitle());
-                }
+        List<String> results = new ArrayList<>();
+        for (Book book : books) {
+            if (book.getTitle().toLowerCase().contains(searchText.toLowerCase())) {
+                results.add(book.getTitle());
             }
-            return results;
-        });
-
-        // Tác vụ kiểm tra ISBN
-        tasks.add(() -> {
-            List<String> results = new ArrayList<>();
+        }
+//        // Tạo ExecutorService với số luồng cố định
+//        ExecutorService executorService = Executors.newFixedThreadPool(4);
+//
+//        // Tạo danh sách các tác vụ
+//        List<Callable<List<String>>> tasks = new ArrayList<>();
+//
+//        // Tác vụ kiểm tra Title
+//        tasks.add(() -> {
+//
+//        });
+//
+//        // Tác vụ kiểm tra ISBN
+//        tasks.add(() -> {
+//            List<String> results = new ArrayList<>();
             for (Book book : books) {
                 if (book.getISBN().toLowerCase().contains(searchText.toLowerCase())) {
                     results.add(book.getISBN());
                 }
             }
-            return results;
-        });
+//            return results;
+//        });
 
         // Tác vụ kiểm tra Author
-        tasks.add(() -> {
-            List<String> results = new ArrayList<>();
+//        tasks.add(() -> {
+//            List<String> results = new ArrayList<>();
             for (Book book : books) {
                 if (book.getAuthor().toLowerCase().contains(searchText.toLowerCase())) {
                     results.add(book.getAuthor());
                 }
             }
-            return results;
-        });
+//            return results;
+//        });
 
         // Tác vụ kiểm tra Publisher
-        tasks.add(() -> {
-            List<String> results = new ArrayList<>();
+//        tasks.add(() -> {
+//            List<String> results = new ArrayList<>();
             for (Book book : books) {
                 if (book.getPublisher().toLowerCase().contains(searchText.toLowerCase())) {
                     results.add(book.getPublisher());
                 }
             }
-            return results;
-        });
+//            return results;
+//        });
 
         // Tác vụ kiểm tra PublishYear
-        tasks.add(() -> {
-            List<String> results = new ArrayList<>();
+//        tasks.add(() -> {
+//            List<String> results = new ArrayList<>();
             for (Book book : books) {
                 if (book.getPublishYear().toLowerCase().contains(searchText.toLowerCase())) {
                     results.add(book.getPublishYear());
                 }
             }
-            return results;
-        });
+//            return results;
+//        });
 
-        try {
-            // Thực hiện các tác vụ song song
-            List<Future<List<String>>> results = executorService.invokeAll(tasks);
-
-            // Tổng hợp kết quả từ các tác vụ
-            for (Future<List<String>> result : results) {
-                suggestions.addAll(result.get());
-            }
-        } catch (InterruptedException | ExecutionException e) {
-            e.printStackTrace();
-        } finally {
-            // Tắt ExecutorService
-            executorService.shutdown();
-        }
+//        try {
+//            // Thực hiện các tác vụ song song
+//            List<Future<List<String>>> results = executorService.invokeAll(tasks);
+//
+//            // Tổng hợp kết quả từ các tác vụ
+//            for (Future<List<String>> result : results) {
+//                suggestions.addAll(result.get());
+//            }
+//        } catch (InterruptedException | ExecutionException e) {
+//            e.printStackTrace();
+//        } finally {
+//            // Tắt ExecutorService
+//            executorService.shutdown();
+//        }
 
         // Loại bỏ các gợi ý trùng lặp (nếu cần)
-        return suggestions.stream().distinct().collect(Collectors.toList());
+        return results.stream().distinct().collect(Collectors.toList());
     }
     private void onKeyTyped(KeyEvent event) {
         String searchText = input.getText().trim();
@@ -293,58 +337,15 @@ public class managebookcontroller extends menucontroller {
     @FXML
     public void searchBook() {
         // Hiển thị spinner
-        loadingSpinner.setVisible(true);
-
-        Task<List<Book>> task = new Task<>() {
-            @Override
-            protected List<Book> call() throws Exception {
-                List<Book> books = new ArrayList<>();
-
-                // Tạo ExecutorService với số luồng cố định
-                ExecutorService executorService = Executors.newFixedThreadPool(4);
-
-                // Tạo danh sách các tác vụ
-                List<Callable<List<Book>>> tasks = new ArrayList<>();
-                tasks.add(() -> Book.searchBooksByTitle(input.getText())); // Tìm kiếm theo Title
-                tasks.add(() -> Book.searchBooksByAuthor(input.getText())); // Tìm kiếm theo Author
-                tasks.add(() -> Book.searchBooksByPublisher(input.getText())); // Tìm kiếm theo Publisher
-
-                try {
-                    // Thực hiện các tác vụ song song
-                    List<Future<List<Book>>> results = executorService.invokeAll(tasks);
-
-                    // Tổng hợp kết quả từ các tác vụ
-                    for (Future<List<Book>> result : results) {
-                        books.addAll(result.get());
-                    }
-
-                } finally {
-                    executorService.shutdown();
-                }
 
                 // Loại bỏ các sách trùng lặp (nếu cần)
-                return books.stream().distinct().collect(Collectors.toList());
-            }
-        };
-
-        // Xử lý khi hoàn thành
-        task.setOnSucceeded(e -> {
-            List<Book> books = task.getValue();
+//        loadingSpinner.setVisible(true);
+            List<Book> books = Book.getBookDB(input.getText());
             bookTable.setItems(FXCollections.observableArrayList(books));
             toggleTableViewVisibility(bookTable, true);
 
             // Ẩn spinner sau khi hoàn thành
-            loadingSpinner.setVisible(false);
-        });
-
-        // Xử lý khi có lỗi
-        task.setOnFailed(e -> {
-            task.getException().printStackTrace();
-            loadingSpinner.setVisible(false);
-        });
-
-        // Chạy Task trong một luồng riêng
-        new Thread(task).start();
+//            loadingSpinner.setVisible(false);
     }
 
     //    public void searchBook() {

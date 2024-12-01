@@ -34,6 +34,7 @@ public class EditProfileController extends ProfileController {
     private Button cancelButton;
 
     public void initialize() {
+        super.initialize();
     }
 
     private void saveUserProfile() {

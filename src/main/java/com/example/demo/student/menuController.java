@@ -17,6 +17,7 @@ import java.io.IOException;
 
 public class menuController extends HelloController {
 
+    public Button back;
     @FXML
     protected AnchorPane contentArea;
     @FXML
@@ -50,7 +51,11 @@ public class menuController extends HelloController {
     }
 
     public void initialize() {
-        //loadContent(contentArea,"home.fxml");
+        homeButton.setOnAction(event -> {home(event);});
+        profileButton.setOnAction(event -> {Profile(event);});
+        returnBookButton.setOnAction(event -> {handleRequest(event);});
+        back.setOnAction(event -> {handleBack(event);});
+        //(contentArea,"home.fxml");
     }
 
     @FXML

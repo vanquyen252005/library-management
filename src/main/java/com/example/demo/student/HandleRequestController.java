@@ -29,6 +29,7 @@ public class HandleRequestController extends menuController {
 
     @FXML
     public void initialize() {
+        super.initialize();
         // Lấy danh sách sách từ cơ sở dữ liệu
         ObservableList<Book_borrowed> books = fetchBooksFromDatabase();
 

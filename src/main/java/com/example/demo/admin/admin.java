@@ -35,7 +35,7 @@ public class admin extends User  {
 //        return false;
     }
     public List<com.example.demo.admin.Request> getRequestBook() {
-        List<com.example.demo.admin.Request> ans = Request.getInQueue();
+        List<com.example.demo.admin.Request> ans = Request.getPendingRequests();
         return ans;
     }
 

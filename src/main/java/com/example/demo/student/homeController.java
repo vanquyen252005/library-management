@@ -241,6 +241,7 @@ public class homeController extends menuController {
 
     @FXML
     public void initialize() {
+        super.initialize();
         scrollPane.setContent(vbox);
         loadTopRatedBooks("");  // Initial load with empty search
         scrollPane.setOnScroll(event -> {
