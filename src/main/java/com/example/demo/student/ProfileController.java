@@ -55,6 +55,7 @@ public class ProfileController extends menuController {
     @FXML
     private TableColumn<BookInfo, String> PublisherColumn;
     public void initialize() {
+        super.initialize();
         fieldColumn.setCellValueFactory(new PropertyValueFactory<>("field"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
 

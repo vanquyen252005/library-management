@@ -24,7 +24,7 @@ public class Database {
     private Connection connection;
     private static final String URL = "jdbc:mysql://localhost:3306/bookdbb";
     private static final String USER = "root";
-    private static final String PASSWORD = "123456";
+    private static final String PASSWORD = "123456789";
 
     private static final ExecutorService executorService = Executors.newCachedThreadPool();
 

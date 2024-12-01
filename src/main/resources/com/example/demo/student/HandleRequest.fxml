@@ -9,7 +9,9 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.HandleRequestController">
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.HandleRequestController">
+
 
 <!-- Menu Panel -->
 <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
@@ -31,6 +33,7 @@
             <Image url="@../../../../Picture/icon.png" />
         </image>
     </ImageView>
+
 
     <Button fx:id="back" layoutX="274.0" layoutY="48.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
     <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" text="Logout" />

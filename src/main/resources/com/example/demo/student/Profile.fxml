@@ -10,23 +10,28 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1315.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.ProfileController">
 
 
 <!-- Menu Panel -->
+
     <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
-        <Button fx:id="homeButton" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#home" prefHeight="41.0" prefWidth="188.0" styleClass=".btn_workbench" text="Home" />
-        <Button fx:id="profileButton" layoutX="12.0" layoutY="376.0" mnemonicParsing="false" onAction="#Profile" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Profile" />
-        <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleRequest" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
+        <Button fx:id="homeButton" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#home" prefHeight="41.0" prefWidth="188.0" styleClass="btn_workbench" text="Home" />
+        <Button fx:id="profileButton" layoutX="12.0" layoutY="376.0" mnemonicParsing="false" onAction="#Profile" prefHeight="41.0" prefWidth="188.0" styleClass="inner_pane" text="Profile" />
+        <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleRequest" prefHeight="41.0" prefWidth="188.0" styleClass="inner_pane" text="Handle request" />
     </Pane>
+
 
 <!-- Header Area (Logo, User info, Buttons) -->
 
     <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="45.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
+
         <image>
             <Image url="@../../../../Picture/profile.png" />
         </image>
     </ImageView>
+
 <!-- Logout Button -->
 
 
