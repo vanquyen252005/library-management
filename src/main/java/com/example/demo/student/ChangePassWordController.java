@@ -1,5 +1,6 @@
 package com.example.demo.student;
 
+import com.example.demo.DesignPattern.Singleton.NotificationManager;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
@@ -17,6 +18,11 @@ public class ChangePassWordController extends EditProfileController {
     public Button Cancel_btn;
 
     public void submit(ActionEvent event) {
+        boolean isNotified = NotificationManager.getInstance().userNotify(Integer.parseInt(user.getId()),2,"");
+        if(!isNotified) {
+            System.out.println("#2 unable to notify borrowing book");
+        }
+
         String oldPassWord = oldPassWordField.getText();
         String newPassWord = newPassWordField.getText();
         String cfNewPassWord = cfNewPassWordfield.getText();
