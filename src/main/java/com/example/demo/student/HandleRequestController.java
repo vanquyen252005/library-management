@@ -1,5 +1,6 @@
 package com.example.demo.student;
 
+import com.example.demo.DesignPattern.Singleton.NotificationManager;
 import com.example.demo.book.Book_borrowed;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -58,6 +59,10 @@ public class HandleRequestController extends menuController {
             }
 
             private void handleReturnBook(Book_borrowed book) {
+                boolean isNotified = NotificationManager.getInstance().userNotify(Integer.parseInt(user.getId()),4,book.getISBN());
+                if(!isNotified) {
+                    System.out.println("#4 unable to notify borrowing book");
+                }
                 jdbc db = jdbc.getInstance();
                 boolean success = db.insertReturnRequest(book.getISBN(), parseInt(user.getId()));
                 if (success) {

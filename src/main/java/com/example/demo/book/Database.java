@@ -575,7 +575,7 @@ import java.sql.*;
 public class Database {
     private static Database instance;
     private Connection connection;
-    private static final String URL = "jdbc:mysql://localhost:3306/bookdb";
+    private static final String URL = "jdbc:mysql://localhost:3306/bookdbb";
     private static final String USER = "root";
     private static final String PASSWORD = "123456789";
 

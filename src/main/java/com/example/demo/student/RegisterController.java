@@ -82,6 +82,8 @@ public class RegisterController extends HelloController {
 
     @FXML
     private Button registerButton;
+    @FXML
+    private Button Back;
 
     String emailRegex = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$";
     String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
@@ -188,7 +190,7 @@ public class RegisterController extends HelloController {
     }
 
     public void backLoginForm(ActionEvent event) {
-        displayScene(event,"student/StudentLogin.fxml");
+        displayScene(event,"StudentLogin.fxml");
     }
 
 

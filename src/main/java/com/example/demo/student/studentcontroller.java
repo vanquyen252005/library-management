@@ -1,5 +1,6 @@
 package com.example.demo.student;
 
+import com.example.demo.HelloApplication;
 import com.example.demo.HelloController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -54,17 +55,18 @@ public class studentcontroller extends menuController {
     public void login(ActionEvent event) {
         if (user.login(username.getText(), password.getText())) {
             HelloController.writeAdmin( user,"log.txt");
-            displayScene(event, "home.fxml");
+            //displayScene(event, "home.fxml");
+            displayScene(HelloApplication.getPrimaryStage(), "student/home.fxml");
         }
         else {
             loginFailLabel.setVisible(true);
         }
     }
 
-    public void Profile(ActionEvent event) {
-        System.out.println("truy cap thanh cong ProfileController");
-        displayScene(event,"Profile.fxml");
-    }
+//    public void Profile(ActionEvent event) {
+//        System.out.println("truy cap thanh cong ProfileController");
+//        displayScene(event,"Profile.fxml");
+//    }
 
 
     public void register(ActionEvent event) {
@@ -73,7 +75,7 @@ public class studentcontroller extends menuController {
     }
 
     public void handleBack(ActionEvent event) {
-        controller.undo();
+        displayScene(HelloApplication.getPrimaryStage(),"hello-view.fxml");
     }
 
 
