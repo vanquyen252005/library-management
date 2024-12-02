@@ -20,6 +20,7 @@
       <Button fx:id="manageStudent" layoutX="40.0" layoutY="189.0" onAction="#handleManageStudentAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Students" />
       <Button fx:id="home" layoutX="40.0" layoutY="141.0" onAction="#handleHomeAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Home" />
       <Button fx:id="handleRequest" layoutX="40.0" layoutY="285.0" onAction="#handleHandleRequestAction" prefHeight="46.0" prefWidth="190.0" styleClass="sidebar-button" text="Handle request" />
+      <Button fx:id="adminNotify" layoutX="49.0" layoutY="347.0" mnemonicParsing="false" onAction="#handleAdminNotifyAction" styleClass="sidebar-button" text="Notification" />
       <Button fx:id="manageBook" layoutX="40.0" layoutY="237.0" onAction="#handleManageBookAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Books">
          <font>
             <Font size="14.0" />

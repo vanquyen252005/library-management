@@ -65,7 +65,9 @@ public class NotificationManager {
         //3 request borrow
         //4 request return
 
+
         String newContent = content;
+
         if(content.contains("profile")) {
             newContent = "user " + user_id + " have made change to the profile information";
         } else if(content.contains("returning") || content.contains("borrowing")) {
@@ -97,7 +99,7 @@ public class NotificationManager {
             String newContent = convertAdminNotification(notify);
             notify.setContent(newContent);
             result.add(notify);
-//            System.out.println("$$$"+notify.getContent());
+
         }
         return result;
     }
