@@ -24,7 +24,7 @@ public class Database {
     private Connection connection;
     private static final String URL = "jdbc:mysql://localhost:3306/bookdbb";
     private static final String USER = "root";
-    private static final String PASSWORD = "123456789";
+    private static final String PASSWORD = "123456";
 
     private static final ExecutorService executorService = Executors.newCachedThreadPool();
 
@@ -646,6 +646,16 @@ public class Database {
         } catch (SQLException e) {
             e.printStackTrace();
             System.err.println("An error occurred while undoing the request.");
+        }
+    }
+
+    public void deleteComment(int comment_id) {
+        String sql = "DELETE FROM book_comments WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, comment_id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

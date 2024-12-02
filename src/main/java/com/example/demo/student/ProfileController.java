@@ -22,34 +22,47 @@ public class ProfileController extends menuController {
     public AnchorPane rootPane;
     public Button back;
     protected Student user = studentcontroller.getStudent();
+    private static ImageView savedImageView;
+    private static String savedImageURI;
     @FXML
-    private ImageView profileImageView;
+    protected ImageView profileImageView = new ImageView();
     @FXML
     private Button editProfileButton;
     @FXML
-    private TableView<UserInfo> userInfoTable;
+    private TableView<UserInfo> userInfoTable = new TableView<>();
     @FXML
-    private TableColumn<UserInfo, String> fieldColumn;
+    private TableColumn<UserInfo, String> fieldColumn = new TableColumn<>();
     @FXML
-    private TableColumn<UserInfo, String> valueColumn;
+    private TableColumn<UserInfo, String> valueColumn = new TableColumn<>();
     @FXML
-    private TableView<BookInfo> borrowedBooksTable;
+    private TableView<BookInfo> borrowedBooksTable = new TableView<>();
     @FXML
-    private TableColumn<BookInfo, String> bookIdColumn;
+    private TableColumn<BookInfo, String> bookIdColumn = new TableColumn<>();
     @FXML
-    private TableColumn<BookInfo, String> borrowedDateColumn;
+    private TableColumn<BookInfo, String> borrowedDateColumn = new TableColumn<>();
     @FXML
-    private TableColumn<BookInfo, String> returnDateColumn;
+    private TableColumn<BookInfo, String> returnDateColumn = new TableColumn<>();
     @FXML
-    private TableColumn<BookInfo, String> TitleColumn;
+    private TableColumn<BookInfo, String> TitleColumn = new TableColumn<>();
     @FXML
-    private TableColumn<BookInfo, String> AuthorColumn;
+    private TableColumn<BookInfo, String> AuthorColumn = new TableColumn<>();
     @FXML
-    private TableColumn<BookInfo, String> PublishYearColumn;
+    private TableColumn<BookInfo, String> PublishYearColumn = new TableColumn<>();
     @FXML
-    private TableColumn<BookInfo, String> PublisherColumn;
+    private TableColumn<BookInfo, String> PublisherColumn = new TableColumn<>();
+
+    public ImageView getProfileImageView() {
+        return profileImageView;
+    }
+
     public void initialize() {
+        if (savedImageURI != null) {
+            System.out.println("Loading saved image.");
+            Image savedImage = new Image(savedImageURI);
+            profileImageView.setImage(savedImage);
+        }
         super.initialize();
+
         fieldColumn.setCellValueFactory(new PropertyValueFactory<>("field"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
 
@@ -171,13 +184,14 @@ public class ProfileController extends menuController {
             return returnDate;
         }
     }
+
     public void chooseProfileImage() {
         // Mở hộp thoại để chọn ảnh
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Chọn ảnh đại diện");
 
         // Đặt thư mục ban đầu
-        File initialDirectory = new File("D:/github/oop/new6/library-management/src/main/resources/Picture");
+        File initialDirectory = new File("C:/library-management/src/main/resources/Picture");
         if (initialDirectory.exists() && initialDirectory.isDirectory()) {
             fileChooser.setInitialDirectory(initialDirectory);
         }
@@ -193,6 +207,7 @@ public class ProfileController extends menuController {
             // Đặt ảnh mới làm ảnh đại diện
             Image newImage = new Image(selectedFile.toURI().toString());
             profileImageView.setImage(newImage);
+            savedImageURI = selectedFile.toURI().toString();
 
             // Thông báo thành công
             Alert alert = new Alert(Alert.AlertType.INFORMATION);

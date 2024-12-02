@@ -217,5 +217,5 @@ public class Book {
     public List<Comment> getCommentList() {
         return Request.GetCommentList(ISBN);
     }
-    public void getNewComment(){};
+
 }

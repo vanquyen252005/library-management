@@ -238,23 +238,7 @@ public class homeController extends menuController {
     private ScrollPane scrollPane;
     @FXML
     private ListView<String> suggestionList;
-    @FXML
 
-    public void initialize() {
-        super.initialize();
-        scrollPane.setContent(vbox);
-        loadTopRatedBooks("");  // Initial load with empty search
-        scrollPane.setOnScroll(event -> {
-            if (scrollPane.getVvalue() >= 0.7) {
-                currentPage++;  // Increase the page
-                loadTopRatedBooks(search_field.getText());  // Load more books
-                scrollPane.setVvalue(0.2);
-            } else if (scrollPane.getVvalue() == 0.0 && currentPage > 0) {
-                currentPage--;
-                loadTopRatedBooks(search_field.getText());  // Load more books
-                scrollPane.setVvalue(0.7);
-            }
-        });
 
     private GridPane bookGridPane = new GridPane();
     @FXML
@@ -320,6 +304,7 @@ public class homeController extends menuController {
             }
         });
         suggestionList.setVisible(false);
+
         if (cachedBookList != null && isBooksDisplayed) {
             // Nếu sách đã được hiển thị trước đó, chỉ cần hiển thị lại
             bookList = cachedBookList;
