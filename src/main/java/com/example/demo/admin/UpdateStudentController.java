@@ -24,10 +24,24 @@ public class UpdateStudentController extends menucontroller {
     @FXML
     public void initialize() {
         super.initialize();
-        super.manageBook.getStyleClass().remove("selected");
-        super.home.getStyleClass().remove("selected");
-        super.manageStudent.getStyleClass().add("selected");
-        super.handleRequest.getStyleClass().remove("selected");
+        home.getStyleClass().remove("selected");
+        manageStudent.getStyleClass().remove("select");
+        manageBook.getStyleClass().remove("selected");
+        handleRequest.getStyleClass().remove("selected");
+
+        home.getStyleClass().remove("pre");
+        manageStudent.getStyleClass().remove("pre");
+        manageBook.getStyleClass().remove("pre");
+        handleRequest.getStyleClass().remove("pre");
+
+        home.getStyleClass().remove("after");
+        manageStudent.getStyleClass().remove("after");
+        manageBook.getStyleClass().remove("after");
+        handleRequest.getStyleClass().remove("after");
+
+        home.getStyleClass().add("pre");
+        manageStudent.getStyleClass().add("selected");
+        manageBook.getStyleClass().add("after");
 //        System.out.println(curStudent.getUsername());
         username.setText(curStudent.getUsername());
         name.setText(curStudent.getName());
@@ -64,5 +78,6 @@ public class UpdateStudentController extends menucontroller {
             // Hiển thị alert
             alert.showAndWait();
         }
+        controller.undo();
     }
 }

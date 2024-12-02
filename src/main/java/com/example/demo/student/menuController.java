@@ -17,6 +17,7 @@ import java.io.IOException;
 
 public class menuController extends HelloController {
 
+    public Button back;
     @FXML
     protected AnchorPane contentArea;
     @FXML
@@ -29,6 +30,8 @@ public class menuController extends HelloController {
     protected Button returnBookButton;
     @FXML
     protected Button logOut;
+    @FXML
+    protected Button notificationButton;
 
 
     public AnchorPane getAnchorPane() {return this.contentArea;}
@@ -50,7 +53,11 @@ public class menuController extends HelloController {
     }
 
     public void initialize() {
-        //loadContent(contentArea,"home.fxml");
+        homeButton.setOnAction(event -> {home(event);});
+        profileButton.setOnAction(event -> {Profile(event);});
+        returnBookButton.setOnAction(event -> {handleRequest(event);});
+        back.setOnAction(event -> {handleBack(event);});
+        //(contentArea,"home.fxml");
     }
 
     @FXML
@@ -64,6 +71,10 @@ public class menuController extends HelloController {
     @FXML
     protected void home(ActionEvent event) {
         displayScene(HelloApplication.getPrimaryStage(), "student/home.fxml");
+    }
+    @FXML
+    protected void notification(ActionEvent event) {
+        displayScene(HelloApplication.getPrimaryStage(), "student/notification.fxml");
     }
 
     public void handleBack(ActionEvent event) {

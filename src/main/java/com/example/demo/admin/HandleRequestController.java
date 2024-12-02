@@ -19,9 +19,23 @@ public class HandleRequestController extends menucontroller{
     @FXML
     public void initialize() {
         super.initialize();
-        super.handleRequest.getStyleClass().add("selected");
-        super.home.getStyleClass().remove("selected");
-//        System.out.println(user.getRole());
+        {home.getStyleClass().remove("selected");
+        manageStudent.getStyleClass().remove("select");
+        manageBook.getStyleClass().remove("selected");
+        handleRequest.getStyleClass().remove("selected");
+
+        home.getStyleClass().remove("pre");
+        manageStudent.getStyleClass().remove("pre");
+        manageBook.getStyleClass().remove("pre");
+        handleRequest.getStyleClass().remove("pre");
+
+        home.getStyleClass().remove("after");
+        manageStudent.getStyleClass().remove("after");
+        manageBook.getStyleClass().remove("after");
+        handleRequest.getStyleClass().remove("after");
+
+        manageBook.getStyleClass().add("pre");
+        handleRequest.getStyleClass().add("selected");}
         TableColumn<Request, String> column1 =
                 new TableColumn<>("ID");
         TableColumn<Request, String> column2 =
@@ -32,6 +46,8 @@ public class HandleRequestController extends menucontroller{
                 new TableColumn<>("RequestvDate");
         TableColumn<Request, String> column5 =
                 new TableColumn<>("Status");
+        TableColumn<Request, String> column6 =
+                new TableColumn<>("Type");
 
         column1.setCellValueFactory(
                 new PropertyValueFactory<>("id"));
@@ -43,42 +59,17 @@ public class HandleRequestController extends menucontroller{
                 new PropertyValueFactory<>("requestDate"));
         column5.setCellValueFactory(
                 new PropertyValueFactory<>("status"));
+        column6.setCellValueFactory(
+                new PropertyValueFactory<>("type"));
 //        List<Request> requests = user.getRequestBook();
 //         Hiển thị các yêu cầu trong table view
-        requestTable.getColumns().addAll(column1, column2, column3, column4, column5);
-loadRequests();
+        requestTable.getColumns().addAll(column1, column2, column3, column4, column5, column6);
+        loadRequests();
     }
     private void loadRequests() {
-        // Bắt đầu spinner
-        loadingSpinner.setVisible(true);
-
-        // Tạo một task để tải dữ liệu yêu cầu trong background
-        Task<List<Request>> task = new Task<List<Request>>() {
-            @Override
-            protected List<Request> call() throws Exception {
-                return Request.getRequest();
-            }
-        };
-
-        // Khi task hoàn thành
-        task.setOnSucceeded(event -> {
-            // Ẩn spinner
-            loadingSpinner.setVisible(false);
-
+        List<Request> requests = Request.getRequest();
             // Cập nhật dữ liệu vào TableView
-            requestTable.setItems(FXCollections.observableArrayList(task.getValue()));
-        });
-
-        // Nếu task có lỗi
-        task.setOnFailed(event -> {
-            loadingSpinner.setVisible(false);
-            task.getException().printStackTrace();
-        });
-
-        // Chạy task trong một thread riêng biệt
-        Thread thread = new Thread(task);
-        thread.setDaemon(true);
-        thread.start();
+            requestTable.setItems(FXCollections.observableArrayList(requests));
     }
 
     public void acceptRequest(ActionEvent event) {
@@ -109,7 +100,14 @@ loadRequests();
         }
     }
 
-    private void showError(String noRequestSelected, String s) {
+    private void showError(String error, String s) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi");
+        alert.setHeaderText("Đã xảy ra lỗi!");
+        alert.setContentText(error);
+
+        // Hiển thị Alert và chờ người dùng đóng
+        alert.showAndWait();
     }
 
     public void declineRequest(ActionEvent event) {

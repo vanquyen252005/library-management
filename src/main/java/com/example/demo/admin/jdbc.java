@@ -10,7 +10,7 @@ public class jdbc {
     jdbc() {
         try {
             connection = DriverManager.getConnection(
-                    "jdbc:mysql://localhost:3306/bookdb",
+                    "jdbc:mysql://localhost:3306/bookdbb",
                     "root",
                     "123456789"
             );
@@ -53,7 +53,7 @@ public class jdbc {
         return resultSet;
     }
 
-    public ArrayList<Request> getInQueue() {
+    public ArrayList<Request> getBorrowRequest() {
         ArrayList<Request> requestList = new ArrayList<>();
 
         try {
@@ -74,7 +74,37 @@ public class jdbc {
                 String status = rs.getString("status");
 
                 // Tạo đối tượng RequestBook và thêm vào danh sách
-                Request request = new Request(id, bookId, userId, requestDate, status);
+                Request request = new Request(id, bookId, userId,"borrow", requestDate, status);
+                requestList.add(request);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return requestList;
+    }
+    public ArrayList<Request> getReturnRequest() {
+        ArrayList<Request> requestList = new ArrayList<>();
+
+        try {
+            String query = "SELECT * FROM request_return_book WHERE status = 'pending' ORDER BY request_date ASC";
+
+            // Dùng PreparedStatement để tạo truy vấn
+            PreparedStatement pstmt = connection.prepareStatement(query);
+
+            // Thực thi truy vấn
+            ResultSet rs = pstmt.executeQuery();
+
+            // Duyệt qua kết quả và thêm vào danh sách
+            while (rs.next()) {
+                int id = rs.getInt("id");
+                String bookId = rs.getString("book_id");
+                int userId = rs.getInt("user_id");
+                String requestDate = rs.getTimestamp("request_date").toString();
+                String status = rs.getString("status");
+
+                // Tạo đối tượng RequestBook và thêm vào danh sách
+                Request request = new Request(id, bookId, userId,"return", requestDate, status);
                 requestList.add(request);
             }
         } catch (Exception e) {
@@ -85,9 +115,10 @@ public class jdbc {
     }
     public List<Request> getPendingRequests() {
         List<Request> requests = new ArrayList<>();
-        String sql = "SELECT * FROM request_borrow_book WHERE status = 'pending'";
+        String sqlBorrow = "SELECT * FROM request_borrow_book WHERE status = 'pending'";
+        String sqlReturn = "SELECT * FROM request_return_book WHERE status = 'pending'";
 try{
-             PreparedStatement pstmt = connection.prepareStatement(sql);
+             PreparedStatement pstmt = connection.prepareStatement(sqlBorrow);
              ResultSet rs = pstmt.executeQuery();
 
             while (rs.next()) {
@@ -95,12 +126,27 @@ try{
                         rs.getInt("id"),
                         rs.getString("book_id"),
                         rs.getInt("user_id"),
+                        "borrow",
                         rs.getTimestamp("request_date").toString(),
                         rs.getString("status")
                 );
                 requests.add(request);
             }
 
+     pstmt = connection.prepareStatement(sqlReturn);
+     rs = pstmt.executeQuery();
+
+    while (rs.next()) {
+        Request request = new Request(
+                rs.getInt("id"),
+                rs.getString("book_id"),
+                rs.getInt("user_id"),
+                "return",
+                rs.getTimestamp("request_date").toString(),
+                rs.getString("status")
+        );
+        requests.add(request);
+    }
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -108,14 +154,21 @@ try{
         return requests;
     }
 
-    public void updateRequestStatus(int id, String status) {
-        String updateQuery = "UPDATE request_borrow_book SET status = ? WHERE id = ?";
+    public void updateRequestStatus(Request request) {
+        String table = " request_" + request.getType() + "_book ";
+        String updateRequest = "UPDATE " + table + " SET status = ? WHERE id = ?";
+        String updateBook = "UPDATE bookdb.books \n" +
+                "SET quantity = CASE \n" +
+                "    WHEN ? = 1 THEN quantity - 1 \n" +
+                "    ELSE quantity + 1 \n" +
+                "END \n" +
+                "WHERE ISBN = ?";
         try{
-        PreparedStatement stmt = connection.prepareStatement(updateQuery);
+        PreparedStatement stmt = connection.prepareStatement(updateRequest);
 
             // Đặt giá trị cho các tham số trong câu lệnh SQL
-            stmt.setString(1, status); // Gán trạng thái mới
-            stmt.setInt(2, id); // Gán ID của yêu cầu cần cập nhật
+            stmt.setString(1, request.getStatus()); // Gán trạng thái mới
+            stmt.setInt(2, request.getId()); // Gán ID của yêu cầu cần cập nhật
 
             // Thực thi câu lệnh cập nhật
             int rowsAffected = stmt.executeUpdate();
@@ -124,6 +177,22 @@ try{
             } else {
                 System.out.println("No request found with the given ID.");
             }
+
+            if (!request.getStatus().equals("rejected")) {
+                stmt = connection.prepareStatement(updateBook);
+                stmt.setString(1, (request.getType().equals("return"))?"0":"1"); // Gán trạng thái mới
+                stmt.setString(2, request.getBookId()); // Gán ID của yêu cầu cần cập nhật
+
+                // Thực thi câu lệnh cập nhật
+                rowsAffected = stmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("Request status updated successfully.");
+                } else {
+                    System.out.println("No request found with the given ID.");
+                }
+            }
+            // Đặt giá trị cho các tham số trong câu lệnh SQL
+
 
         } catch (SQLException e) {
             e.printStackTrace();

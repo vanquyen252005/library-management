@@ -9,15 +9,17 @@ public class Request {
     private String requestDate;
     private String status;
     private static jdbc RequestDB = new jdbc();
+    private String type;
     public Request() {
     }
 
-    public Request(int id, String bookId, int userId, String requestDate, String status) {
+    public Request(int id, String bookId, int userId,String type, String requestDate, String status) {
         this.id = id;
         this.bookId = bookId;
         this.userId = userId;
         this.requestDate = requestDate;
         this.status = status;
+        this.type = type;
     }
 
     public static List<Request> getRequest() {
@@ -44,6 +46,13 @@ public class Request {
         return userId;
     }
 
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
 
     public void setUserId(int userId) {
         this.userId = userId;
@@ -66,6 +75,6 @@ public class Request {
     }
 
     public void updateRequestStatus() {
-        RequestDB.updateRequestStatus(id, status);
+        RequestDB.updateRequestStatus(this);
     }
 }

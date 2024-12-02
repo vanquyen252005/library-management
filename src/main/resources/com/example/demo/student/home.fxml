@@ -24,7 +24,10 @@
         </Pane>
       <ScrollPane fx:id="scrollPane" layoutX="276.0" layoutY="231.0" prefHeight="541.0" prefWidth="872.0">
         <content>
-          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="preView" layoutX="347.0" layoutY="155.0" prefHeight="200.0" prefWidth="100.0" visible="false" />
+               </children></AnchorPane>
         </content>
       </ScrollPane>
         <VBox layoutX="439.0" layoutY="185.0" prefHeight="200.0" prefWidth="399.0">
@@ -33,14 +36,19 @@
                 <ListView fx:id="suggestionList" prefHeight="175.0" prefWidth="250.0" />
             </children>
         </VBox>
-<<<<<<< Updated upstream
-        <Button fx:id="back" layoutX="44.0" layoutY="652.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
-=======
+
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../../Picture/icon.png" />
          </image>
       </ImageView>
->>>>>>> Stashed changes
-    </children>
+
+     <Button fx:id="back" layoutX="274.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
+     <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" text="Logout" />
+     <Button fx:id="notificationButton" layoutX="1008.0" layoutY="23.0" mnemonicParsing="false" onAction="#notification" text="Notifcation" />
+
+
+
+
+ </children>
 </AnchorPane>

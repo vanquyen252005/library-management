@@ -49,6 +49,24 @@ public class detailbookcontroller extends menucontroller {
     @FXML
     public void initialize() {
         super.initialize();
+        home.getStyleClass().remove("selected");
+        manageStudent.getStyleClass().remove("select");
+        manageBook.getStyleClass().remove("selected");
+        handleRequest.getStyleClass().remove("selected");
+
+        home.getStyleClass().remove("pre");
+        manageStudent.getStyleClass().remove("pre");
+        manageBook.getStyleClass().remove("pre");
+        handleRequest.getStyleClass().remove("pre");
+
+        home.getStyleClass().remove("after");
+        manageStudent.getStyleClass().remove("after");
+        manageBook.getStyleClass().remove("after");
+        handleRequest.getStyleClass().remove("after");
+
+        manageStudent.getStyleClass().add("pre");
+        manageBook.getStyleClass().add("selected");
+        handleRequest.getStyleClass().add("after");
 
         bookImageView.setFitWidth(200); // Chiều rộng (px)
         bookImageView.setFitHeight(300);

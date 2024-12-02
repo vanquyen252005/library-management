@@ -3,6 +3,7 @@ package com.example.demo.admin;
 import com.example.demo.student.Student;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
 public class createstudentcontroller extends menucontroller {
@@ -19,10 +20,24 @@ public class createstudentcontroller extends menucontroller {
     @FXML
     public void initialize() {
         super.initialize();
-        super.manageBook.getStyleClass().remove("selected");
-        super.home.getStyleClass().remove("selected");
-        super.manageStudent.getStyleClass().add("selected");
-        super.handleRequest.getStyleClass().remove("selected");
+        home.getStyleClass().remove("selected");
+        manageStudent.getStyleClass().remove("select");
+        manageBook.getStyleClass().remove("selected");
+        handleRequest.getStyleClass().remove("selected");
+
+        home.getStyleClass().remove("pre");
+        manageStudent.getStyleClass().remove("pre");
+        manageBook.getStyleClass().remove("pre");
+        handleRequest.getStyleClass().remove("pre");
+
+        home.getStyleClass().remove("after");
+        manageStudent.getStyleClass().remove("after");
+        manageBook.getStyleClass().remove("after");
+        handleRequest.getStyleClass().remove("after");
+
+        home.getStyleClass().add("pre");
+        manageStudent.getStyleClass().add("selected");
+        manageBook.getStyleClass().add("after");
 
     }
     @FXML
@@ -34,6 +49,28 @@ public class createstudentcontroller extends menucontroller {
                 "Student",
                 phone.getText(),
                 Class.getText());
-        Student.addStudent(newStudent);
+        boolean flag =  Student.addStudent(newStudent);
+        if (flag == true) {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Add Student");
+            alert.setHeaderText("Add Student");
+            alert.setContentText("Add Student '"
+                    + newStudent.getName() + "' successfully!"
+            );
+
+            // Hiển thị alert
+            alert.showAndWait();
+        } else {
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Add Student");
+            alert.setHeaderText("Add Student");
+            alert.setContentText("Add Student '"
+                    +  newStudent.getName()  + "' failed!"
+            );
+
+            // Hiển thị alert
+            alert.showAndWait();
+        }
+        controller.undo();
     }
 }
