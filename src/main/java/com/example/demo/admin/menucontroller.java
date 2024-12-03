@@ -39,8 +39,6 @@ public class menucontroller extends HelloController {
     protected Button manageBook;
     @FXML
     protected Button handleRequest;
-    @FXML
-    protected Button adminNotify;
     public admin user = admincontroller.user;
     @FXML
     public void initialize() {
@@ -51,7 +49,6 @@ public class menucontroller extends HelloController {
         manageBook.setOnAction(event -> handleManageBookAction(event));
         handleRequest.setOnAction(event -> handleHandleRequestAction(event));
         back.setOnAction(event -> handleBack(event));
-        adminNotify.setOnAction(event -> handleAdminNotifyAction(event));
         TreeItem<String> rootItem = new TreeItem<>("Hello " + user.getUsername() );
         rootItem.setExpanded(false); // Mở rộng TreeView mặc định
         adminNotify.setImage(new Image(getClass().getResourceAsStream("/Picture/rb_2177.png")));
@@ -176,10 +173,6 @@ public class menucontroller extends HelloController {
 
     public void handleHandleRequestAction(ActionEvent event) {
         displayScene(event, "HandleRequest.fxml");
-    }
-
-    public void handleAdminNotifyAction(ActionEvent event) {
-        displayScene(event, "adminNotification.fxml");
     }
 
     public void handleBack(ActionEvent event) {
