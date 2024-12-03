@@ -238,7 +238,8 @@ public class homeController extends menuController {
     private ScrollPane scrollPane;
     @FXML
     private ListView<String> suggestionList;
-    @FXML
+
+
     private GridPane bookGridPane = new GridPane();
     @FXML
     private VBox preView;
@@ -293,7 +294,6 @@ public class homeController extends menuController {
 
     @FXML
     public void initialize() {
-        super.initialize();
         bookGridPane.setHgap(50);
         bookGridPane.setVgap(30);
         scrollPane.setContent(bookGridPane);

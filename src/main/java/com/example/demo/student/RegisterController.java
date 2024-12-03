@@ -6,10 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
 
 import java.util.List;
@@ -29,36 +26,15 @@ public class RegisterController extends HelloController {
     private TextField nameField;
 
     @FXML
-    private TextField passwordField;
+    private PasswordField passwordField;
 
     @FXML
-    private TextField retextField;
+    private PasswordField confirmtField;
 
     @FXML
     private TextField classNameField;
 
     // Label declarations
-    @FXML
-    private Label emailConditionLabel;
-
-    @FXML
-    private Label phoneConditionLabel;
-
-    @FXML
-    private Label usernameConditionLabel;
-
-    @FXML
-    private Label nameConditionLabel;
-
-    @FXML
-    private Label passwordConditionLabel;
-
-    @FXML
-    private Label retextConditionLabel;
-
-    @FXML
-    private Label classNameConditionLabel;
-
     @FXML
     private Label emailLabel;
 
@@ -92,110 +68,61 @@ public class RegisterController extends HelloController {
     private static jdbc Database = jdbc.getInstance();
     private boolean ableToRegister = true;
 
-
-
-    @FXML
-    public void initialize() {
-        emailConditionLabel.setText("required to fill out"); //1
-        usernameConditionLabel.setText("required to fill out"); //2
-        passwordConditionLabel.setText("required to fill out"); //3
-        retextConditionLabel.setText("required to fill out"); //4
-        nameConditionLabel.setText("required to fill out"); //5
-        phoneConditionLabel.setText("not required");
-        classNameConditionLabel.setText("not required");
-
-        emailField.setOnKeyTyped(event -> UpdateConditionLabel(emailField, emailLabel ,1));
-        usernameField.setOnKeyTyped(event -> UpdateConditionLabel(usernameField, usernameLabel,2));
-        passwordField.setOnKeyTyped(event -> UpdateConditionLabel(passwordField, passwordLabel,3));
-        retextField.setOnKeyTyped(event -> UpdateConditionLabel(retextField, retextLabel,4));
-        nameField.setOnKeyTyped(event -> UpdateConditionLabel(nameField, nameLabel,5));
-
-
-    }
-
-    public void ifFieldNull(Label InspectLabel, TextField InspectField) {
-        if (InspectField.getText().equals("")) {
-            InspectLabel.setText("required to fill out");
-        }
-    }
-
-    public void UpdateConditionLabel(TextField InspectField, Label InspectLabel , int conditionRoute) {
-//        InspectField.setOnKeyTyped(event -> {
-        ifFieldNull(InspectLabel, InspectField);
-        String onField = InspectField.getText();
-
-        if (conditionRoute == 1) {
-            boolean isValid = Pattern.matches(emailRegex, onField) && Database.CheckExistedEmail(emailField.getText());
-            ableToRegister &= isValid;
-            if(isValid) {
-                emailConditionLabel.setText("proper email");
-            }
-            else emailConditionLabel.setText("this email is not valid");
-        }
-        else if (conditionRoute == 2) {
-            boolean isValid = Database.CheckExistedUsername(usernameField.getText());
-            ableToRegister &= isValid;
-            if(isValid) {
-                usernameConditionLabel.setText("proper username");
-            }
-            else usernameConditionLabel.setText("this username existed");
-        }
-        else if (conditionRoute == 3) {
-            boolean isValid = Pattern.matches(passwordRegex, onField);
-            ableToRegister &= isValid;
-            if(isValid) {
-                passwordConditionLabel.setText("proper password");
-            }
-            else passwordConditionLabel.setText("this password is not valid");
-
-        }
-        else if (conditionRoute == 4) {
-            boolean isValid = retextField.getText().equals(passwordField.getText());
-            ableToRegister &= isValid;
-            if (isValid) {
-                retextLabel.setText("correct password");
-            }
-            else retextLabel.setText("unmatched password");
-        }
-        else if (conditionRoute == 5) {
-            boolean isValid = Database.CheckExistedName(nameField.getText());
-            ableToRegister &= isValid;
-            if(isValid) {
-                nameLabel.setText("proper name");
-            }
-            else nameLabel.setText("this name existed");
-        }
-    }
-
     @FXML
     public void clickRegisterButton(ActionEvent event) {
-        if(ableToRegister) {
-            Student newStudent = new Student(
-                    usernameField.getText(),
-                    passwordField.getText(),
-                    nameField.getText(),
-                    "student",
-                    phoneField.getText(),
-                    classNameField.getText());
-            Student.addStudent(newStudent);
-            displayScene(event,"student/StudentLogin.fxml");
+
+        String email = emailField.getText();
+        if (!email.matches(emailRegex)) {
+            showErrorAlert("Địa chỉ email không hợp lệ", "Vui lòng nhập một địa chỉ email hợp lệ.");
+            return;
         }
-        else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Lỗi Đăng Ký");
-            alert.setHeaderText("Đăng ký thất bại");
-            alert.setContentText("Vui lòng kiểm tra thông tin và thử lại.");
-            alert.showAndWait();
+
+        String password = passwordField.getText();
+        if (!password.matches(passwordRegex)) {
+            showErrorAlert("Mật khẩu không hợp lệ",
+                    "Mật khẩu phải có ít nhất 8 ký tự, bao gồm cả chữ hoa, chữ thường, số và ký tự đặc biệt.");
+            return;
         }
+
+        String confirmPassword = confirmtField.getText();
+        if (!password.equals(confirmPassword)) {
+            showErrorAlert("Mật khẩu không khớp", "Bạn cần xác nhận đúng mật khẩu");
+            return;
+        }
+
+        if (nameField.getText().isEmpty() || phoneField.getText().isEmpty() || classNameField.getText().isEmpty()) {
+            showErrorAlert("Thông tin không đầy đủ", "Vui lòng điền đầy đủ thông tin.");
+            return;
+        }
+
+        Student newStudent = new Student(
+                usernameField.getText(),
+                passwordField.getText(),
+                nameField.getText(),
+                "student",
+                phoneField.getText(),
+                classNameField.getText());
+        Student.addStudent(newStudent);
+        displayScene(event,"student/StudentLogin.fxml");
     }
+
+    private void showErrorAlert(String headerText, String contentText) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Lỗi Đăng Ký");
+        alert.setHeaderText(headerText);
+
+        // Tạo một TextArea thay vì Label
+        TextArea textArea = new TextArea(contentText);
+        textArea.setEditable(false);  // Không cho phép chỉnh sửa
+        textArea.setWrapText(true);   // Cho phép gói dòng
+        textArea.setMaxHeight(200);   // Hạn chế chiều cao của TextArea nếu cần
+        textArea.setMinWidth(300);    // Cài đặt chiều rộng tối thiểu
+        alert.getDialogPane().setContent(textArea);
+        alert.showAndWait();
+    }
+
 
     public void backLoginForm(ActionEvent event) {
         displayScene(event,"StudentLogin.fxml");
     }
-
-
-
-
-
-
 }
