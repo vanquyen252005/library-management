@@ -31,6 +31,7 @@ public class NotificationController extends menuController {
     private Student user = studentcontroller.getStudent();
 
     public void initialize() {
+        super.initialize();
         UpNotification();
     }
 
