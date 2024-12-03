@@ -12,7 +12,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -33,7 +32,7 @@ public class menuController extends HelloController {
     protected Button logOut;
     @FXML
     protected Button notificationButton;
-    public Student user = new Student();
+
 
     public AnchorPane getAnchorPane() {return this.contentArea;}
 
@@ -58,7 +57,6 @@ public class menuController extends HelloController {
         profileButton.setOnAction(event -> {Profile(event);});
         returnBookButton.setOnAction(event -> {handleRequest(event);});
         back.setOnAction(event -> {handleBack(event);});
-        logOut.setOnAction(event -> {logOut(event);});
         //(contentArea,"home.fxml");
     }
 
@@ -81,13 +79,5 @@ public class menuController extends HelloController {
 
     public void handleBack(ActionEvent event) {
         controller.undo();
-    }
-
-    public void logOut(ActionEvent event) {
-//        user = null;
-        user1 = null;
-        HelloController.writeUser(null,"log.txt");
-        Stage stage = HelloApplication.getPrimaryStage();
-        HelloController.displayScene(stage, "hello-view.fxml");
     }
 }
