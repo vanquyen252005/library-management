@@ -7,16 +7,6 @@ public class Request {
     private String bookId;
     private int userId;
     private String requestDate;
-
-    public void setReturnDate(String returnDate) {
-        this.returnDate = returnDate;
-    }
-
-    public String getReturnDate() {
-        return returnDate;
-    }
-
-    private String returnDate;
     private String status;
     private static jdbc RequestDB = new jdbc();
     private String type;

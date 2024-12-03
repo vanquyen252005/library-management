@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.homeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.homeController">
 
  <children>
         <Button fx:id="search_button" layoutX="1008.0" layoutY="172.0" mnemonicParsing="false" onAction="#clickOKButton" text="search" />
@@ -44,7 +44,7 @@
       </ImageView>
 
      <Button fx:id="back" layoutX="274.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
-     <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" onAction="#logOut" text="Logout" />
+     <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" text="Logout" />
      <Button fx:id="notificationButton" layoutX="1008.0" layoutY="23.0" mnemonicParsing="false" onAction="#notification" text="Notifcation" />
 
 
