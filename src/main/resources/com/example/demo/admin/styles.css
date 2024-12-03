@@ -255,74 +255,26 @@
 /* TreeView */
 .tree-view {
     -fx-font-size: 14px;
-    -fx-pref-height: 30px;
-    -fx-background-color: transparent;
-    -fx-control-inner-background: transparent;
-    -fx-padding: 0;
-    -fx-text-fill: black; /* Chỉnh màu chữ thành đen */
+   -fx-background-color: transparent; /* Loại bỏ nền */
+   -fx-control-inner-background: transparent; /* Loại bỏ nền bên trong */
+   -fx-padding: 0; /* Bỏ padding (nếu cần) */
+}
+.tree-cell .tree-disclosure-node {
+    -fx-background-color: transparent; /* Làm nền của nút trong suốt */
 }
 
-.tree-view.expanded {
--fx-pref-height: 120px;
--fx-background-radius:10px;
--fx-background-color:white;
-}
-.tree-view .tree-cell {
-    -fx-text-fill: black; /* Đảm bảo mỗi cell có chữ màu đen */
-
-}
-
-/*.tree-view:expanded {
--fx-pref-height: 100px;
-}*/
-/*.tree-cell .tree-disclosure-node {
-    -fx-background-color: transparent; *//* Làm nền của nút trong suốt *//*
-}*/
-/*
 .tree-cell .tree-disclosure-node > .arrow {
-    -fx-background-color: transparent; *//**//* Làm trong suốt mũi tên *//*
-    -fx-stroke: #000; *//**//* Màu của mũi tên *//*
-    -fx-stroke-width: 2; *//**//* Độ dày mũi tên *//*
-}*/
+    -fx-background-color: transparent; /* Làm trong suốt mũi tên */
+    -fx-stroke: #000; /* Màu của mũi tên */
+    -fx-stroke-width: 2; /* Độ dày mũi tên */
+}
+.tree-cell:expanded {
+    -fx-background-color: lightblue; /* Thêm nền màu khi mở rộng */
+}
 .content-box {
     -fx-background-color: rgba(255, 255, 255, 0.9); /* Nền trắng trong suốt */
     -fx-border-radius: 20; /* Góc bo tròn */
     -fx-background-radius: 20;
     -fx-padding: 20; /* Khoảng cách bên trong */
     -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0, 2, 2); /* Hiệu ứng bóng */
-}
-.list-view {
-    -fx-background-color: transparent;
-    -fx-border-color: #cccccc;
-    -fx-border-width: 1;
-
-}
-/* Loại bỏ màu nền mặc định khi mục trong ListView được chọn */
-.list-cell:focused {
-    -fx-background-color: #f0f0f0; /* Không có màu nền */
-}
-
-/* Thêm màu nền tùy chỉnh khi mục trong ListView được chọn */
-.list-cell:focused:selected {
-    -fx-background-color: #f0f0f0; /* Không có màu nền khi mục được chọn */
-}
-
-/* Nếu bạn muốn chọn một màu nền khác khi mục được chọn */
-.list-cell:selected {
-    -fx-background-color: #f0f0f0; /* Ví dụ: màu nền sáng khi chọn */
-}
-
-/* Loại bỏ màu nền mặc định khi mục trong ListView được chọn */
-.tree-view:focused {
-    -fx-background-color: #f0f0f0; /* Không có màu nền */
-}
-
-/* Thêm màu nền tùy chỉnh khi mục trong ListView được chọn */
-.tree-view:focused:selected {
-    -fx-background-color: #f0f0f0; /* Không có màu nền khi mục được chọn */
-}
-
-/* Nếu bạn muốn chọn một màu nền khác khi mục được chọn */
-.tree-view:selected {
-    -fx-background-color: #f0f0f0; /* Ví dụ: màu nền sáng khi chọn */
 }

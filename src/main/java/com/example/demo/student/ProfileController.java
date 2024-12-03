@@ -56,7 +56,6 @@ public class ProfileController extends menuController {
     }
 
     public void initialize() {
-        super.initialize();
         if (savedImageURI != null) {
             System.out.println("Loading saved image.");
             Image savedImage = new Image(savedImageURI);
