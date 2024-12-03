@@ -23,7 +23,7 @@ public class ProfileController extends menuController {
     public Button back;
     protected Student user = studentcontroller.getStudent();
     private static ImageView savedImageView;
-    private static String savedImageURI;
+    protected static String savedImageURI;
     @FXML
     protected ImageView profileImageView = new ImageView();
     @FXML
@@ -61,7 +61,6 @@ public class ProfileController extends menuController {
             Image savedImage = new Image(savedImageURI);
             profileImageView.setImage(savedImage);
         }
-        super.initialize();
 
         fieldColumn.setCellValueFactory(new PropertyValueFactory<>("field"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
