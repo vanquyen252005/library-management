@@ -33,7 +33,7 @@ public class menuController extends HelloController {
     protected Button logOut;
     @FXML
     protected Button notificationButton;
-    public Student user = new Student();
+
 
     public AnchorPane getAnchorPane() {return this.contentArea;}
 
@@ -58,10 +58,8 @@ public class menuController extends HelloController {
         profileButton.setOnAction(event -> {Profile(event);});
         returnBookButton.setOnAction(event -> {handleRequest(event);});
         back.setOnAction(event -> {handleBack(event);});
-        logOut.setOnAction(event -> {logOut(event);});
         //(contentArea,"home.fxml");
     }
-
     @FXML
     protected void Profile(ActionEvent event) {
         displayScene(HelloApplication.getPrimaryStage(), "student/Profile.fxml");

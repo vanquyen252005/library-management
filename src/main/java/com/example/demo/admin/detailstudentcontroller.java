@@ -60,11 +60,11 @@ public class detailstudentcontroller extends menucontroller {
     }
 
     private void loadBook() {
-        ArrayList<Book_borrowed> cur = curStudent.getBorrowingBook();
-        for (Book_borrowed x:cur) {
-            borrowingBook.getItems().add(x);
+//        ArrayList<Book_borrowed> cur = curStudent.getBorrowingBook();
+//        for (Book_borrowed x:cur) {
+//            borrowingBook.getItems().add(x);
 //            System.out.println(x.getTitle());
-        }
+//        }
     }
 
 }

@@ -1015,6 +1015,15 @@ public class Database {
             e.printStackTrace();
         }
     }
+    public void deleteComment(int comment_id) {
+        String sql = "DELETE FROM book_comments WHERE id = ?";
+        try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setInt(1, comment_id);
+            pstmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Book getBookByISBN(String isbn) {
         Book book = null;

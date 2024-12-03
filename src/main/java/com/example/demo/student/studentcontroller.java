@@ -75,8 +75,7 @@ public class studentcontroller extends menuController {
     }
 
     public void handleBack(ActionEvent event) {
-        controller.undo();
-//        displayScene(HelloApplication.getPrimaryStage(),"hello-view.fxml");
+        displayScene(HelloApplication.getPrimaryStage(),"hello-view.fxml");
     }
 
 

@@ -18,7 +18,7 @@ public class admin extends User  {
             ResultSet resultSet = Request.getData(username, password);
             while (resultSet.next() != false) {
                 if (resultSet.getString("role").equals("admin")) {
-                    //super.setID(resultSet.getString("id"));
+                    super.setID(resultSet.getString("id"));
                     super.setUsername(resultSet.getString("username"));
                     super.setPassword(resultSet.getString("password"));
                     super.setName(resultSet.getString("name"));
