@@ -8,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.util.Duration;
 
 import java.util.Scanner;
@@ -36,6 +37,7 @@ public class EditProfileController extends ProfileController {
 
     public void initialize() {
         super.initialize();
+        profileImageView = getProfileImageView();
     }
 
     private void saveUserProfile() {

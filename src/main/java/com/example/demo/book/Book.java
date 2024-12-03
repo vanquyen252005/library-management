@@ -210,6 +210,7 @@ public class Book {
     public List<Comment> getCommentList() {
         return Request.GetCommentList(ISBN);
     }
+
     public void getNewComment(){};
 
     public Book(String ISBN, String title, String author, String publisher, String publishYear, String image, int quantity) {
@@ -225,4 +226,5 @@ public class Book {
     public int getQuantity() {
         return quantity;
     }
+
 }
