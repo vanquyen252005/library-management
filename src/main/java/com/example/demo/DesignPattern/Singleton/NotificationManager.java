@@ -64,11 +64,11 @@ public class NotificationManager {
         if(content.contains("profile")) {
             newContent = "user " + user_id + " have made change to the profile information";
         } else if(content.contains("returning") || content.contains("borrowing")) {
-            newContent = "user " + user_id + content.substring(4);
+            newContent = "user " + user_id + " " + content.substring(4);
         } else if(content.contains("password")) {
             newContent = "user " + user_id + " have changed the password";
         }
-
+        System.out.println(newContent);
         return newContent;
     }
 
@@ -77,19 +77,21 @@ public class NotificationManager {
 
         for (Notification notification : notificationList) {
             // Kiểm tra nếu content chứa "undo"
+
             if (notification.getContent().contains("undo") && !notificationStack.isEmpty()) {
                 notificationStack.pop();
                 continue;
             }
+
             notificationStack.push(notification);
         }
 
         List<Notification> result = new ArrayList<>();
 
         for(Notification notify : notificationStack) {
-            String content = notify.getContent();
             String newContent = convertAdminNotification(notify);
             notify.setContent(newContent);
+            System.out.println(newContent);
             result.add(notify);
         }
         return result;
