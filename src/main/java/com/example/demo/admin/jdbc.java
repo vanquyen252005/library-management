@@ -1,8 +1,11 @@
 package com.example.demo.admin;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 public class jdbc {
     Connection connection;
@@ -12,7 +15,7 @@ public class jdbc {
             connection = DriverManager.getConnection(
                     "jdbc:mysql://localhost:3306/bookdbb",
                     "root",
-                    "123456"
+                    "123456789"
             );
 
             statement = connection.createStatement();
@@ -163,6 +166,13 @@ try{
                 "    ELSE quantity + 1 \n" +
                 "END \n" +
                 "WHERE ISBN = ?";
+        String updateBorrowedBook = "insert into book_borrowed (`book_id`,\n" +
+                "                `user_id`,\n" +
+                "                `borrow_date`,\n" +
+                "                `return_date`\n" +
+                "                ) values\n" +
+                "                (?,?,\n" +
+                "                CURRENT_TIMESTAMP, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL ? DAY))";
         try{
         PreparedStatement stmt = connection.prepareStatement(updateRequest);
 
@@ -191,8 +201,16 @@ try{
                     System.out.println("No request found with the given ID.");
                 }
             }
-            // Đặt giá trị cho các tham số trong câu lệnh SQL
-
+               stmt = connection.prepareStatement(updateBorrowedBook);
+               stmt.setString(1,request.getBookId());
+               stmt.setInt(2,request.getUserId());
+               stmt.setInt(3,parseInt(request.getReturnDate()));
+               rowsAffected = stmt.executeUpdate();
+               if (rowsAffected > 0) {
+                   System.out.println("update book borrowed");
+               } else {
+                   System.out.println("No update book borrowed.");
+               }
 
         } catch (SQLException e) {
             e.printStackTrace();

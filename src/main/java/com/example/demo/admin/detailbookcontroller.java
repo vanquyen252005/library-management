@@ -3,7 +3,6 @@ package com.example.demo.admin;
 import com.example.demo.book.Book;
 import com.example.demo.book.BookQR;
 import com.example.demo.book.Comment;
-import com.example.demo.book.Database;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -14,10 +13,6 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 public class detailbookcontroller extends menucontroller {
@@ -28,19 +23,15 @@ public class detailbookcontroller extends menucontroller {
     @FXML
     public TableView requestBook1;
     @FXML
-    public Text name;
-    @FXML
-    public Text id;
-    @FXML
-    public Text Class;
-    @FXML
-    public Text phone;
-    @FXML
     public TreeView<String> miniBar;
     @FXML
     public ImageView QRImageView;
     public TextField CommentField;
     public AnchorPane CommentView;
+    public Label yearLabel;
+    public Label publisherLabel;
+    public Label authorLabel;
+    public Label titleLabel;
     @FXML
     private GridPane FormatComment = new GridPane();
     @FXML
@@ -49,11 +40,12 @@ public class detailbookcontroller extends menucontroller {
     protected ImageView bookImageView;
     private int ParentComment;
 
+//    private ConnectDB BookDatabase = ;
     @Override
     @FXML
     public void initialize() {
         super.initialize();
-        home.getStyleClass().remove("selected");
+        {home.getStyleClass().remove("selected");
         manageStudent.getStyleClass().remove("select");
         manageBook.getStyleClass().remove("selected");
         handleRequest.getStyleClass().remove("selected");
@@ -70,14 +62,17 @@ public class detailbookcontroller extends menucontroller {
 
         manageStudent.getStyleClass().add("pre");
         manageBook.getStyleClass().add("selected");
-        handleRequest.getStyleClass().add("after");
+        handleRequest.getStyleClass().add("after");}
 
         bookImageView.setFitWidth(200); // Chiều rộng (px)
         bookImageView.setFitHeight(300);
         bookImageView.setPreserveRatio(true);
         bookImageView.setImage(curBook.loadImage().getImage());
+        titleLabel.setText(curBook.getTitle());
+        authorLabel.setText(curBook.getAuthor());
+        publisherLabel.setText(curBook.getPublisher());
+        yearLabel.setText(curBook.getPublishYear());
 
-        loadComment();
     }
 
     public void ClickBookQR(ActionEvent event) {
@@ -88,25 +83,13 @@ public class detailbookcontroller extends menucontroller {
 
 
     public void loadComment() {
-
+        //List<Comment> commentList = BookDatabase.GetCommentList(ISBN);
         List<Comment> commentList = curBook.getCommentList();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-
-        Collections.sort(commentList, new Comparator<Comment>() {
-            @Override
-            public int compare(Comment o1, Comment o2) {
-                LocalDateTime date1 = LocalDateTime.parse(o1.getDate(), formatter);
-                LocalDateTime date2 = LocalDateTime.parse(o2.getDate(), formatter);
-                return date2.compareTo(date1);
-            }
-        });
-
-
 
         ParentComment = commentList.size();
         // CommentField.setText("");
 
-        if (commentList.isEmpty()) {
+        if (commentList == null || commentList.isEmpty()) {
             System.out.println("No comments found for ISBN: " + curBook.getISBN());
             return;
         }
@@ -120,24 +103,27 @@ public class detailbookcontroller extends menucontroller {
         // Duyệt qua danh sách bình luận và thêm vào GridPane
         int row = 0;
         for (Comment comment : commentList) {
-            Button deleteCommentButton = new Button("Xóa bình luận");
-            Label userLabel = new Label("Admin" + comment.getUserId());
-            Label dateLabel = new Label("Time: " + comment.getDate());
+            // Tạo Label hiển thị User ID
+            Label userLabel = new Label("User: " + comment.getUserId());
+            Label dateLabel = new Label("User: " + comment.getDate());
             FormatComment.add(userLabel, 0, row);
-            FormatComment.add(dateLabel, 1, row);
-            FormatComment.add(deleteCommentButton,2, row+1);
-
+            FormatComment.add(dateLabel, 1, row); // Thêm Label vào cột 0, hàng `row`
+            // Cột 0, Hàng `row`
 
             TextArea commentTextArea = new TextArea(comment.getContent());
-            commentTextArea.setWrapText(true);
-            commentTextArea.setEditable(false);
-            commentTextArea.setPrefHeight(50);
-            FormatComment.add(commentTextArea, 1, row+1);
+            commentTextArea.setWrapText(true); // Tự xuống dòng nếu nội dung dài
+            commentTextArea.setEditable(false); // Chỉ đọc
+            commentTextArea.setPrefHeight(50); // Chiều cao cố định
+            FormatComment.add(commentTextArea, 1, row+1);// Cột 1, Hàng `row`
 
 
-            deleteCommentButton.setOnAction(event -> {
-                clickOndeleteComment(event,comment);
-            });
+            TreeView<String> treeView = new TreeView<>();
+            treeView.setPrefWidth(50); // Đặt chiều rộng cố định 300px
+            treeView.setPrefHeight(50); // Đặt chiều cao cố định 400px
+
+//            loadChildrenComment(treeView,comment);
+//            FormatComment.add(treeView,0,row+2);
+
 
             row+=2; // Chuyển sang hàng tiếp theo
         }
@@ -149,28 +135,21 @@ public class detailbookcontroller extends menucontroller {
         AnchorPane.setLeftAnchor(FormatComment, 20.0);   // Cách cạnh trái 10px
         AnchorPane.setRightAnchor(FormatComment, 10.0);  // Cách cạnh phải 10px
 
-    }
 
-    @FXML
-    public void clickOndeleteComment(ActionEvent event, Comment comment) {
-        System.out.println("you click delete comment");
-        Database.getInstance().deleteComment(comment.getId());
-        FormatComment.getChildren().clear();
-        CommentView.getChildren().remove(FormatComment);
-        loadComment();
+
     }
 
     @FXML
     public void PostComment(ActionEvent event) {
-        System.out.println(user.getId());
         String PostContent = CommentField.getText();
-        Database.getInstance().PostCommentForBook(PostContent,curBook.getISBN(),Integer.parseInt(admincontroller.user.getId()) );
+        //BookDatabase.PostCommentForBook(PostContent,curBook.getISBN(), 3);
+//        curBook.getNewComment(PostContent,user.getId());
+//        FormatComment.getChildren().clear();
+//        CommentView.getChildren().remove(FormatComment);
+//        loadComment();
+//        CommentField.clear();
 
-        //curBook.getNewComment(PostContent,Integer.parseInt(user.getId()));
-        FormatComment.getChildren().clear();
-        CommentView.getChildren().remove(FormatComment);
-        loadComment();
-        CommentField.clear();
+
 
     }
 
