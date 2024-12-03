@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.homeController">
+
+ <children>
+        <Button fx:id="search_button" layoutX="1008.0" layoutY="172.0" mnemonicParsing="false" onAction="#clickOKButton" text="search" />
+        <Button fx:id="clear_button" layoutX="859.0" layoutY="172.0" mnemonicParsing="false" onAction="#clickClearButton" text="Clear" />
+        <Label fx:id="labelSearchResult" layoutX="468.0" layoutY="131.0" prefHeight="17.0" prefWidth="326.0" text="Label" />
+        <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
+            <Button fx:id="homeButton" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#home" prefHeight="41.0" prefWidth="188.0" styleClass=".btn_workbench" text="Home" />
+            <Button fx:id="profileButton" layoutX="12.0" layoutY="376.0" mnemonicParsing="false" onAction="#Profile" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Profile" />
+            <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleRequest" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
+        </Pane>
+      <ScrollPane fx:id="scrollPane" layoutX="276.0" layoutY="231.0" prefHeight="541.0" prefWidth="872.0">
+        <content>
+          <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0">
+               <children>
+                  <VBox fx:id="preView" layoutX="347.0" layoutY="155.0" prefHeight="200.0" prefWidth="100.0" visible="false" />
+               </children></AnchorPane>
+        </content>
+      </ScrollPane>
+        <VBox layoutX="439.0" layoutY="185.0" prefHeight="200.0" prefWidth="399.0">
+            <children>
+                <TextField fx:id="search_field" prefHeight="25.0" prefWidth="348.0" />
+                <ListView fx:id="suggestionList" prefHeight="175.0" prefWidth="250.0" />
+            </children>
+        </VBox>
+
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../../Picture/icon.png" />
+         </image>
+      </ImageView>
+
+     <Button fx:id="back" layoutX="274.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
+     <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" onAction="#logOut" text="Logout" />
+     <Button fx:id="notificationButton" layoutX="1008.0" layoutY="23.0" mnemonicParsing="false" onAction="#notification" text="Notifcation" />
+
+
+
+
+ </children>
+</AnchorPane>
