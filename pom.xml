@@ -64,6 +64,16 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-
+      <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-controls</artifactId>
+          <version>17.0.6</version> <!-- Thay bằng phiên bản JavaFX phù hợp -->
+      </dependency>
+      <!-- JavaFX Media Module -->
+      <dependency>
+          <groupId>org.openjfx</groupId>
+          <artifactId>javafx-media</artifactId>
+          <version>17.0.6</version>
+      </dependency>
   </dependencies>
 </project>

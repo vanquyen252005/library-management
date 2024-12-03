@@ -32,7 +32,7 @@ public class RealBookCover implements BookCover {
         executorService.submit(() -> {
             try {
                 // Tạo URL và kết nối
-                java.net.URL url = new URL(imageUrl);
+                URL url = new URL(imageUrl);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setDoInput(true);
                 connection.setRequestProperty("User-Agent", "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/85.0.4183.121 Safari/537.36");
