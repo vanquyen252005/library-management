@@ -23,19 +23,15 @@ public class detailbookcontroller extends menucontroller {
     @FXML
     public TableView requestBook1;
     @FXML
-    public Text name;
-    @FXML
-    public Text id;
-    @FXML
-    public Text Class;
-    @FXML
-    public Text phone;
-    @FXML
     public TreeView<String> miniBar;
     @FXML
     public ImageView QRImageView;
     public TextField CommentField;
     public AnchorPane CommentView;
+    public Label yearLabel;
+    public Label publisherLabel;
+    public Label authorLabel;
+    public Label titleLabel;
     @FXML
     private GridPane FormatComment = new GridPane();
     @FXML
@@ -49,7 +45,7 @@ public class detailbookcontroller extends menucontroller {
     @FXML
     public void initialize() {
         super.initialize();
-        home.getStyleClass().remove("selected");
+        {home.getStyleClass().remove("selected");
         manageStudent.getStyleClass().remove("select");
         manageBook.getStyleClass().remove("selected");
         handleRequest.getStyleClass().remove("selected");
@@ -66,12 +62,17 @@ public class detailbookcontroller extends menucontroller {
 
         manageStudent.getStyleClass().add("pre");
         manageBook.getStyleClass().add("selected");
-        handleRequest.getStyleClass().add("after");
+        handleRequest.getStyleClass().add("after");}
 
         bookImageView.setFitWidth(200); // Chiều rộng (px)
         bookImageView.setFitHeight(300);
         bookImageView.setPreserveRatio(true);
         bookImageView.setImage(curBook.loadImage().getImage());
+        titleLabel.setText(curBook.getTitle());
+        authorLabel.setText(curBook.getAuthor());
+        publisherLabel.setText(curBook.getPublisher());
+        yearLabel.setText(curBook.getPublishYear());
+
     }
 
     public void ClickBookQR(ActionEvent event) {

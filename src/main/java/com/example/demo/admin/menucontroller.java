@@ -1,5 +1,6 @@
 package com.example.demo.admin;
 
+import com.example.demo.DesignPattern.Singleton.Music;
 import com.example.demo.DesignPattern.Singleton.Notification;
 import com.example.demo.DesignPattern.Singleton.NotificationManager;
 import com.example.demo.HelloApplication;
@@ -29,6 +30,7 @@ public class menucontroller extends HelloController {
     public ListView notifyList;
     public ImageView adminNotify;
     public AnchorPane notifyPane;
+    private static Music music = Music.getInstance();
     @FXML
     protected Button home;
     @FXML
@@ -50,16 +52,12 @@ public class menucontroller extends HelloController {
         TreeItem<String> rootItem = new TreeItem<>("Hello " + user.getUsername() );
         rootItem.setExpanded(false); // Mở rộng TreeView mặc định
         adminNotify.setImage(new Image(getClass().getResourceAsStream("/Picture/rb_2177.png")));
-        // Tạo các mục con
         TreeItem<String> logoutItem = new TreeItem<>("Logout");
-        TreeItem<String> changeThemeItem = new TreeItem<>("Change Theme");
+        TreeItem<String> changeThemeItem = new TreeItem<>("Play/Pause music");
         // Thêm các mục con vào gốc
         rootItem.getChildren().addAll(logoutItem, changeThemeItem);
         notifyPane.setPrefHeight(0);
         notifyList.setOpacity(0);
-
-        // Tạo TreeView
-//        TreeView<String> miniBar = new TreeView<>(rootItem);
         miniBar.setRoot(rootItem);
         miniBar.setShowRoot(true);
         miniBar.getStyleClass().add("tree-view");
@@ -69,8 +67,6 @@ public class menucontroller extends HelloController {
             rootItem.setExpanded(true); // Mở rộng khi di chuột vào
             miniBar.getStyleClass().add("expanded"); // Thêm CSS nếu cần
         });
-
-// Thêm sự kiện di chuột ra
         miniBar.setOnMouseExited(event -> {
             rootItem.setExpanded(false); // Thu gọn khi di chuột ra
             miniBar.getStyleClass().remove("expanded"); // Xóa CSS nếu cần
@@ -82,14 +78,23 @@ public class menucontroller extends HelloController {
                         case "Logout":
                             user = null;
                             user1 = null;
-                            HelloController.writeAdmin(null,"log.txt");
+                            HelloController.writeUser(null,"log.txt");
                             Stage stage = HelloApplication.getPrimaryStage();
-                            HelloController.displayScene(stage, "hello-view.fxml");
+                            displayScene(stage, "hello-view.fxml");
                             // Xử lý logout ở đây
                             break;
-                        case "Change Theme":
+                        case "Play/Pause music":
                             System.out.println("Đã chọn Change Theme");
-                            // Xử lý đổi theme ở đây
+                            switch (music.getStatus()) {
+                                case PLAYING:
+                                    music.pauseSong();
+                                    break;
+                                case PAUSED:
+                                    music.playSong();
+                                    break;
+                                default:
+                                    System.out.println("Nhạc không chạy!");
+                            }
                             break;
                         default:
                             break;
@@ -97,6 +102,14 @@ public class menucontroller extends HelloController {
         });
         UpNotification();
         notifyList.setPrefHeight(0);
+
+        if (music.getNameSong() == null) {
+            music.setNameSong("music.mp3");
+            music.playSong();
+        }
+
+        // Nút phát nhạc
+
     }
     public void UpNotification() {
         List<Notification> notificationList = NotificationManager.getInstance().getNotificationList();

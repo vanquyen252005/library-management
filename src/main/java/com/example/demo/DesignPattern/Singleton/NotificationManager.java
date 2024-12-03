@@ -13,22 +13,17 @@ public class NotificationManager {
     private NotificationManager (){
         notificationList = Database.getInstance().getNotificationList();
         //content#date#user_id
-//        System.out.println("form manager");
-//        for (Notification x:notificationList) {
-//            System.out.println(x.getNotify_date());
-//        }
     }
 
     public static NotificationManager getInstance() {
         if (instance == null) {
             instance = new NotificationManager();
         }
-        instance.notificationList = Database.getInstance().getNotificationList();
         return instance;
     }
 
     public List<Notification> getUserNotification(int user_id) {
-
+        notificationList = Database.getInstance().getNotificationList();
         System.out.println("before take notify list for usser id , the total size is " + notificationList.size());
         List<Notification> resultList = new ArrayList<>();
 
@@ -65,15 +60,15 @@ public class NotificationManager {
         //3 request borrow
         //4 request return
 
-        String newContent = content;
+        String newContent = "";
         if(content.contains("profile")) {
             newContent = "user " + user_id + " have made change to the profile information";
         } else if(content.contains("returning") || content.contains("borrowing")) {
-            newContent = "user " + user_id + content.substring(4);
+            newContent = "user " + user_id + " " + content.substring(4);
         } else if(content.contains("password")) {
             newContent = "user " + user_id + " have changed the password";
         }
-
+        System.out.println(newContent);
         return newContent;
     }
 
@@ -87,17 +82,17 @@ public class NotificationManager {
                 notificationStack.pop();
                 continue;
             }
+
             notificationStack.push(notification);
         }
 
         List<Notification> result = new ArrayList<>();
 
         for(Notification notify : notificationStack) {
-            String content = notify.getContent();
             String newContent = convertAdminNotification(notify);
             notify.setContent(newContent);
+            System.out.println(newContent);
             result.add(notify);
-//            System.out.println("$$$"+notify.getContent());
         }
         return result;
     }

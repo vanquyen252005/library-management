@@ -6,11 +6,12 @@
 <?import javafx.scene.control.TreeView?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
-<?import javafx.scene.text.Text?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="header" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.menucontroller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="header" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.detailstudentcontroller">
    <children>
       <Pane fx:id="pane21" layoutX="192.0" layoutY="261.0" prefHeight="46.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Pane fx:id="pane2" layoutX="192.0" layoutY="224.0" prefHeight="46.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
@@ -26,32 +27,74 @@
       <AnchorPane layoutX="229.0" layoutY="73.0" prefHeight="699.0" prefWidth="949.0" styleClass="content" AnchorPane.bottomAnchor="27.799999999999955" AnchorPane.leftAnchor="229.0" AnchorPane.rightAnchor="21.600000000000023" AnchorPane.topAnchor="72.79999999999995">
          <children>
             <Button fx:id="back" layoutX="98.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleBack" text="Quay lại" />
-            <Pane fx:id="detailStudent" layoutX="92.0" layoutY="55.0" prefHeight="326.0" prefWidth="717.0">
+            <Pane fx:id="detailStudent" layoutX="92.0" layoutY="55.0" prefHeight="357.0" prefWidth="718.0">
                <children>
-                  <Label layoutX="39.0" layoutY="24.0" text="Name:" />
-                  <Label layoutX="42.0" layoutY="89.0" prefHeight="30.0" prefWidth="76.0" text="Class:" />
-                  <Label layoutX="42.0" layoutY="147.0" prefHeight="30.0" prefWidth="76.0" text="ID:" />
-                  <Label layoutX="42.0" layoutY="212.0" prefHeight="41.0" prefWidth="90.0" text="Phone:" />
-                  <Text fx:id="name" layoutX="87.0" layoutY="39.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="id" layoutX="87.0" layoutY="169.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="Class" layoutX="87.0" layoutY="111.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
-                  <Text fx:id="phone" layoutX="87.0" layoutY="239.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Text">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Text>
+                  <VBox layoutX="238.0" layoutY="27.0" prefHeight="219.0" prefWidth="200.0">
+                     <children>
+                        <HBox layoutX="10.0" layoutY="101.0" prefHeight="47.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="58.0" text="ID:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="id" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="57.0" prefHeight="47.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="85.0" text="Username:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Label>
+                              <Label fx:id="username" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="None">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="47.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="58.0" text="Name:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Label>
+                              <Label fx:id="name" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="10.0" prefHeight="47.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="58.0" text="Class:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Label>
+                              <Label fx:id="Class" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </HBox>
+                        <HBox layoutX="10.0" layoutY="104.0" prefHeight="47.0" prefWidth="200.0">
+                           <children>
+                              <Label prefHeight="18.0" prefWidth="58.0" text="Phone:">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font></Label>
+                              <Label fx:id="phone" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
+                                 <font>
+                                    <Font size="14.0" />
+                                 </font></Label>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
                </children>
             </Pane>
          </children>

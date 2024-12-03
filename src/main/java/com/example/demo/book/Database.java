@@ -1263,11 +1263,6 @@ public class Database {
     }
 
     public boolean userNotify(int user_id, int type, String ISBN) {
-        //1 change profile info
-        //2 change password
-        //3 request borrow
-        //4 request return
-        //5 undo borrow
 
         String content = "";
 

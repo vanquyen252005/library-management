@@ -25,7 +25,7 @@ public class admincontroller extends HelloController {
     public void login(ActionEvent event) {
         //System.out.println(username);
        if (user.login(username.getText(), password.getText())) {
-            HelloController.writeAdmin( user,"log.txt");
+            HelloController.writeUser( user,"log.txt");
             displayScene(event, "menu.fxml");
         }
         else {

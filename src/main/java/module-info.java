@@ -8,6 +8,7 @@ module com.example.demo {
     requires org.json;
     requires com.google.zxing;
     requires com.google.zxing.javase;
+    requires javafx.media;
 
 
     opens com.example.demo to javafx.fxml;
