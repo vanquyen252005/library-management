@@ -30,12 +30,11 @@ public class HelloController{
     protected void displayScene(ActionEvent event, String fxmlLink) {
         try {
 
-//            System.out.println("hehe" + getClass());
-//          System.out.println("hehe"+getClass().getResource(fxmlLink));
-//
-//            // Đảm bảo đường dẫn đầy đủ
-//            System.out.println("curClass:" + getClass());
-//            System.out.println("FXML Path: " + getClass().getResource(fxmlLink));
+          System.out.println("hehe"+getClass().getResource(fxmlLink));
+
+            // Đảm bảo đường dẫn đầy đủ
+            System.out.println("curClass:" + getClass());
+            System.out.println("FXML Path: " + getClass().getResource(fxmlLink));
 
             root = FXMLLoader.load(getClass().getResource(fxmlLink));
             scene = new Scene(root);
@@ -52,15 +51,14 @@ public class HelloController{
             Parent root = loader.load();
             // Tạo Scene mới và gán vào Stage
             Scene scene = new Scene(root);
-            NavigationSystem navigationSystem1 = new NavigationSystem(stage);
-            Command switchToScence = new ConcreteCommand(navigationSystem1, scene);
-            controller.executeCommand(switchToScence);
+            stage.setScene(scene);
+            stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public static void writeUser(User user, String fileName) {
+    public static void writeAdmin(User user, String fileName) {
         String path = "src/main/resources/com/example/demo/" + fileName;
 
         try  {
@@ -72,7 +70,7 @@ public class HelloController{
             System.err.println("Lỗi khi ghi đối tượng: " + e.getMessage());
         }
     }
-    public static User readUser(String fileName) {
+    public static User readAdmin(String fileName) {
         String path = "src/main/resources/com/example/demo/" + fileName;
         try  {
             ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
@@ -92,9 +90,9 @@ public class HelloController{
     }
     @FXML
     public void initialize() {
-        if (HelloController.readUser("log.txt") != null) {
+        if (HelloController.readAdmin("log.txt") != null) {
             System.out.println("kdoaljdoids");
-            user1 = HelloController.readUser("log.txt");
+            user1 = HelloController.readAdmin("log.txt");
             if (user1 instanceof admin) {
             admincontroller.user = (admin) user1;}
             else if (user1 instanceof Student) {
