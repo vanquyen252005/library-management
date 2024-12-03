@@ -26,7 +26,7 @@ public class admincontroller extends HelloController {
         //System.out.println(username);
        if (user.login(username.getText(), password.getText())) {
             HelloController.writeUser( user,"log.txt");
-            displayScene(event, "menu.fxml");
+            displayScene(event, "Home.fxml");
         }
         else {
             loginFailLabel.setVisible(true);

@@ -160,7 +160,7 @@ try{
     public void updateRequestStatus(Request request) {
         String table = " request_" + request.getType() + "_book ";
         String updateRequest = "UPDATE " + table + " SET status = ? WHERE id = ?";
-        String updateBook = "UPDATE bookdb.books \n" +
+        String updateBook = "UPDATE books \n" +
                 "SET quantity = CASE \n" +
                 "    WHEN ? = 1 THEN quantity - 1 \n" +
                 "    ELSE quantity + 1 \n" +
@@ -173,6 +173,8 @@ try{
                 "                ) values\n" +
                 "                (?,?,\n" +
                 "                CURRENT_TIMESTAMP, DATE_ADD(CURRENT_TIMESTAMP, INTERVAL ? DAY))";
+        String deleteBorrowBook = "DELETE FROM book_borrowed \n" +
+                "where user_id = ? and book_id = ? ";
         try{
         PreparedStatement stmt = connection.prepareStatement(updateRequest);
 
@@ -192,7 +194,7 @@ try{
                 stmt = connection.prepareStatement(updateBook);
                 stmt.setString(1, (request.getType().equals("return"))?"0":"1"); // Gán trạng thái mới
                 stmt.setString(2, request.getBookId()); // Gán ID của yêu cầu cần cập nhật
-
+                System.out.println(stmt);
                 // Thực thi câu lệnh cập nhật
                 rowsAffected = stmt.executeUpdate();
                 if (rowsAffected > 0) {
@@ -201,16 +203,32 @@ try{
                     System.out.println("No request found with the given ID.");
                 }
             }
-               stmt = connection.prepareStatement(updateBorrowedBook);
-               stmt.setString(1,request.getBookId());
-               stmt.setInt(2,request.getUserId());
-               stmt.setInt(3,parseInt(request.getReturnDate()));
-               rowsAffected = stmt.executeUpdate();
-               if (rowsAffected > 0) {
-                   System.out.println("update book borrowed");
-               } else {
-                   System.out.println("No update book borrowed.");
-               }
+            System.out.println(request.getType());
+              if (!request.getType().equals("return")) {
+                  stmt = connection.prepareStatement(updateBorrowedBook);
+                  stmt.setString(1,request.getBookId());
+                  stmt.setInt(2,request.getUserId());
+                  stmt.setInt(3,parseInt(request.getReturnDate()));
+                  rowsAffected = stmt.executeUpdate();
+                  if (rowsAffected > 0) {
+                      System.out.println("update book borrowed");
+                  } else {
+                      System.out.println("No update book borrowed.");
+                  }
+              } else {
+                  System.out.println("111111"+request.getType());
+
+                  stmt = connection.prepareStatement(deleteBorrowBook);
+                  stmt.setInt(1,request.getUserId());
+                  stmt.setString(2,request.getBookId());
+                  System.out.println(stmt);
+                  rowsAffected = stmt.executeUpdate();
+                  if (rowsAffected > 0) {
+                      System.out.println("update book borrowed");
+                  } else {
+                      System.out.println("No update book borrowed.");
+                  }
+              }
 
         } catch (SQLException e) {
             e.printStackTrace();

@@ -151,7 +151,24 @@
 .create-button:hover {
     -fx-background-color: #FFC107; /* Màu vàng nhạt hơn khi hover */
 }
-
+#back {
+    -fx-background-color: #D3D3D3; /* Màu xám nhạt */
+    -fx-text-fill: black; /* Chữ màu đen */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+    -fx-border-color: #B0B0B0; /* Viền xám đậm hơn */
+    -fx-border-width: 1px;
+    -fx-padding: 5px 10px;
+}
+#back:hover {
+    -fx-background-color: #C0C0C0; /* Xám đậm hơn khi di chuột */
+}
+.button-update {
+    -fx-background-color: #FFC107; /* Vàng cam */
+    -fx-text-fill: black; /* Chữ màu đen */
+    -fx-border-radius: 5px;
+    -fx-background-radius: 5px;
+}
 .search-button {
     -fx-background-color: #4CAF50; /* Màu vàng */
     -fx-text-fill: #ffffff; /* Màu chữ tối để dễ đọc */
@@ -312,17 +329,27 @@
     -fx-background-color: #f0f0f0; /* Ví dụ: màu nền sáng khi chọn */
 }
 
-/* Loại bỏ màu nền mặc định khi mục trong ListView được chọn */
+/* Loại bỏ màu nền mặc định khi TreeView được tập trung (focused) */
 .tree-view:focused {
-    -fx-background-color: #f0f0f0; /* Không có màu nền */
+    -fx-background-color: transparent; /* Nền trong suốt */
 }
 
-/* Thêm màu nền tùy chỉnh khi mục trong ListView được chọn */
-.tree-view:focused:selected {
-    -fx-background-color: #f0f0f0; /* Không có màu nền khi mục được chọn */
+/* Loại bỏ màu nền khi mục được chọn trong TreeView */
+.tree-cell:selected {
+    -fx-background-color: transparent; /* Không có màu nền khi mục được chọn */
 }
 
-/* Nếu bạn muốn chọn một màu nền khác khi mục được chọn */
-.tree-view:selected {
-    -fx-background-color: #f0f0f0; /* Ví dụ: màu nền sáng khi chọn */
+/* Tùy chỉnh màu nền khi mục được chọn và TreeView được tập trung */
+.tree-cell:selected:focused {
+    -fx-background-color: transparent; /* Màu nền tùy chỉnh khi chọn */
+}
+
+/* Tùy chỉnh màu chữ khi mục được chọn */
+.tree-cell:selected {
+    -fx-text-fill: #000000; /* Đặt màu chữ (đen) cho mục được chọn */
+}
+
+/* Đảm bảo màu chữ mặc định cho các mục không được chọn */
+.tree-cell {
+    -fx-text-fill: -fx-text-base-color; /* Màu chữ mặc định */
 }

@@ -456,5 +456,6 @@ public class homeController extends menuController {
     }
 
     public void logOut(ActionEvent event) {
+
     }
 }

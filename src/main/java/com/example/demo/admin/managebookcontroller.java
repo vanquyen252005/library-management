@@ -146,7 +146,7 @@ public class managebookcontroller extends menucontroller {
                             detailBook(book.getBook(), event);
                         });
 
-                        updateButton.getStyleClass().add("update-button");
+                        updateButton.getStyleClass().add("button-update");
                         // Đặt sự kiện cho nút "Delete"
                         updateButton.setOnAction(event -> {
                             Book book = getTableView().getItems().get(getIndex());
