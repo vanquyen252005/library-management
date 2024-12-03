@@ -8,6 +8,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 import java.util.Scanner;
@@ -17,6 +19,7 @@ public class EditProfileController extends ProfileController {
     public Label Notification;
     @FXML
     public Button ChangePassWord_lbn;
+    public ImageView imageView = new ImageView();
     @FXML
     private TextField usernameField;
     @FXML
@@ -36,6 +39,11 @@ public class EditProfileController extends ProfileController {
 
     public void initialize() {
         super.initialize();
+        if (savedImageURI != null) {
+            System.out.println("Loading saved image.");
+            Image savedImage = new Image(savedImageURI);
+            imageView.setImage(savedImage);
+        }
     }
 
     private void saveUserProfile() {

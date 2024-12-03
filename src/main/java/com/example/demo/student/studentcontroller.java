@@ -54,7 +54,7 @@ public class studentcontroller extends menuController {
 
     public void login(ActionEvent event) {
         if (user.login(username.getText(), password.getText())) {
-            HelloController.writeUser( user,"log.txt");
+            HelloController.writeAdmin( user,"log.txt");
             //displayScene(event, "home.fxml");
             displayScene(HelloApplication.getPrimaryStage(), "student/home.fxml");
         }
@@ -75,8 +75,7 @@ public class studentcontroller extends menuController {
     }
 
     public void handleBack(ActionEvent event) {
-        controller.undo();
-//        displayScene(HelloApplication.getPrimaryStage(),"hello-view.fxml");
+        displayScene(HelloApplication.getPrimaryStage(),"hello-view.fxml");
     }
 
 

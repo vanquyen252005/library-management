@@ -20,7 +20,7 @@
    <!-- Header Area (Logo, User info, Buttons) -->
 
       <!-- Logout Button -->
-
+   <Button fx:id="logOut" text="Logout" />
       <!-- Change Theme Button -->
    <!-- Logo Image -->
 
@@ -28,7 +28,6 @@
    <!-- User Info (User ID) -->
    <Label layoutX="81.0" layoutY="231.0" text="User ID: 12345" />
    <Button fx:id="back" layoutX="301.0" layoutY="694.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
-   <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" onAction="#logOut" text="Logout" />
    <Button fx:id="notificationButton" layoutX="1077.0" layoutY="34.0" mnemonicParsing="false" onAction="#notification" text="Notifcation" />
 
 </AnchorPane>
