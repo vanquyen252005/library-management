@@ -1,67 +1,61 @@
 package com.example.demo.student;
 
+import com.example.demo.HelloController;
+import com.example.demo.book.Book;
 import com.example.demo.book.Book_borrowed;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.FileChooser;
+import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.util.ArrayList;
-import javafx.scene.control.Alert;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import java.io.File;
+import java.util.Objects;
+
+import static java.lang.Integer.parseInt;
 
 
 public class ProfileController extends menuController {
     public AnchorPane rootPane;
     public Button back;
     protected Student user = studentcontroller.getStudent();
-    private static ImageView savedImageView;
-    protected static String savedImageURI;
-    @FXML
-    protected ImageView profileImageView = new ImageView();
     @FXML
     private Button editProfileButton;
     @FXML
-    private TableView<UserInfo> userInfoTable = new TableView<>();
+    private TableView<UserInfo> userInfoTable;
     @FXML
-    private TableColumn<UserInfo, String> fieldColumn = new TableColumn<>();
+    private TableColumn<UserInfo, String> fieldColumn;
     @FXML
-    private TableColumn<UserInfo, String> valueColumn = new TableColumn<>();
+    private TableColumn<UserInfo, String> valueColumn;
     @FXML
-    private TableView<BookInfo> borrowedBooksTable = new TableView<>();
+    private TableView<BookInfo> borrowedBooksTable;
     @FXML
-    private TableColumn<BookInfo, String> bookIdColumn = new TableColumn<>();
+    private TableColumn<BookInfo, String> bookIdColumn;
     @FXML
-    private TableColumn<BookInfo, String> borrowedDateColumn = new TableColumn<>();
+    private TableColumn<BookInfo, String> borrowedDateColumn;
     @FXML
-    private TableColumn<BookInfo, String> returnDateColumn = new TableColumn<>();
+    private TableColumn<BookInfo, String> returnDateColumn;
     @FXML
-    private TableColumn<BookInfo, String> TitleColumn = new TableColumn<>();
+    private TableColumn<BookInfo, String> TitleColumn;
     @FXML
-    private TableColumn<BookInfo, String> AuthorColumn = new TableColumn<>();
+    private TableColumn<BookInfo, String> AuthorColumn;
     @FXML
-    private TableColumn<BookInfo, String> PublishYearColumn = new TableColumn<>();
+    private TableColumn<BookInfo, String> PublishYearColumn;
     @FXML
-    private TableColumn<BookInfo, String> PublisherColumn = new TableColumn<>();
-
-    public ImageView getProfileImageView() {
-        return profileImageView;
-    }
-
+    private TableColumn<BookInfo, String> PublisherColumn;
     public void initialize() {
-        if (savedImageURI != null) {
-            System.out.println("Loading saved image.");
-            Image savedImage = new Image(savedImageURI);
-            profileImageView.setImage(savedImage);
-        }
-
+        super.initialize();
         fieldColumn.setCellValueFactory(new PropertyValueFactory<>("field"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
 
@@ -184,36 +178,4 @@ public class ProfileController extends menuController {
         }
     }
 
-    public void chooseProfileImage() {
-        // Mở hộp thoại để chọn ảnh
-        FileChooser fileChooser = new FileChooser();
-        fileChooser.setTitle("Chọn ảnh đại diện");
-
-        // Đặt thư mục ban đầu
-        File initialDirectory = new File("C:/library-management/src/main/resources/Picture");
-        if (initialDirectory.exists() && initialDirectory.isDirectory()) {
-            fileChooser.setInitialDirectory(initialDirectory);
-        }
-
-        // Bộ lọc để chọn file ảnh
-        fileChooser.getExtensionFilters().addAll(
-                new FileChooser.ExtensionFilter("Image Files", "*.png", "*.jpg", "*.jpeg")
-        );
-
-        // Hiển thị hộp thoại và lấy file được chọn
-        File selectedFile = fileChooser.showOpenDialog(profileImageView.getScene().getWindow());
-        if (selectedFile != null) {
-            // Đặt ảnh mới làm ảnh đại diện
-            Image newImage = new Image(selectedFile.toURI().toString());
-            profileImageView.setImage(newImage);
-            savedImageURI = selectedFile.toURI().toString();
-
-            // Thông báo thành công
-            Alert alert = new Alert(Alert.AlertType.INFORMATION);
-            alert.setTitle("Thành công");
-            alert.setHeaderText(null);
-            alert.setContentText("Ảnh đại diện đã được thay đổi!");
-            alert.showAndWait();
-        }
-    }
 }
