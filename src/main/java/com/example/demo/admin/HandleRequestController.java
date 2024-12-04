@@ -87,6 +87,17 @@ public class HandleRequestController extends menucontroller{
                     "\nUser: " + selectedRequest.getUserId() +
                     "\nRequested on: " + selectedRequest.getRequestDate());
 
+        if (selectedRequest.getType().equals("return")) {
+            ButtonType okButton = new ButtonType("OK");
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
+            alert.showAndWait().ifPresent(response -> {
+                selectedRequest.setStatus("approved");
+                    selectedRequest.updateRequestStatus();
+                    loadRequests();  // Reload the table after accepting the request
+                });
+            }
+         else {
             TextField day = new TextField();
             Label label = new Label("Return this book after 30 days or");
             TextFlow textFlow = new TextFlow(label, day);
@@ -107,6 +118,7 @@ public class HandleRequestController extends menucontroller{
                     loadRequests();  // Reload the table after accepting the request
                 }
             });
+        }
         } else {
             showError("No request selected", "Please select a request to accept.");
         }

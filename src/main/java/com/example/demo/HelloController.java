@@ -93,7 +93,6 @@ public class HelloController{
     @FXML
     public void initialize() {
         if (HelloController.readUser("log.txt") != null) {
-            System.out.println("kdoaljdoids");
             user1 = HelloController.readUser("log.txt");
             if (user1 instanceof admin) {
             admincontroller.user = (admin) user1;}
@@ -112,7 +111,7 @@ public class HelloController{
 //                scene = new Scene(root);
 //                Command switchToScence = new ConcreteCommand(navigationSystem, scene);
 //                controller.executeCommand(switchToScence);
-            displayScene(event, "admin/menu.fxml");
+            displayScene(event, "admin/Home.fxml");
             } else {
                 displayScene(event,"admin/AdminLogin.fxml");
             }

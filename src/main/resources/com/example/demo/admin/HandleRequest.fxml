@@ -37,8 +37,8 @@
                   <TableView fx:id="requestTable" prefHeight="423.0" prefWidth="826.0" styleClass="table-view" />
                </children>
             </VBox>
-            <Button fx:id="accept" layoutX="606.0" layoutY="613.0" mnemonicParsing="false" onAction="#acceptRequest" text="Accept" />
-            <Button layoutX="774.0" layoutY="613.0" mnemonicParsing="false" onAction="#declineRequest" text="Decline" />
+            <Button fx:id="accept" layoutX="606.0" layoutY="613.0" mnemonicParsing="false" onAction="#acceptRequest" styleClass="search-button" text="Accept" />
+            <Button layoutX="774.0" layoutY="613.0" mnemonicParsing="false" onAction="#declineRequest" styleClass="delete-button" text="Decline" />
             <Button fx:id="back" layoutX="98.0" layoutY="613.0" mnemonicParsing="false" onAction="#handleBack" text="Quay lại" />
          </children>
       </AnchorPane>

@@ -160,7 +160,7 @@ public class menucontroller extends HelloController {
 
     public void handleHomeAction(ActionEvent event) {
 
-        displayScene(event, "menu.fxml");
+        displayScene(event, "Home.fxml");
     }
 
     public void handleManageStudentAction(ActionEvent event) {

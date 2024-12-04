@@ -58,7 +58,7 @@
                   <TextField fx:id="author" layoutX="195.0" layoutY="140.0" />
                   <TextField fx:id="publisyear" layoutX="195.0" layoutY="167.0" text="none" />
                   <TextField fx:id="publisher" layoutX="195.0" layoutY="197.0" text="none" />
-                  <Button layoutX="271.0" layoutY="372.0" mnemonicParsing="false" onAction="#updateBook" text="Update">
+                  <Button layoutX="271.0" layoutY="372.0" mnemonicParsing="false" onAction="#updateBook" styleClass="button-update" text="Update">
                      <font>
                         <Font size="14.0" />
                      </font>
