@@ -2,6 +2,7 @@ package com.example.demo.book;
 
 
 import com.example.demo.DesignPattern.Singleton.NotificationManager;
+import com.example.demo.admin.admincontroller;
 import com.example.demo.student.menuController;
 import com.example.demo.student.studentcontroller;
 import javafx.event.ActionEvent;
@@ -19,6 +20,10 @@ import com.example.demo.student.Student;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class BookDetailController extends menuController{
@@ -183,6 +188,17 @@ public class BookDetailController extends menuController{
     public void loadComment() {
         List<Comment> commentList = BookDatabase.GetCommentList(ISBN);
 
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        Collections.sort(commentList, new Comparator<Comment>() {
+            @Override
+            public int compare(Comment o1, Comment o2) {
+                LocalDateTime date1 = LocalDateTime.parse(o1.getDate(), formatter);
+                LocalDateTime date2 = LocalDateTime.parse(o2.getDate(), formatter);
+                return date2.compareTo(date1);
+            }
+        });
+
         ParentComment = commentList.size();
         // CommentField.setText("");
 
@@ -202,7 +218,7 @@ public class BookDetailController extends menuController{
         for (Comment comment : commentList) {
             // Tạo Label hiển thị User ID
             Label userLabel = new Label("User: " + comment.getUserId());
-            Label dateLabel = new Label("User: " + comment.getDate());
+            Label dateLabel = new Label("Time" + comment.getDate());
             FormatComment.add(userLabel, 0, row);
             FormatComment.add(dateLabel, 1, row); // Thêm Label vào cột 0, hàng `row`
             // Cột 0, Hàng `row`

@@ -119,7 +119,7 @@ public class managestudentcontroller extends menucontroller {
                             Student student = getTableView().getItems().get(getIndex());
                             detailStudent(student.getStudent(), event);
                         });
-                        updateButton.getStyleClass().add("button-update");
+                        updateButton.getStyleClass().add("update-button");
                         // Đặt sự kiện cho nút "Detail"
                         updateButton.setOnAction(event -> {
                             Student student = getTableView().getItems().get(getIndex());
