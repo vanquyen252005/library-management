@@ -48,4 +48,5 @@ public class ChangePassWordController extends EditProfileController {
     public void cancel(ActionEvent event) {
         displayScene(event,"editProfile.fxml");
     }
+
 }

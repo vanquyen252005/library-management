@@ -44,7 +44,7 @@
       </ImageView>
 
      <Button fx:id="back" layoutX="274.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
-     <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" onAction="#logOut" text="Logout" />
+     <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" onAction="#logout" text="Logout" />
      <Button fx:id="notificationButton" layoutX="1008.0" layoutY="23.0" mnemonicParsing="false" onAction="#notification" text="Notifcation" />
 
 

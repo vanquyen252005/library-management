@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.NotificationController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.NotificationController">
 
     <!-- Menu Panel -->
     <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
@@ -23,7 +23,7 @@
     <!-- Header Area (Logo, User info, Buttons) -->
 
     <!-- Logout Button -->
-    <Button fx:id="logOut" text="Logout" />
+    <Button fx:id="logOut" layoutX="60.0" layoutY="165.0" onAction="#logout" text="Logout" />
     <!-- Change Theme Button -->
     <!-- Logo Image -->
 
@@ -35,7 +35,7 @@
 
 
     <!-- User Info (User ID) -->
-    <Label layoutX="81.0" layoutY="231.0" text="User ID: 12345" />
+    <Label layoutX="64.0" layoutY="223.0" text="User ID: 12345" />
     <Button fx:id="back" layoutX="288.0" layoutY="25.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
    <GridPane fx:id="notifyView" layoutX="255.0" layoutY="265.0" prefHeight="90.0" prefWidth="923.0" styleClass="notifyView">
      <columnConstraints>
