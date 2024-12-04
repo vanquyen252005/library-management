@@ -12,6 +12,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 import java.io.IOException;
 
@@ -59,7 +60,6 @@ public class menuController extends HelloController {
         back.setOnAction(event -> {handleBack(event);});
         //(contentArea,"home.fxml");
     }
-
     @FXML
     protected void Profile(ActionEvent event) {
         displayScene(HelloApplication.getPrimaryStage(), "student/Profile.fxml");
@@ -79,5 +79,13 @@ public class menuController extends HelloController {
 
     public void handleBack(ActionEvent event) {
         controller.undo();
+    }
+
+    public void logOut(ActionEvent event) {
+//        user = null;
+        user1 = null;
+        HelloController.writeUser(null,"log.txt");
+        Stage stage = HelloApplication.getPrimaryStage();
+        HelloController.displayScene(stage, "hello-view.fxml");
     }
 }

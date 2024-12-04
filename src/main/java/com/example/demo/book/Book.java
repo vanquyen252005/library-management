@@ -16,7 +16,7 @@ public class Book {
     private String Publisher;
     private String PublishYear;
     private String Image;
-    private int Quantity;
+    private int quantity;
     private static Database Request = Database.getInstance();
     public Book() {
     }
@@ -29,15 +29,6 @@ public class Book {
         PublishYear = publishYear;
         this.Image = image;
     }
-    public Book(String ISBN, String title, String author, String publisher, String publishYear, String image, int Quantity) {
-        this.ISBN = ISBN;
-        Title = title;
-        Author = author;
-        Publisher = publisher;
-        PublishYear = publishYear;
-        this.Image = image;
-        this.Quantity = Quantity;
-    }
 
     public Book(String ISBN, String Title, String Author, String Publisher, String PublishYear) {
         this.ISBN = ISBN;
@@ -45,14 +36,6 @@ public class Book {
         this.Author = Author;
         this.Publisher = Publisher;
         this.PublishYear = PublishYear;
-    }
-
-    public int getQuantity() {
-        return Quantity;
-    }
-
-    public void setQuantity(int quantity) {
-        Quantity = quantity;
     }
 
     public static List<Book> getBook(String searchText) {
@@ -111,6 +94,16 @@ public class Book {
                 , newBook.getPublishYear()
                 , newBook.getPublisher()
                 , newBook.getImage());
+    }
+
+
+        public static List<Book> getBooksByPage(int page, String text) {
+            int pageSize = 10; // Số sách mỗi trang
+            int offset = (page - 1) * pageSize;
+
+            // Truy vấn cơ sở dữ liệu hoặc lấy dữ liệu từ API
+            // Ví dụ: SELECT * FROM books LIMIT pageSize OFFSET offset;
+            return Request.queryBooks(pageSize, offset, text);
     }
 
     public boolean updateBook(Book curBook) {
@@ -217,5 +210,19 @@ public class Book {
     public List<Comment> getCommentList() {
         return Request.GetCommentList(ISBN);
     }
+    public void getNewComment(){};
 
+    public Book(String ISBN, String title, String author, String publisher, String publishYear, String image, int quantity) {
+        this.ISBN = ISBN;
+        Title = title;
+        Author = author;
+        Publisher = publisher;
+        PublishYear = publishYear;
+        Image = image;
+        this.quantity = quantity;
+    }
+
+    public int getQuantity() {
+        return quantity;
+    }
 }

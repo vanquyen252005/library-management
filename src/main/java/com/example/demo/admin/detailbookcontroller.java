@@ -28,19 +28,15 @@ public class detailbookcontroller extends menucontroller {
     @FXML
     public TableView requestBook1;
     @FXML
-    public Text name;
-    @FXML
-    public Text id;
-    @FXML
-    public Text Class;
-    @FXML
-    public Text phone;
-    @FXML
     public TreeView<String> miniBar;
     @FXML
     public ImageView QRImageView;
     public TextField CommentField;
     public AnchorPane CommentView;
+    public Label yearLabel;
+    public Label publisherLabel;
+    public Label authorLabel;
+    public Label titleLabel;
     @FXML
     private GridPane FormatComment = new GridPane();
     @FXML
@@ -49,11 +45,12 @@ public class detailbookcontroller extends menucontroller {
     protected ImageView bookImageView;
     private int ParentComment;
 
+//    private ConnectDB BookDatabase = ;
     @Override
     @FXML
     public void initialize() {
         super.initialize();
-        home.getStyleClass().remove("selected");
+        {home.getStyleClass().remove("selected");
         manageStudent.getStyleClass().remove("select");
         manageBook.getStyleClass().remove("selected");
         handleRequest.getStyleClass().remove("selected");
@@ -70,14 +67,17 @@ public class detailbookcontroller extends menucontroller {
 
         manageStudent.getStyleClass().add("pre");
         manageBook.getStyleClass().add("selected");
-        handleRequest.getStyleClass().add("after");
+        handleRequest.getStyleClass().add("after");}
 
         bookImageView.setFitWidth(200); // Chiều rộng (px)
         bookImageView.setFitHeight(300);
         bookImageView.setPreserveRatio(true);
         bookImageView.setImage(curBook.loadImage().getImage());
+        titleLabel.setText(curBook.getTitle());
+        authorLabel.setText(curBook.getAuthor());
+        publisherLabel.setText(curBook.getPublisher());
+        yearLabel.setText(curBook.getPublishYear());
 
-        loadComment();
     }
 
     public void ClickBookQR(ActionEvent event) {
@@ -160,11 +160,13 @@ public class detailbookcontroller extends menucontroller {
         loadComment();
     }
 
+
     @FXML
     public void PostComment(ActionEvent event) {
         System.out.println(user.getId());
         String PostContent = CommentField.getText();
-        Database.getInstance().PostCommentForBook(PostContent,curBook.getISBN(),Integer.parseInt(admincontroller.user.getId()) );
+        System.out.println("lfjsdofjsdfjds"+user.getId());
+        Database.getInstance().PostCommentForBook(PostContent,curBook.getISBN(),Integer.parseInt(user.getId()) );
 
         //curBook.getNewComment(PostContent,Integer.parseInt(user.getId()));
         FormatComment.getChildren().clear();
