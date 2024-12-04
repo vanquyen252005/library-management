@@ -81,7 +81,8 @@ public class menuController extends HelloController {
         controller.undo();
     }
 
-    public void logOut(ActionEvent event) {
+    @FXML
+    public void logout(ActionEvent event) {
 //        user = null;
         user1 = null;
         HelloController.writeUser(null,"log.txt");

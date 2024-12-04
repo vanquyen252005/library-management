@@ -294,6 +294,7 @@ public class homeController extends menuController {
 
     @FXML
     public void initialize() {
+        super.initialize();
         bookGridPane.setHgap(50);
         bookGridPane.setVgap(30);
         scrollPane.setContent(bookGridPane);
@@ -455,7 +456,4 @@ public class homeController extends menuController {
         search_field.clear();
     }
 
-    public void logOut(ActionEvent event) {
-
-    }
 }

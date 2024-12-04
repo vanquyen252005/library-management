@@ -10,68 +10,63 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1315.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.ProfileController">
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1315.0" stylesheets="@home.css" xmlns="http://javafx.com/javafx/23" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.ProfileController">
-
-
-<!-- Menu Panel -->
-
+    <!-- Menu Panel -->
     <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
-        <Button fx:id="homeButton" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#home" prefHeight="41.0" prefWidth="188.0" styleClass="btn_workbench" text="Home" />
-        <Button fx:id="profileButton" layoutX="12.0" layoutY="376.0" mnemonicParsing="false" onAction="#Profile" prefHeight="41.0" prefWidth="188.0" styleClass="inner_pane" text="Profile" />
-        <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleRequest" prefHeight="41.0" prefWidth="188.0" styleClass="inner_pane" text="Handle request" />
+        <Button fx:id="homeButton" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#home" prefHeight="41.0" prefWidth="188.0" styleClass=".btn_workbench" text="Home" />
+        <Button fx:id="profileButton" layoutX="12.0" layoutY="376.0" mnemonicParsing="false" onAction="#Profile" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Profile" />
+        <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleRequest" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
     </Pane>
 
-
-<!-- Header Area (Logo, User info, Buttons) -->
-
-    <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="45.0" layoutY="31.0" pickOnBounds="true" preserveRatio="true">
-
+    <!-- Header Area (Logo, User info, Buttons) -->
+    <ImageView fx:id="profileImageView" fitHeight="150.0" fitWidth="200.0" layoutX="45.0" layoutY="67.0" onMouseClicked="#chooseProfileImage" pickOnBounds="true" preserveRatio="true">
         <image>
             <Image url="@../../../../Picture/profile.png" />
         </image>
     </ImageView>
 
-<!-- Logout Button -->
+    <!-- Logout Button -->
+    <Button fx:id="logOut" layoutX="267.0" layoutY="29.0" text="Logout" />
+    <AnchorPane fx:id="rootPane" layoutX="230.0" layoutY="1.0" prefHeight="800.0" prefWidth="1239.0" stylesheets="@home.css">
 
+        <!-- Container -->
+        <VBox alignment="TOP_CENTER" layoutX="4.0" layoutY="-14.0" prefHeight="800.0" prefWidth="988.0" spacing="20" styleClass="root" stylesheets="@student.css">
 
-    <Button fx:id="back" layoutX="274.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
-    <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" text="Logout" />
-    <Button fx:id="notificationButton" layoutX="1068.0" layoutY="23.0" mnemonicParsing="false" onAction="#notification" text="Notifcation" />
+            <!-- Header -->
+            <Label style="-fx-font-size: 24; -fx-font-weight: bold;" stylesheets="@student.css" text="User Profile" translateY="70.0" />
 
-     <!-- Container -->
-     <VBox alignment="TOP_CENTER" layoutX="294.0" layoutY="106.0" prefHeight="676.0" prefWidth="962.0" spacing="20" styleClass="root" stylesheets="@student.css">
+            <!-- Edit Profile Button -->
+            <Button fx:id="editProfileButton" onAction="#editProfile" stylesheets="@student.css" text="Edit Profile" translateX="350.0" />
 
-         <!-- Edit Profile Button -->
-         <Button fx:id="editProfileButton" onAction="#editProfile" stylesheets="@student.css" text="Edit Profile" translateX="350.0" />
-   
-               <!-- Header -->
-         <Label prefHeight="46.0" prefWidth="99.0" style="-fx-font-size: 24; -fx-font-weight: bold;" stylesheets="@student.css" text="User Profile" />
+            <!-- Table for User Info -->
+            <TableView fx:id="userInfoTable" prefHeight="200.0" prefWidth="882.0" stylesheets="@student.css">
+                <columns>
+                    <TableColumn fx:id="fieldColumn" prefWidth="207.0" text="Field" />
+                    <TableColumn fx:id="valueColumn" prefWidth="592.0" text="Value" />
+                </columns>
+            </TableView>
 
-         <!-- Table for User Info -->
-         <TableView fx:id="userInfoTable" prefHeight="273.0" prefWidth="902.0" styleClass="table-view">
-             <columns>
-                 <TableColumn fx:id="fieldColumn" prefWidth="207.0" text="Field" />
-                 <TableColumn fx:id="valueColumn" prefWidth="592.0" text="Value" />
-             </columns>
-         </TableView>
-         <!-- Label for Borrowed Books -->
-         <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Borrowed Books" />
+            <!-- Label for Borrowed Books -->
+            <Label style="-fx-font-size: 20; -fx-font-weight: bold;" text="Borrowed Books" />
 
-         <!-- Table for Borrowed Books -->
-         <TableView fx:id="borrowedBooksTable" prefHeight="300.0" prefWidth="600.0" styleClass="table-view">
-             <columns>
-                 <TableColumn fx:id="bookIdColumn" prefWidth="175.0" text="Book ID" />
-                 <TableColumn fx:id="TitleColumn" prefWidth="250.0" text="Title" />
-                 <TableColumn fx:id="AuthorColumn" prefWidth="138.0" text="Author" />
-                 <TableColumn fx:id="PublishYearColumn" prefWidth="116.0" text="Publish Year" />
-                 <TableColumn fx:id="PublisherColumn" prefWidth="99.0" text="Publisher" />
-                 <TableColumn fx:id="borrowedDateColumn" prefWidth="172.0" text="Borrowed Date" />
-                 <TableColumn fx:id="returnDateColumn" prefWidth="164.0" text="Return Date" />
-             </columns>
-         </TableView>
-     </VBox>
+            <!-- Table for Borrowed Books -->
+            <TableView fx:id="borrowedBooksTable" prefHeight="300.0" prefWidth="600.0" stylesheets="@student.css">
+                <columns>
+                    <TableColumn fx:id="bookIdColumn" prefWidth="175.0" text="Book ID" />
+                    <TableColumn fx:id="TitleColumn" prefWidth="250.0" text="Title" />
+                    <TableColumn fx:id="AuthorColumn" prefWidth="138.0" text="Author" />
+                    <TableColumn fx:id="PublishYearColumn" prefWidth="116.0" text="Publish Year" />
+                    <TableColumn fx:id="PublisherColumn" prefWidth="99.0" text="Publisher" />
+                    <TableColumn fx:id="borrowedDateColumn" prefWidth="172.0" text="Borrowed Date" />
+                    <TableColumn fx:id="returnDateColumn" prefWidth="164.0" text="Return Date" />
+                </columns>
+            </TableView>
 
+            <!-- Back Button -->
+            <Button fx:id="back" mnemonicParsing="false" onAction="#handleBack" text="Back" />
 
-
+        </VBox>
+    </AnchorPane>
+   <Button fx:id="logOut1" layoutX="60.0" layoutY="227.0" onAction="#logout" text="Logout" />
 </AnchorPane>
