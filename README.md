@@ -1,5 +1,5 @@
 #**Library Management Application**
--##**1.Giới thiệu**: 
+##**1.Giới thiệu**: 
      - *1.1 Mục đích* :  
            Đây là một ứng dụng quản lý thư viện được xây dựng theo mô hình lập trình hướng đối tượng. Ứng dụng cho phép người dùng quản lý sách, độc giả và giao dịch mượn/trả sách.
       - *1.2 Tính năng chính*:
