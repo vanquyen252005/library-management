@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.admincontroller">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@login.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.admincontroller">
    <children>
       <Label fx:id="loginFailLabel" contentDisplay="CENTER" layoutX="764.0" layoutY="551.0" text="Wrong username or password!" textFill="#ec1b1b" visible="false" />
       <AnchorPane layoutX="444.0" layoutY="60.0" prefHeight="392.0" prefWidth="343.0" styleClass="content-box">
@@ -23,13 +23,13 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="122.0" layoutY="35.0" prefHeight="34.0" prefWidth="141.0" text="Login as admin!">
+            <Label layoutX="122.0" layoutY="35.0" prefHeight="34.0" prefWidth="165.0" text="Login as admin!">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-             <TextField fx:id="username" layoutX="107.0" layoutY="133.0" prefHeight="26.0" prefWidth="221.0" promptText="Username" />
-            <PasswordField fx:id="password" layoutX="107.0" layoutY="209.0" prefHeight="26.0" prefWidth="222.0" promptText="Password" />
+             <TextField fx:id="username" layoutX="136.0" layoutY="132.0" prefHeight="26.0" prefWidth="221.0" promptText="Username" />
+            <PasswordField fx:id="password" layoutX="136.0" layoutY="208.0" prefHeight="26.0" prefWidth="222.0" promptText="Password" />
             <Hyperlink layoutX="106.0" layoutY="266.0" onAction="#handleBack" text="Return main ">
                <font>
                   <Font size="14.0" />

@@ -1,0 +1,140 @@
+/* Nút sidebar không có đường viền */
+.sidebar-button {
+    -fx-background-color: #ffffff;
+    -fx-text-fill: #333333;
+    -fx-font-size: 14px;
+    -fx-pref-width: 188;
+    -fx-padding: 5 10;
+    /* Xóa đường viền */
+    -fx-border-width: 0;           /* Đặt độ dày của viền là 0 */
+}
+/* Đổi màu nền khi hover */
+.sidebar-button:hover {
+    -fx-background-color: #e0e0e0;
+}
+.side_ankerpane {
+-fx-background-color: #ffffff;
+}
+/* Đặt màu nền vàng cho nút "create" */
+.create-button {
+    -fx-background-color: #FFD700; /* Màu vàng */
+    -fx-text-fill: #333333; /* Màu chữ tối để dễ đọc */
+    -fx-font-size: 14px;    /* Kích thước font chữ */
+    -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+    -fx-pref-height: 30;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+    -fx-border-color: transparent; /* Xóa viền mặc định */
+    -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
+}
+
+/* Đổi màu nền khi hover */
+.create-button:hover {
+    -fx-background-color: #FFC107; /* Màu vàng nhạt hơn khi hover */
+}
+
+.search-button {
+    -fx-background-color: #4CAF50; /* Màu vàng */
+    -fx-text-fill: #ffffff; /* Màu chữ tối để dễ đọc */
+    -fx-font-size: 14px;    /* Kích thước font chữ */
+    -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+    -fx-pref-height: 30;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+    -fx-border-color: transparent; /* Xóa viền mặc định */
+    -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
+}
+
+/* Đổi màu nền khi hover */
+.search-button:hover {
+    -fx-background-color: #45a049; /* Màu vàng nhạt hơn khi hover */
+}
+/* Đặt màu nền và kiểu cho VBox */
+.vbox {
+    -fx-background-color: #ffffff;  /* Nền trắng cho VBox */
+    -fx-border-color: #cccccc;      /* Màu viền xám nhẹ */
+    -fx-border-width: 1px;          /* Độ dày viền */
+    -fx-padding: 10px;               /* Khoảng cách giữa nội dung và viền */
+    -fx-spacing: 10px;               /* Khoảng cách giữa các phần tử trong VBox */
+}
+
+/* Đặt kiểu cho TableView */
+.table-view {
+    -fx-background-color: #ffffff;  /* Màu nền trắng cho TableView */
+    -fx-border-color: #cccccc;      /* Màu viền xám nhẹ */
+    -fx-border-width: 1px;          /* Độ dày viền */
+             /* Chiều rộng cố định cho TableView */
+    -fx-selection-bar: #2196F3;     /* Màu của thanh chọn khi chọn dòng */
+}
+
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-id-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:50px;
+}
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-username-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:100px;
+}
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-name-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:150px;
+}
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-class-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:150px;
+}
+/* Làm cho TableView dễ đọc hơn */
+.table-view .table-student-detail-cell {
+    -fx-padding: 5px 10px;          /* Khoảng cách trong các ô */
+    -fx-font-size: 14px;            /* Kích thước font chữ trong các ô */
+    -fx-pref-width:200px;
+}
+
+/* Ẩn TableView khi cần */
+.table-view[visible="false"] {
+    -fx-opacity: 0; /* Ẩn TableView */
+}
+/* Đặt màu nền đỏ và chữ trắng cho nút "Delete" */
+.delete-button {
+    -fx-background-color: #FF4C4C; /* Màu nền đỏ */
+    -fx-text-fill: #ffffff;        /* Màu chữ trắng */
+  -fx-font-size: 14px;    /* Kích thước font chữ */
+     -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+     -fx-pref-height: 30;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+     -fx-border-color: transparent; /* Xóa viền mặc định */
+     -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
+}
+
+/* Đổi màu khi hover */
+.delete-button:hover {
+    -fx-background-color: #b30000; /* Màu đỏ đậm khi hover */
+}
+
+/* Đặt màu nền đỏ và chữ trắng cho nút "Delete" */
+.detail-button {
+    -fx-background-color: #4da6ff; /* Màu nền đỏ */
+    -fx-text-fill: #ffffff;        /* Màu chữ trắng */
+  -fx-font-size: 14px;    /* Kích thước font chữ */
+     -fx-pref-width: 70;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+     -fx-pref-height: 30;    /* Chiều rộng của nút */  /* Khoảng cách giữa văn bản và cạnh nút */
+     -fx-border-color: transparent; /* Xóa viền mặc định */
+     -fx-border-width: 0;           /* Đặt độ dày viền là 0 */
+}
+
+/* Đặt màu nền đỏ và chữ trắng cho nút "Delete" */
+
+/* Đổi màu khi hover */
+.detail-button:hover {
+    -fx-background-color: #004080; /* Màu đỏ đậm khi hover */
+}
+.content-box {
+    -fx-background-color: rgba(255, 255, 255, 0.9); /* Nền trắng trong suốt */
+    -fx-border-radius: 20; /* Góc bo tròn */
+    -fx-background-radius: 20;
+    -fx-padding: 20; /* Khoảng cách bên trong */
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.25), 10, 0, 2, 2); /* Hiệu ứng bóng */
+}

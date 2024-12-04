@@ -455,4 +455,7 @@ public class homeController extends menuController {
         search_field.clear();
     }
 
+    public void logOut(ActionEvent event) {
+
+    }
 }

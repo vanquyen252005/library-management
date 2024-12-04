@@ -12,6 +12,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 
 import java.net.HttpURLConnection;
@@ -23,6 +24,11 @@ import java.util.stream.Collectors;
 
 
 public class managebookcontroller extends menucontroller {
+    public ScrollPane scrollPane;
+    public ScrollBar scrollBar;
+    ScrollBar verticalScrollBar;
+    public VBox vbox;
+    private List<Book> books = new ArrayList<>();
     @FXML
     private TextField input;
     @FXML
@@ -32,6 +38,7 @@ public class managebookcontroller extends menucontroller {
 
     @FXML
     private ProgressIndicator loadingSpinner;
+    private int currentPage = 1;
     public static Book onClickBook = new Book();
 //    private static final ExecutorService executorService = Executors.newFixedThreadPool(3);
     @Override
@@ -56,6 +63,7 @@ public class managebookcontroller extends menucontroller {
         manageStudent.getStyleClass().add("pre");
         manageBook.getStyleClass().add("selected");
         handleRequest.getStyleClass().add("after");}
+
         TableColumn<Book, String> column1 =
                 new TableColumn<>("ISBN");
         TableColumn<Book, String> column2 =
@@ -139,7 +147,7 @@ public class managebookcontroller extends menucontroller {
                             detailBook(book.getBook(), event);
                         });
 
-                        updateButton.getStyleClass().add("update-button");
+                        updateButton.getStyleClass().add("button-update");
                         // Đặt sự kiện cho nút "Delete"
                         updateButton.setOnAction(event -> {
                             Book book = getTableView().getItems().get(getIndex());
@@ -160,7 +168,7 @@ public class managebookcontroller extends menucontroller {
                         }
                     }
                 };
-                cell.getStyleClass().add("table-student-detail-cell");
+                cell.getStyleClass().add("table-book-detail-cell");
                 return cell;
             }
         };
@@ -169,7 +177,7 @@ public class managebookcontroller extends menucontroller {
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(item);
-                getStyleClass().add("table-student-id-cell");
+                getStyleClass().add("table-book-id-cell");
             }
         });
         column2.setCellFactory(param -> new TableCell<Book, String>() {
@@ -177,7 +185,7 @@ public class managebookcontroller extends menucontroller {
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(item);
-                getStyleClass().add("table-student-username-cell");
+                getStyleClass().add("table-book-title-cell");
             }
         });
         column3.setCellFactory(param -> new TableCell<Book, String>() {
@@ -185,7 +193,7 @@ public class managebookcontroller extends menucontroller {
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(item);
-                getStyleClass().add("table-student-name-cell");
+                getStyleClass().add("table-book-author-cell");
             }
         });
         column4.setCellFactory(param -> new TableCell<Book, String>() {
@@ -193,27 +201,61 @@ public class managebookcontroller extends menucontroller {
             protected void updateItem(String item, boolean empty) {
                 super.updateItem(item, empty);
                 setText(item);
-                getStyleClass().add("table-student-class-cell");
+                getStyleClass().add("table-book-publisher-cell");
             }
         });
         // Đặt cellFactory cho cột actions
         actionColumn.setCellFactory(cellFactory);
-        column1.getStyleClass().add("table-student-id-cell");
-        column2.getStyleClass().add("table-student-username-cell");
-        column3.getStyleClass().add("table-student-name-cell");
-        column4.getStyleClass().add("table-student-class-cell");
+        column1.getStyleClass().add("table-book-id-cell");
+        column2.getStyleClass().add("table-book-title-cell");
+        column3.getStyleClass().add("table-book-author-cell");
+        column4.getStyleClass().add("table-book-publisher-cell");
+        actionColumn.getStyleClass().add("table-book-detail-cell");
         bookTable.getColumns().addAll(column1, column2, column3, column4, actionColumn, imageColumn);
         suggestionList.setVisible(false); // Ẩn gợi ý ban đầu
         input.setOnKeyTyped(this::onKeyTyped); // Lắng nghe sự kiện khi gõ
         suggestionList.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) { // Single click
                 input.setText(suggestionList.getSelectionModel().getSelectedItem());
-                System.out.println("Clicked: " + input.getText());
                 suggestionList.setVisible(false);
                 searchBook();
             }
         });
+        verticalScrollBar = (ScrollBar) bookTable.lookup(".scroll-bar:vertical");
+        loadMoreBooks();
+
     }
+    private void loadMoreBooks() {
+        loadingSpinner.setVisible(true); // Hiển thị spinner khi đang tải dữ liệu
+
+        Task<List<Book>> task = new Task<>() {
+            @Override
+            protected List<Book> call() {
+                // Gọi phương thức trong lớp Book để lấy dữ liệu theo trang
+                return Book.getBooksByPage(currentPage, input.getText());
+            }
+        };
+
+        task.setOnSucceeded(e -> {
+            List<Book> newBook = task.getValue();
+            if (newBook != null && !newBook.isEmpty()) {
+              for (Book book:newBook) {
+                  books.add(book);
+              }
+                bookTable.setItems(FXCollections.observableArrayList(books));
+                toggleTableViewVisibility(bookTable, true);
+            }
+            loadingSpinner.setVisible(false); // Ẩn spinner sau khi hoàn tất
+        });
+
+        task.setOnFailed(e -> {
+            task.getException().printStackTrace();
+            loadingSpinner.setVisible(false);
+        });
+
+        new Thread(task).start();
+    }
+
     private List<String> getSearchSuggestions(String searchText) {
         List<String> suggestions = new ArrayList<>();
         List<Book> books = Book.getBookDB(searchText);
@@ -223,77 +265,26 @@ public class managebookcontroller extends menucontroller {
                 results.add(book.getTitle());
             }
         }
-//        // Tạo ExecutorService với số luồng cố định
-//        ExecutorService executorService = Executors.newFixedThreadPool(4);
-//
-//        // Tạo danh sách các tác vụ
-//        List<Callable<List<String>>> tasks = new ArrayList<>();
-//
-//        // Tác vụ kiểm tra Title
-//        tasks.add(() -> {
-//
-//        });
-//
-//        // Tác vụ kiểm tra ISBN
-//        tasks.add(() -> {
-//            List<String> results = new ArrayList<>();
             for (Book book : books) {
                 if (book.getISBN().toLowerCase().contains(searchText.toLowerCase())) {
                     results.add(book.getISBN());
                 }
             }
-//            return results;
-//        });
-
-        // Tác vụ kiểm tra Author
-//        tasks.add(() -> {
-//            List<String> results = new ArrayList<>();
             for (Book book : books) {
                 if (book.getAuthor().toLowerCase().contains(searchText.toLowerCase())) {
                     results.add(book.getAuthor());
                 }
             }
-//            return results;
-//        });
-
-        // Tác vụ kiểm tra Publisher
-//        tasks.add(() -> {
-//            List<String> results = new ArrayList<>();
             for (Book book : books) {
                 if (book.getPublisher().toLowerCase().contains(searchText.toLowerCase())) {
                     results.add(book.getPublisher());
                 }
             }
-//            return results;
-//        });
-
-        // Tác vụ kiểm tra PublishYear
-//        tasks.add(() -> {
-//            List<String> results = new ArrayList<>();
             for (Book book : books) {
                 if (book.getPublishYear().toLowerCase().contains(searchText.toLowerCase())) {
                     results.add(book.getPublishYear());
                 }
             }
-//            return results;
-//        });
-
-//        try {
-//            // Thực hiện các tác vụ song song
-//            List<Future<List<String>>> results = executorService.invokeAll(tasks);
-//
-//            // Tổng hợp kết quả từ các tác vụ
-//            for (Future<List<String>> result : results) {
-//                suggestions.addAll(result.get());
-//            }
-//        } catch (InterruptedException | ExecutionException e) {
-//            e.printStackTrace();
-//        } finally {
-//            // Tắt ExecutorService
-//            executorService.shutdown();
-//        }
-
-        // Loại bỏ các gợi ý trùng lặp (nếu cần)
         return results.stream().distinct().collect(Collectors.toList());
     }
     private void onKeyTyped(KeyEvent event) {
@@ -336,59 +327,28 @@ public class managebookcontroller extends menucontroller {
 
     @FXML
     public void searchBook() {
-        // Hiển thị spinner
-
-                // Loại bỏ các sách trùng lặp (nếu cần)
-//        loadingSpinner.setVisible(true);
-            List<Book> books = Book.getBookDB(input.getText());
-            bookTable.setItems(FXCollections.observableArrayList(books));
-            toggleTableViewVisibility(bookTable, true);
-
-            // Ẩn spinner sau khi hoàn thành
-//            loadingSpinner.setVisible(false);
+//            List<Book> books = Book.getBookDB(input.getText());
+//            bookTable.setItems(FXCollections.observableArrayList(books));
+//            toggleTableViewVisibility(bookTable, true);
+        books.clear();
+        bookTable.refresh();
+        currentPage = 0;
+        currentPage++;
+        loadMoreBooks();
+        Platform.runLater(() -> {
+             verticalScrollBar = (ScrollBar) bookTable.lookup(".scroll-bar:vertical");
+            if (verticalScrollBar != null) {
+                System.out.println("dfsgbxb qqqq");
+                verticalScrollBar.valueProperty().addListener((obs, oldValue, newValue) -> {
+                    if (newValue.doubleValue() == 1.0) { // Kiểm tra cuộn đến cuối
+                        currentPage++;
+                        loadMoreBooks();
+                    }
+                });
+            }
+        });
     }
 
-    //    public void searchBook() {
-//        List<Book> books = new ArrayList<>();
-//
-//        // Tạo ExecutorService với số luồng cố định
-//        ExecutorService executorService = Executors.newFixedThreadPool(4);
-//
-//        // Tạo danh sách các tác vụ
-//        List<Callable<List<Book>>> tasks = new ArrayList<>();
-//
-//        // Chia công việc thành các truy vấn độc lập
-//        tasks.add(() -> Book.searchBooksByTitle(input.getText())); // Tìm kiếm theo Title
-//        tasks.add(() -> Book.searchBooksByAuthor(input.getText())); // Tìm kiếm theo Author
-//        tasks.add(() -> Book.searchBooksByPublisher(input.getText())); // Tìm kiếm theo Publisher
-//
-//        try {
-//            // Thực hiện các tác vụ song song
-//            List<Future<List<Book>>> results = executorService.invokeAll(tasks);
-//
-//            // Tổng hợp kết quả từ các tác vụ
-//            for (Future<List<Book>> result : results) {
-//                books.addAll(result.get());
-//            }
-//
-//        } catch (InterruptedException | ExecutionException e) {
-//            e.printStackTrace();
-//        } finally {
-//            executorService.shutdown();
-//        }
-//
-//        // Loại bỏ các sách trùng lặp (nếu cần)
-//        books = books.stream().distinct().collect(Collectors.toList());
-//        bookTable.setItems(FXCollections.observableArrayList());
-//        toggleTableViewVisibility(bookTable, true);
-//        for (Book x:books) {
-////            root1.getChildren().add(new TreeItem<>(x));
-//            bookTable.getItems().add(x);
-//            System.out.println(x);
-//        }
-////        System.out.println("Returning book list with size: " + books.size());
-////        return books;
-//    }
     public void toggleTableViewVisibility(TableView<?> tableView, boolean isVisible) {
 //        boolean isVisible = tableView.isVisible();
         tableView.setVisible(isVisible);

@@ -8,6 +8,7 @@ module com.example.demo {
     requires org.json;
     requires com.google.zxing;
     requires com.google.zxing.javase;
+    requires javafx.media;
 
 
     opens com.example.demo to javafx.fxml;
@@ -22,5 +23,7 @@ module com.example.demo {
     exports com.example.demo.book;
     exports com.example.demo.DesignPattern.Command;
     opens com.example.demo.DesignPattern.Command to javafx.fxml;
+    opens com.example.demo.DesignPattern.Singleton to javafx.base;
+    exports com.example.demo.DesignPattern.Singleton;
 
 }
