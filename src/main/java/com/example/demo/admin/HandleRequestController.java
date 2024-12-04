@@ -6,8 +6,12 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import java.util.List;
+
+import static java.lang.Integer.parseInt;
 
 public class HandleRequestController extends menucontroller{
     @FXML
@@ -83,18 +87,38 @@ public class HandleRequestController extends menucontroller{
                     "\nUser: " + selectedRequest.getUserId() +
                     "\nRequested on: " + selectedRequest.getRequestDate());
 
+        if (selectedRequest.getType().equals("return")) {
             ButtonType okButton = new ButtonType("OK");
             ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(okButton, cancelButton);
-
+            alert.showAndWait().ifPresent(response -> {
+                selectedRequest.setStatus("approved");
+                    selectedRequest.updateRequestStatus();
+                    loadRequests();  // Reload the table after accepting the request
+                });
+            }
+         else {
+            TextField day = new TextField();
+            Label label = new Label("Return this book after 30 days or");
+            TextFlow textFlow = new TextFlow(label, day);
+            alert.getDialogPane().setContent(textFlow);
+            ButtonType okButton = new ButtonType("OK");
+            ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
+            alert.getButtonTypes().setAll(okButton, cancelButton);
             alert.showAndWait().ifPresent(response -> {
                 if (response == okButton) {
                     // Accept the request (update the status in DB)
                     selectedRequest.setStatus("approved");
+                    String date = "30";
+                    if (day.getText().trim().matches("\\d+")) {
+                        date = day.getText();
+                    }
+                    selectedRequest.setReturnDate(date);
                     selectedRequest.updateRequestStatus();
                     loadRequests();  // Reload the table after accepting the request
                 }
             });
+        }
         } else {
             showError("No request selected", "Please select a request to accept.");
         }
