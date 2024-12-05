@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@login.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.admincontroller">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@login.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.AdminController">
    <children>
       <Label fx:id="loginFailLabel" contentDisplay="CENTER" layoutX="764.0" layoutY="551.0" text="Wrong username or password!" textFill="#ec1b1b" visible="false" />
       <AnchorPane layoutX="444.0" layoutY="60.0" prefHeight="392.0" prefWidth="343.0" styleClass="content-box">
@@ -35,7 +35,7 @@
                   <Font size="14.0" />
                </font>
             </Hyperlink>
-            <Button layoutX="247.0" layoutY="265.0" mnemonicParsing="false" onAction="#login" text="Submit">
+            <Button layoutX="247.0" layoutY="265.0" mnemonicParsing="false" onAction="#loginAdmin" text="Submit">
                <font>
                   <Font size="14.0" />
                </font>

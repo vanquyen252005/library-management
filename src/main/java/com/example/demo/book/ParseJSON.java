@@ -10,7 +10,7 @@ import java.util.List;
 public class ParseJSON {
 
     public List<Book> parseJSON(String json) {
-        List<Book> books = new ArrayList<>();
+        List<Book> bookList = new ArrayList<>();
 
         JSONObject jsonObject = new JSONObject(json);
         JSONArray itemsArray = jsonObject.optJSONArray("items");
@@ -27,7 +27,7 @@ public class ParseJSON {
                 String publisher = volumeInfo.optString("publisher", "Unknown Publisher");
                 String publishYear = volumeInfo.optString("publishedDate", "Unknown Year");
                 String image = extractImageLink(volumeInfo);
-                String quantity = "Unknown"; // Set quantity to a default value if it's not available from the API
+                int quantity = Integer.parseInt(extractQuantity(item)); // Added method to extract quantity
 
                 // Create a new Book object and set its fields
                 Book book = new Book();
@@ -37,17 +37,16 @@ public class ParseJSON {
                 book.setPublisher(publisher);
                 book.setPublishYear(publishYear);
                 book.setImage(image);
-//                book.setQuantity(quantity);
+                book.setQuantity(quantity); // Set the quantity
 
                 // Add the book to the list
-                books.add(book);
+                bookList.add(book);
             }
         }
-        return books;
+        return bookList;
     }
 
-    // Helper method to extract ISBN
-    private String extractISBN(JSONObject item) {
+    public String extractISBN(JSONObject item) {
         if (item.has("volumeInfo")) {
             JSONArray industryIdentifiers = item.getJSONObject("volumeInfo").optJSONArray("industryIdentifiers");
             if (industryIdentifiers != null) {
@@ -62,11 +61,18 @@ public class ParseJSON {
         return "Unknown ISBN";
     }
 
-    // Helper method to extract image link
-    private String extractImageLink(JSONObject volumeInfo) {
+    public String extractImageLink(JSONObject volumeInfo) {
         if (volumeInfo.has("imageLinks")) {
             return volumeInfo.getJSONObject("imageLinks").optString("thumbnail", "No Image Available");
         }
         return "No Image Available";
+    }
+
+    public String extractQuantity(JSONObject item) {
+        JSONObject saleInfo = item.optJSONObject("saleInfo");
+        if (saleInfo != null) {
+            return saleInfo.optString("quantity", "Unknown Quantity"); // Replace with the actual path if available
+        }
+        return "Unknown Quantity";
     }
 }

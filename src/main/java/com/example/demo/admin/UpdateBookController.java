@@ -6,36 +6,36 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
-public class UpdateBookController extends menucontroller {
+public class UpdateBookController extends MenuController {
 
     @FXML
-    public TextField isbn;
+    public TextField ISBNField;
     @FXML
-    public TextField title;
+    public TextField titleField;
     @FXML
-    public TextField author;
+    public TextField authorField;
     @FXML
-    public TextField publisyear;
+    public TextField publishYearField;
     @FXML
-    public TextField publisher;
+    public TextField publisherField;
     @FXML
     public TextField imgUrl;
-    Book curBook = managebookcontroller.onClickBook;
+    Book curBook = ManageBookController.onClickBook;
     @Override
     @FXML
     public void initialize() {
         super.initialize();
-        home.getStyleClass().remove("selected");
+        homeButton.getStyleClass().remove("selected");
         manageStudent.getStyleClass().remove("select");
         manageBook.getStyleClass().remove("selected");
         handleRequest.getStyleClass().remove("selected");
 
-        home.getStyleClass().remove("pre");
+        homeButton.getStyleClass().remove("pre");
         manageStudent.getStyleClass().remove("pre");
         manageBook.getStyleClass().remove("pre");
         handleRequest.getStyleClass().remove("pre");
 
-        home.getStyleClass().remove("after");
+        homeButton.getStyleClass().remove("after");
         manageStudent.getStyleClass().remove("after");
         manageBook.getStyleClass().remove("after");
         handleRequest.getStyleClass().remove("after");
@@ -44,23 +44,23 @@ public class UpdateBookController extends menucontroller {
         manageBook.getStyleClass().add("selected");
         handleRequest.getStyleClass().add("after");
 
-        isbn.setText(curBook.getISBN());
-        title.setText(curBook.getTitle());
-        author.setText(curBook.getAuthor());
-        publisher.setText(curBook.getPublisher());
-        publisyear.setText(curBook.getPublishYear());;
+        ISBNField.setText(curBook.getISBN());
+        titleField.setText(curBook.getTitle());
+        authorField.setText(curBook.getAuthor());
+        publisherField.setText(curBook.getPublisher());
+        publishYearField.setText(curBook.getPublishYear());;
         imgUrl.setText(curBook.getImage());
     }
     @FXML
     public void updateBook(ActionEvent event) {
-        Book newBook = new Book(isbn.getText()
-                , title.getText()
-                , author.getText()
-                , publisher.getText()
-                , publisyear.getText()
+        Book newBook = new Book(ISBNField.getText()
+                , titleField.getText()
+                , authorField.getText()
+                , publisherField.getText()
+                , publishYearField.getText()
                 , imgUrl.getText());
         boolean flag = curBook.updateBook(newBook);
-        if (flag == true) {
+        if (flag) {
             Alert alert = new Alert(Alert.AlertType.INFORMATION);
             alert.setTitle("Update Book");
             alert.setHeaderText("Update Book");

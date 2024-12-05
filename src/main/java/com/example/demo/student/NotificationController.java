@@ -1,8 +1,7 @@
 package com.example.demo.student;
 
-import com.example.demo.DesignPattern.Singleton.Notification;
-import com.example.demo.DesignPattern.Singleton.NotificationManager;
-import com.example.demo.book.Database;
+import com.example.demo.designpattern.Singleton.Notification;
+import com.example.demo.designpattern.Singleton.NotificationManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -14,12 +13,11 @@ import javafx.scene.layout.RowConstraints;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-public class NotificationController extends menuController {
+public class NotificationController extends MenuController {
 
     @FXML
     private GridPane notifyView;
@@ -27,8 +25,7 @@ public class NotificationController extends menuController {
     @FXML
     private Button clearNotification;
 
-    private Database database = Database.getInstance();
-    private Student user = studentcontroller.getStudent();
+    private Student user = StudentController.getStudent();
 
     public void initialize() {
         UpNotification();
@@ -43,12 +40,9 @@ public class NotificationController extends menuController {
         Collections.sort(notificationList, new Comparator<Notification>() {
             @Override
             public int compare(Notification o1, Notification o2) {
-                // Chuyển đổi notify_date từ chuỗi thành LocalDateTime
                 LocalDateTime date1 = LocalDateTime.parse(o1.getNotify_date(), formatter);
                 LocalDateTime date2 = LocalDateTime.parse(o2.getNotify_date(), formatter);
-
-                // So sánh thời gian, ngày mới hơn sẽ đứng trước
-                return date2.compareTo(date1);  // So sánh ngược lại để sắp xếp từ ngày mới nhất
+                return date2.compareTo(date1);
             }
         });
 
@@ -62,31 +56,25 @@ public class NotificationController extends menuController {
         int row = 0;
 
         for (Notification notification : notificationList) {
-            String notify_date = notification.getNotify_date();  // Lấy ngày thông báo
-            String content = notification.getContent();  // Lấy nội dung thông báo
+            String notify_date = notification.getNotify_date();
+            String content = notification.getContent();
 
-            // Tạo Label cho date và content
             Label dateLabel = new Label(notify_date);
             Label contentLabel = new Label(content);
 
             dateLabel.getStyleClass().add("dateLabel");
             contentLabel.getStyleClass().add("contentLabel");
 
-            // Thiết lập padding cho các Label (nếu cần thiết)
-            dateLabel.setPadding(new Insets(5, 10, 5, 10));  // Padding cho date
-            contentLabel.setPadding(new Insets(5, 10, 5, 10));  // Padding cho content
+            dateLabel.setPadding(new Insets(5, 10, 5, 10));
+            contentLabel.setPadding(new Insets(5, 10, 5, 10));
 
-            // Kiểm tra nếu GridPane có đủ hàng để thêm thông báo
             if (row >= notifyView.getRowCount()) {
-                // Nếu số hàng ít hơn số notification, tự động thêm hàng
-                notifyView.getRowConstraints().add(new RowConstraints());  // Thêm một hàng mới
+                notifyView.getRowConstraints().add(new RowConstraints());
             }
 
-            // Đặt các Label vào các ô tương ứng trong GridPane
-            notifyView.add(dateLabel, 0, row);  // Đặt date vào cột 0, hàng row
-            notifyView.add(contentLabel, 1, row);  // Đặt content vào cột 1, hàng row
+            notifyView.add(dateLabel, 0, row);
+            notifyView.add(contentLabel, 1, row);
 
-            // Tăng số hàng lên để cho các thông báo tiếp theo
             row++;
         }
     }

@@ -39,8 +39,8 @@
         <Label fx:id="authorLabel" layoutX="406.0" layoutY="97.0" prefHeight="17.0" prefWidth="200.0" text="author" />
         <Label fx:id="publisherLabel" layoutX="406.0" layoutY="142.0" prefHeight="17.0" prefWidth="200.0" text="publisher" />
         <Label fx:id="yearLabel" layoutX="406.0" layoutY="178.0" prefHeight="17.0" prefWidth="200.0" text="year" />
-        <Button fx:id="Borrow_book" layoutX="366.0" layoutY="331.0" mnemonicParsing="false" onAction="#ClickBorrowButton" prefHeight="25.0" prefWidth="65.0" text="Borrow" />
-        <Button fx:id="BookQR" layoutX="702.0" layoutY="331.0" mnemonicParsing="false" onAction="#ClickBookQR" prefWidth="150.0" text="Book QR" />
+        <Button fx:id="borrowBook" layoutX="366.0" layoutY="331.0" mnemonicParsing="false" onAction="#clickBorrowButton" prefHeight="25.0" prefWidth="65.0" text="Borrow" />
+        <Button fx:id="bookQRButton" layoutX="702.0" layoutY="331.0" mnemonicParsing="false" onAction="#clickBookQR" prefWidth="150.0" text="Book QR" />
 
         <!-- QR Image -->
         <ImageView fx:id="QRImageView" fitHeight="227.0" fitWidth="212.0" layoutX="668.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true" />
@@ -48,10 +48,10 @@
         <!-- Comment Section -->
         <ScrollPane layoutX="40.0" layoutY="391.0" prefHeight="200.0" prefWidth="880.0">
             <content>
-                <AnchorPane fx:id="CommentView" prefHeight="185.0" prefWidth="887.0">
+                <AnchorPane fx:id="commentView" prefHeight="185.0" prefWidth="887.0">
                     <children>
-                        <TextField fx:id="CommentField" layoutX="10.0" layoutY="15.0" prefHeight="40.0" prefWidth="750.0" />
-                        <Button layoutX="654.0" layoutY="10.0" mnemonicParsing="false" onAction="#PostComment" prefHeight="40.0" prefWidth="80.0" text="Post" />
+                        <TextField fx:id="commentField" layoutX="10.0" layoutY="15.0" prefHeight="40.0" prefWidth="750.0" />
+                        <Button layoutX="654.0" layoutY="10.0" mnemonicParsing="false" onAction="#postComment" prefHeight="40.0" prefWidth="80.0" text="Post" />
                         <Label layoutX="10.0" layoutY="55.0" styleClass="comment-label" text="Post your comment" />
                     </children>
                 </AnchorPane>
@@ -59,14 +59,14 @@
         </ScrollPane>
 
         <!-- Undo Request Button -->
-        <Button fx:id="UndoRequestButton" layoutX="525.0" layoutY="331.0" mnemonicParsing="false" onAction="#clickUndoRequestButton" prefWidth="150.0" text="Undo request" visible="false" />
+        <Button fx:id="undoRequestButton" layoutX="525.0" layoutY="331.0" mnemonicParsing="false" onAction="#clickUndoRequestButton" prefWidth="150.0" text="Undo request" visible="false" />
       <Label layoutX="406.0" layoutY="233.0" text="Quantity:" />
       <Label fx:id="bookQuantity" layoutX="499.0" layoutY="233.0" text="bookQuantity" />
 
     </AnchorPane>
 
     <Button fx:id="back" layoutX="274.0" layoutY="23.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
-    <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" text="Logout" />
+    <Button fx:id="logOut" layoutX="50.0" layoutY="217.0" onAction="#logout" text="Logout" />
     <Button fx:id="notificationButton" layoutX="1008.0" layoutY="23.0" mnemonicParsing="false" onAction="#notification" text="Notifcation" />
 
 

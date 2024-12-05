@@ -10,8 +10,11 @@ public abstract class User implements Serializable {
     private String name;
     private String role;
     private String phone;
-    public User(){}
-    public User( String username, String password, String name, String role, String phone) {
+
+    public User() {
+    }
+
+    public User(String username, String password, String name, String role, String phone) {
 
         this.username = username;
         this.password = password;
@@ -19,12 +22,13 @@ public abstract class User implements Serializable {
         this.role = role;
         this.phone = phone;
     }
+
     public User(String id, String username, String name) {
         this.username = username;
         this.name = name;
 
     }
-    // Phương thức getter cho từng thuộc tính
+
     public String getId() {
         return id;
     }
@@ -49,9 +53,6 @@ public abstract class User implements Serializable {
         return phone;
     }
 
-
-
-    // Các phương thức setter
     public void setID(String id) {
         this.id = id;
     }
@@ -76,5 +77,5 @@ public abstract class User implements Serializable {
         this.phone = phone;
     }
 
-    public abstract boolean login(String username, String password) throws SQLException;
+    public abstract boolean loginAdmin(String username, String password) throws SQLException;
 }

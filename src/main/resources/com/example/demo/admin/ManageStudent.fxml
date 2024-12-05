@@ -13,13 +13,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="header" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.managestudentcontroller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="header" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.ManageStudentController">
    <children>
       <Pane fx:id="pane21" layoutX="192.0" layoutY="261.0" prefHeight="46.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Pane fx:id="pane2" layoutX="192.0" layoutY="224.0" prefHeight="46.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Pane fx:id="pane1" layoutX="192.0" layoutY="165.0" prefHeight="48.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Button fx:id="manageStudent" layoutX="40.0" layoutY="189.0" onAction="#handleManageStudentAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Students" />
-      <Button fx:id="home" layoutX="40.0" layoutY="141.0" onAction="#handleHomeAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Home" />
+      <Button fx:id="homeButton" layoutX="40.0" layoutY="141.0" onAction="#handleHomeAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Home" />
       <Button fx:id="handleRequest" layoutX="40.0" layoutY="285.0" onAction="#handleHandleRequestAction" prefHeight="46.0" prefWidth="190.0" styleClass="sidebar-button" text="Handle request" />
       <Button fx:id="manageBook" layoutX="40.0" layoutY="237.0" onAction="#handleManageBookAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Books">
          <font>
@@ -39,7 +39,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="input" layoutX="525.0" layoutY="70.0" prefHeight="26.0" prefWidth="236.0" />
+            <TextField fx:id="inputField" layoutX="525.0" layoutY="70.0" prefHeight="26.0" prefWidth="236.0" />
             <Button layoutX="784.0" layoutY="70.0" mnemonicParsing="false" onAction="#searchStudent" styleClass="search-button" text="Search" />
             <Button layoutX="213.0" layoutY="14.0" mnemonicParsing="false" onAction="#createStudent" styleClass="create-button" text="+Create" />
             <ListView fx:id="suggestionList" layoutX="525.0" layoutY="96.0" prefHeight="78.0" prefWidth="236.0" />

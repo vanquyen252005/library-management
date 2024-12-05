@@ -18,7 +18,7 @@ public class Request {
 
     private String returnDate;
     private String status;
-    private static jdbc RequestDB = new jdbc();
+    private static final Jdbc RequestDB = new Jdbc();
     private String type;
     public Request() {
     }

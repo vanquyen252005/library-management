@@ -14,13 +14,13 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="header" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.detailstudentcontroller">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" styleClass="header" stylesheets="@styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.admin.DetailStudentController">
    <children>
       <Pane fx:id="pane21" layoutX="192.0" layoutY="261.0" prefHeight="46.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Pane fx:id="pane2" layoutX="192.0" layoutY="224.0" prefHeight="46.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Pane fx:id="pane1" layoutX="192.0" layoutY="165.0" prefHeight="48.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Button fx:id="manageStudent" layoutX="40.0" layoutY="189.0" onAction="#handleManageStudentAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Students" />
-      <Button fx:id="home" layoutX="40.0" layoutY="141.0" onAction="#handleHomeAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Home" />
+      <Button fx:id="homeButton" layoutX="40.0" layoutY="141.0" onAction="#handleHomeAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Home" />
       <Button fx:id="handleRequest" layoutX="40.0" layoutY="285.0" onAction="#handleHandleRequestAction" prefHeight="46.0" prefWidth="190.0" styleClass="sidebar-button" text="Handle request" />
       <Button fx:id="manageBook" layoutX="40.0" layoutY="237.0" onAction="#handleManageBookAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Books">
          <font>
@@ -33,10 +33,10 @@
             <TableView fx:id="borrowedBooksTable" layoutX="125.0" layoutY="295.0" prefHeight="300.0" prefWidth="740.0" styleClass="table-view">
                <columns>
                   <TableColumn fx:id="bookIdColumn" prefWidth="71.99999618530273" text="Book ID" />
-                  <TableColumn fx:id="TitleColumn" prefWidth="87.99996948242188" text="Title" />
-                  <TableColumn fx:id="AuthorColumn" prefWidth="84.80000305175781" text="Author" />
-                  <TableColumn fx:id="PublishYearColumn" minWidth="0.0" prefWidth="216.79998779296875" text="Publish Year" />
-                  <TableColumn fx:id="PublisherColumn" prefWidth="320.0" text="Publisher" />
+                  <TableColumn fx:id="titleColumn" prefWidth="87.99996948242188" text="Title" />
+                  <TableColumn fx:id="authorColumn" prefWidth="84.80000305175781" text="Author" />
+                  <TableColumn fx:id="publishYearColumn" minWidth="0.0" prefWidth="216.79998779296875" text="Publish Year" />
+                  <TableColumn fx:id="publisherColumn" prefWidth="320.0" text="Publisher" />
                   <TableColumn fx:id="borrowedDateColumn" prefWidth="172.0" text="Borrowed Date" />
                   <TableColumn fx:id="returnDateColumn" prefWidth="164.0" text="Return Date" />
                </columns>
@@ -52,7 +52,7 @@
                                     <Font name="System Bold" size="14.0" />
                                  </font>
                               </Label>
-                              <Label fx:id="id" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
+                              <Label fx:id="idLabel" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
                                  <font>
                                     <Font size="14.0" />
                                  </font>
@@ -65,7 +65,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Label>
-                              <Label fx:id="username" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="None">
+                              <Label fx:id="usernameLabel" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="139.0" text="None">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
@@ -77,7 +77,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Label>
-                              <Label fx:id="name" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
+                              <Label fx:id="nameLabel" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
@@ -89,7 +89,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Label>
-                              <Label fx:id="Class" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
+                              <Label fx:id="classLabel" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
@@ -101,7 +101,7 @@
                                  <font>
                                     <Font name="System Bold" size="14.0" />
                                  </font></Label>
-                              <Label fx:id="phone" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
+                              <Label fx:id="phoneLabel" layoutX="10.0" layoutY="10.0" prefHeight="18.0" prefWidth="144.0" text="None">
                                  <font>
                                     <Font size="14.0" />
                                  </font></Label>
@@ -111,7 +111,7 @@
                   </VBox>
                </children>
             </Pane>
-            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id = "userAvatar" fitHeight="150.0" fitWidth="200.0" layoutX="55.0" layoutY="41.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../../../Picture/profile.png" />
                </image>

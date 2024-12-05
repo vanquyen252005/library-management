@@ -1,6 +1,6 @@
 package com.example.demo.student;
 
-import com.example.demo.book.Book_borrowed;
+import com.example.demo.book.BookBorrowed;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -18,10 +18,10 @@ import javafx.scene.image.ImageView;
 import java.io.File;
 
 
-public class ProfileController extends menuController {
+public class ProfileController extends MenuController {
     public AnchorPane rootPane;
     public Button back;
-    protected Student user = studentcontroller.getStudent();
+    protected Student user = StudentController.getStudent();
     private static ImageView savedImageView;
     protected static String savedImageURI;
     @FXML
@@ -80,14 +80,14 @@ public class ProfileController extends menuController {
 
     public void loadUserInfo() {
         ObservableList<UserInfo> userInfoList = FXCollections.observableArrayList();
-        jdbc db = jdbc.getInstance();
+        Jdbc db = Jdbc.getInstance();
         Student userInfo = db.LoadUserInfor(Integer.parseInt(user.getId()));
         if (userInfo != null) {
             userInfoList.add(new UserInfo("Username", userInfo.getUsername()));
             userInfoList.add(new UserInfo("Name", userInfo.getName()));
             userInfoList.add(new UserInfo("Role", userInfo.getRole()));
             userInfoList.add(new UserInfo("Phone", userInfo.getPhone()));
-            userInfoList.add(new UserInfo("Class", userInfo.getClassname()));
+            userInfoList.add(new UserInfo("Class", userInfo.getClassName()));
         } else {
             System.out.println("Không tìm thấy thông tin người dùng.");
         }
@@ -98,12 +98,12 @@ public class ProfileController extends menuController {
     private void loadBorrowedBooks() {
         ObservableList<BookInfo> bookInfoList = FXCollections.observableArrayList();
 
-        ArrayList<Book_borrowed> list = new ArrayList<>();
+        ArrayList<BookBorrowed> list = new ArrayList<>();
 
         list = user.getBorrowingBook();
-        for (Book_borrowed x:list) {
+        for (BookBorrowed x:list) {
             bookInfoList.add(new BookInfo(
-                    x.getISBN(),x.getTitle(),x.getAuthor(),x.getPublishYear(),x.getPublisher(),x.getBorrow_date(),x.getReturn_date()
+                    x.getISBN(),x.getTitle(),x.getAuthor(),x.getPublishYear(),x.getPublisher(),x.getBorrowDate(),x.getReturnDate()
             ));
         }
 
@@ -111,11 +111,11 @@ public class ProfileController extends menuController {
     }
 
     public void editProfile(ActionEvent event) {
-        displayScene(event,"editProfile.fxml");
+        displayScene(event,"EditProfile.fxml");
     }
 
     public void BACK(ActionEvent event) {
-        displayScene(event,"menu.fxml");
+        displayScene(event,"Menu.fxml");
     }
 
     public static class UserInfo {

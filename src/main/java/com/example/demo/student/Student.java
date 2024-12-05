@@ -1,10 +1,8 @@
 package com.example.demo.student;
 
-import com.example.demo.book.Book;
-import com.example.demo.book.Book_borrowed;
+import com.example.demo.book.BookBorrowed;
 import com.example.demo.user.User;
 
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,48 +10,48 @@ import java.util.List;
 import static java.lang.Integer.parseInt;
 
 public class Student extends User {
-    ArrayList<Book_borrowed> BorrowingBook = new ArrayList<>();
-    private String classname;
-    private static jdbc Request =jdbc.getInstance();
+    ArrayList<BookBorrowed> BorrowingBook = new ArrayList<>();
+    private String className;
+    private static Jdbc Request = Jdbc.getInstance();
     public Student() {
         super();
     }
 
-    public void setBorrowingBook(ArrayList<Book_borrowed> borrowingBook) {
+    public void setBorrowingBook(ArrayList<BookBorrowed> borrowingBook) {
         BorrowingBook = borrowingBook;
     }
 
-    public Student( String username, String password, String name, String role, String phone, String classname) {
+    public Student( String username, String password, String name, String role, String phone, String className) {
         super(username, password, name, role, phone);
-        this.classname = classname;
+        this.className = className;
         // this.BorrowingBook = Request.loadBorrowedBook(parseInt(this.getId()));
     }
     public Student(String id, String username, String name) {
         super(id, username, name);
         // this.BorrowingBook = Request.loadBorrowedBook(parseInt(id));
     }
-    public void setClassname(String classname) {
-        this.classname = classname;
+    public void setClassName(String className) {
+        this.className = className;
     }
-    public String getClassname() {
-        return classname;
+    public String getClassName() {
+        return className;
     }
-    public ArrayList<Book_borrowed> getBorrowingBook() {
+    public ArrayList<BookBorrowed> getBorrowingBook() {
         return BorrowingBook;
     }
     @Override
-    public boolean login(String username, String password) {
+    public boolean loginAdmin(String username, String password) {
         try{
             ResultSet resultSet = Request.getData(username, password);
             while (resultSet.next() != false) {
-                if (resultSet.getString("role").equals("Student")) {
+                if (resultSet.getString("role").equals("student")) {
                     super.setID(resultSet.getString("id"));
                     super.setUsername(resultSet.getString("username"));
                     super.setPassword(resultSet.getString("password"));
                     super.setName(resultSet.getString("name"));
                     super.setRole(resultSet.getString("role"));
                     super.setPhone(resultSet.getString("phone"));
-                    this.setClassname(resultSet.getString("classname"));
+                    this.setClassName(resultSet.getString("classname"));
                     this.BorrowingBook = Request.loadBorrowedBook(parseInt(this.getId()));
                     return true;
                 }
@@ -61,7 +59,7 @@ public class Student extends User {
             }
             return false;
         } catch (Exception e) {
-            System.out.println("dell ket noi dc");
+            System.out.println("unable to connect");
             throw new RuntimeException(e);
         }
     }
@@ -82,7 +80,7 @@ public class Student extends User {
                 cur.setName(resultSet.getString("name"));
                 cur.setRole(resultSet.getString("role"));
                 cur.setPhone(resultSet.getString("phone")); // Chuyển đổi kiểu nếu cần
-                cur.setClassname(resultSet.getString("classname"));
+                cur.setClassName(resultSet.getString("classname"));
                 cur.setBorrowingBook(Request.loadBorrowedBook(parseInt(cur.getId())));
                 arr.add(cur);
             }

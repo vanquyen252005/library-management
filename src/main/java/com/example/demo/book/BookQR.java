@@ -30,7 +30,6 @@ public class BookQR {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
             BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, QR_WIDTH,QR_HEIGHT);
 
-            // Tạo mã QR dưới dạng BufferedImage
             return MatrixToImageWriter.toBufferedImage(bitMatrix);
         }
     }
@@ -39,15 +38,12 @@ public class BookQR {
         try {
             BufferedImage bufferedImage = QRCodeGenerator.generateQRCodeImage(text);
 
-            // Ghi BufferedImage vào ByteArrayOutputStream
             ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
             ImageIO.write(bufferedImage, "png", outputStream);
 
-            // Tạo javafx.scene.image.Image từ ByteArrayInputStream
             ByteArrayInputStream inputStream = new ByteArrayInputStream(outputStream.toByteArray());
             Image qrImage = new Image(inputStream);
 
-            // Tạo ImageView và đặt ảnh mã QR vào
             ImageView imageView = new ImageView(qrImage);
             imageView.setFitWidth(QR_WIDTH);
             imageView.setFitHeight(QR_HEIGHT);

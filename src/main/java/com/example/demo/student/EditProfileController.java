@@ -1,7 +1,6 @@
 package com.example.demo.student;
 
-import com.example.demo.DesignPattern.Singleton.NotificationManager;
-import com.example.demo.HelloController;
+import com.example.demo.designpattern.Singleton.NotificationManager;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,8 +10,6 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-
-import java.util.Scanner;
 
 public class EditProfileController extends ProfileController {
     @FXML

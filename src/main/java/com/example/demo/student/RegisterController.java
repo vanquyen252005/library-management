@@ -1,18 +1,11 @@
 package com.example.demo.student;
 
-import com.example.demo.HelloController;
-import javafx.application.Platform;
-import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
+import com.example.demo.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.KeyEvent;
 
-import java.util.List;
-import java.util.regex.Pattern;
-
-public class RegisterController extends HelloController {
+public class RegisterController extends MainController {
     @FXML
     private TextField emailField;
 
@@ -29,7 +22,7 @@ public class RegisterController extends HelloController {
     private PasswordField passwordField;
 
     @FXML
-    private PasswordField confirmtField;
+    private PasswordField confirmField;
 
     @FXML
     private TextField classNameField;
@@ -65,7 +58,7 @@ public class RegisterController extends HelloController {
     String passwordRegex = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
 
     protected static Student user = new Student();
-    private static jdbc Database = jdbc.getInstance();
+    private static Jdbc Database = Jdbc.getInstance();
     private boolean ableToRegister = true;
 
     @FXML
@@ -73,25 +66,25 @@ public class RegisterController extends HelloController {
 
         String email = emailField.getText();
         if (!email.matches(emailRegex)) {
-            showErrorAlert("Địa chỉ email không hợp lệ", "Vui lòng nhập một địa chỉ email hợp lệ.");
+            showErrorAlert("Invalid email address", "Please enter a valid email address.");
             return;
         }
 
         String password = passwordField.getText();
         if (!password.matches(passwordRegex)) {
-            showErrorAlert("Mật khẩu không hợp lệ",
-                    "Mật khẩu phải có ít nhất 8 ký tự, bao gồm cả chữ hoa, chữ thường, số và ký tự đặc biệt.");
+            showErrorAlert("Invalid password",
+                    "Password must be at least 8 characters long and include uppercase letters, lowercase letters, numbers, and special characters.");
             return;
         }
 
-        String confirmPassword = confirmtField.getText();
+        String confirmPassword = confirmField.getText();
         if (!password.equals(confirmPassword)) {
-            showErrorAlert("Mật khẩu không khớp", "Bạn cần xác nhận đúng mật khẩu");
+            showErrorAlert("Passwords do not match", "You must confirm the correct password.");
             return;
         }
 
         if (nameField.getText().isEmpty() || phoneField.getText().isEmpty() || classNameField.getText().isEmpty()) {
-            showErrorAlert("Thông tin không đầy đủ", "Vui lòng điền đầy đủ thông tin.");
+            showErrorAlert("Incomplete information", "Please fill in all required fields.");
             return;
         }
 
@@ -103,20 +96,19 @@ public class RegisterController extends HelloController {
                 phoneField.getText(),
                 classNameField.getText());
         Student.addStudent(newStudent);
-        displayScene(event,"student/StudentLogin.fxml");
+        displayScene(event,"StudentLogin.fxml");
     }
 
     private void showErrorAlert(String headerText, String contentText) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Lỗi Đăng Ký");
+        alert.setTitle("Registration Error");
         alert.setHeaderText(headerText);
 
-        // Tạo một TextArea thay vì Label
         TextArea textArea = new TextArea(contentText);
-        textArea.setEditable(false);  // Không cho phép chỉnh sửa
-        textArea.setWrapText(true);   // Cho phép gói dòng
-        textArea.setMaxHeight(200);   // Hạn chế chiều cao của TextArea nếu cần
-        textArea.setMinWidth(300);    // Cài đặt chiều rộng tối thiểu
+        textArea.setEditable(false);
+        textArea.setWrapText(true);
+        textArea.setMaxHeight(200);
+        textArea.setMinWidth(300);
         alert.getDialogPane().setContent(textArea);
         alert.showAndWait();
     }

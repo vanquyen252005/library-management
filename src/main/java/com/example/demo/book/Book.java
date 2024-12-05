@@ -39,52 +39,40 @@ public class Book {
     }
 
     public static List<Book> getBook(String searchText) {
-        List<Book> arr = new ArrayList<>();
+        List<Book> bookList = new ArrayList<>();
         try{
-            arr = Request.searchDocuments(searchText);
-//            for(Student a:arr) {
-//                System.out.println(a.getUsername() + " " + a.getName());
-//            }
-            return arr;
+            bookList = Request.searchDocuments(searchText);
+            return bookList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
     public static List<Book> getBookDB(String searchText) {
-        List<Book> arr = new ArrayList<>();
+        List<Book> bookList = new ArrayList<>();
         try{
-            arr = Request.searchDocumentsDB(searchText);
-//            for(Student a:arr) {
-//                System.out.println(a.getUsername() + " " + a.getName());
-//            }
-            return arr;
+            bookList = Request.searchDocumentsDB(searchText);
+            return bookList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
     public static List<Book> getBookAPI(String searchText) {
-        List<Book> arr = new ArrayList<>();
+        List<Book> bookList = new ArrayList<>();
         try{
-            arr = Request.searchDocumentsAPI(searchText);
-//            for(Student a:arr) {
-//                System.out.println(a.getUsername() + " " + a.getName());
-//            }
-            return arr;
+            bookList = Request.searchDocumentsAPI(searchText);
+            return bookList;
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
     }
-    // Tìm kiếm theo Title
     public static List<Book> searchBooksByTitle(String keyword) {
         return Request.searchDocumentsDBSingleColumn("Title", keyword);
     }
 
-    // Tìm kiếm theo Author
     public static List<Book> searchBooksByAuthor(String keyword) {
         return Request.searchDocumentsDBSingleColumn("Author", keyword);
     }
 
-    // Tìm kiếm theo Publisher
     public static List<Book> searchBooksByPublisher(String keyword) {
         return Request.searchDocumentsDBSingleColumn("Publisher", keyword);
     }
@@ -101,8 +89,6 @@ public class Book {
             int pageSize = 10; // Số sách mỗi trang
             int offset = (page - 1) * pageSize;
 
-            // Truy vấn cơ sở dữ liệu hoặc lấy dữ liệu từ API
-            // Ví dụ: SELECT * FROM books LIMIT pageSize OFFSET offset;
             return Request.queryBooks(pageSize, offset, text);
     }
 
@@ -155,6 +141,8 @@ public class Book {
         PublishYear = publishYear;
     }
 
+    public void setQuantity(int quantity) {this.quantity = quantity;}
+
     @Override
     public String toString() {
         return "Book{" +
@@ -181,11 +169,12 @@ public class Book {
     public Book getBook() {
         return this;
     }
+
     public ImageView loadImage() {
         try {
             String imageUrl = this.getImage();
             ImageView imageView = new ImageView();
-            // Tạo URL và kết nối
+
             URL url = new URL(imageUrl);
             HttpURLConnection connection = (HttpURLConnection) url.openConnection();
             connection.setDoInput(true);
@@ -194,7 +183,7 @@ public class Book {
 
             int responseCode = connection.getResponseCode();
             if (responseCode == HttpURLConnection.HTTP_OK) {
-                // Lấy hình ảnh và gán cho ImageView
+
                 InputStream input = connection.getInputStream();
                 javafx.scene.image.Image image = new Image(input);
                 imageView.setImage(image);
@@ -210,7 +199,6 @@ public class Book {
     public List<Comment> getCommentList() {
         return Request.GetCommentList(ISBN);
     }
-    public void getNewComment(){};
 
     public Book(String ISBN, String title, String author, String publisher, String publishYear, String image, int quantity) {
         this.ISBN = ISBN;

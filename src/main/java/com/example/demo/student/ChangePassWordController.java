@@ -1,11 +1,13 @@
 package com.example.demo.student;
 
-import com.example.demo.DesignPattern.Singleton.NotificationManager;
+import com.example.demo.designpattern.Singleton.NotificationManager;
 import javafx.animation.PauseTransition;
 import javafx.event.ActionEvent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
 public class ChangePassWordController extends EditProfileController {
@@ -16,6 +18,15 @@ public class ChangePassWordController extends EditProfileController {
     public Label Notification;
     public Button submit_lbn;
     public Button Cancel_btn;
+    public ImageView PasswordImage;
+
+    public void initialize() {
+        if (savedImageURI != null) {
+            System.out.println("Loading saved image.");
+            Image savedImage = new Image(savedImageURI);
+            PasswordImage.setImage(savedImage);
+        }
+    }
 
     public void submit(ActionEvent event) {
         boolean isNotified = NotificationManager.getInstance().userNotify(Integer.parseInt(user.getId()),2,"");
@@ -40,13 +51,13 @@ public class ChangePassWordController extends EditProfileController {
             Notification.setText("New PassWord is updated successfully");
             Notification.setStyle("-fx-font-size: 16px; -fx-text-fill: red;");
             PauseTransition pause = new PauseTransition(Duration.seconds(1));
-            pause.setOnFinished(e -> displayScene(event, "editProfile.fxml"));
+            pause.setOnFinished(e -> displayScene(event, "EditProfile.fxml"));
             pause.play();
         }
     }
 
     public void cancel(ActionEvent event) {
-        displayScene(event,"editProfile.fxml");
+        displayScene(event,"EditProfile.fxml");
     }
 
 }

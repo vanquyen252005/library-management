@@ -21,9 +21,9 @@ module com.example.demo {
     opens com.example.demo.student to javafx.fxml;
     opens com.example.demo.book to javafx.fxml;  // Mở gói cho javafx.base
     exports com.example.demo.book;
-    exports com.example.demo.DesignPattern.Command;
-    opens com.example.demo.DesignPattern.Command to javafx.fxml;
-    opens com.example.demo.DesignPattern.Singleton to javafx.base;
-    exports com.example.demo.DesignPattern.Singleton;
+    exports com.example.demo.designpattern.Command;
+    opens com.example.demo.designpattern.Command to javafx.fxml;
+    opens com.example.demo.designpattern.Singleton to javafx.base;
+    exports com.example.demo.designpattern.Singleton;
 
 }

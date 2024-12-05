@@ -1,19 +1,17 @@
 package com.example.demo.admin;
 
 import javafx.collections.FXCollections;
-import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 
 import java.util.List;
 
 import static java.lang.Integer.parseInt;
 
-public class HandleRequestController extends menucontroller{
+public class HandleRequestController extends MenuController {
     @FXML
     public TableView<Request> requestTable;
     @FXML
@@ -21,19 +19,22 @@ public class HandleRequestController extends menucontroller{
     @FXML
     private ProgressIndicator loadingSpinner;
     @FXML
+
+    // initialize handle request
     public void initialize() {
         super.initialize();
-        {home.getStyleClass().remove("selected");
+        {
+            homeButton.getStyleClass().remove("selected");
         manageStudent.getStyleClass().remove("select");
         manageBook.getStyleClass().remove("selected");
         handleRequest.getStyleClass().remove("selected");
 
-        home.getStyleClass().remove("pre");
+        homeButton.getStyleClass().remove("pre");
         manageStudent.getStyleClass().remove("pre");
         manageBook.getStyleClass().remove("pre");
         handleRequest.getStyleClass().remove("pre");
 
-        home.getStyleClass().remove("after");
+        homeButton.getStyleClass().remove("after");
         manageStudent.getStyleClass().remove("after");
         manageBook.getStyleClass().remove("after");
         handleRequest.getStyleClass().remove("after");
@@ -47,7 +48,7 @@ public class HandleRequestController extends menucontroller{
         TableColumn<Request, String> column3 =
                 new TableColumn<>("User Id");
         TableColumn<Request, String> column4 =
-                new TableColumn<>("RequestvDate");
+                new TableColumn<>("RequestDate");
         TableColumn<Request, String> column5 =
                 new TableColumn<>("Status");
         TableColumn<Request, String> column6 =
@@ -65,17 +66,20 @@ public class HandleRequestController extends menucontroller{
                 new PropertyValueFactory<>("status"));
         column6.setCellValueFactory(
                 new PropertyValueFactory<>("type"));
-//        List<Request> requests = user.getRequestBook();
+
 //         Hiển thị các yêu cầu trong table view
         requestTable.getColumns().addAll(column1, column2, column3, column4, column5, column6);
         loadRequests();
     }
+
+    // load request from database
     private void loadRequests() {
         List<Request> requests = Request.getRequest();
-            // Cập nhật dữ liệu vào TableView
-            requestTable.setItems(FXCollections.observableArrayList(requests));
+         requestTable.setItems(FXCollections.observableArrayList(requests));
     }
 
+
+    // accept request method
     public void acceptRequest(ActionEvent event) {
         Request selectedRequest = requestTable.getSelectionModel().getSelectedItem();
 
@@ -94,28 +98,27 @@ public class HandleRequestController extends menucontroller{
             alert.showAndWait().ifPresent(response -> {
                 selectedRequest.setStatus("approved");
                     selectedRequest.updateRequestStatus();
-                    loadRequests();  // Reload the table after accepting the request
+                    loadRequests();
                 });
             }
          else {
-            TextField day = new TextField();
+            TextField dayField = new TextField();
             Label label = new Label("Return this book after 30 days or");
-            TextFlow textFlow = new TextFlow(label, day);
+            TextFlow textFlow = new TextFlow(label, dayField);
             alert.getDialogPane().setContent(textFlow);
             ButtonType okButton = new ButtonType("OK");
             ButtonType cancelButton = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
             alert.getButtonTypes().setAll(okButton, cancelButton);
             alert.showAndWait().ifPresent(response -> {
                 if (response == okButton) {
-                    // Accept the request (update the status in DB)
                     selectedRequest.setStatus("approved");
                     String date = "30";
-                    if (day.getText().trim().matches("\\d+")) {
-                        date = day.getText();
+                    if (dayField.getText().trim().matches("\\d+")) {
+                        date = dayField.getText();
                     }
                     selectedRequest.setReturnDate(date);
                     selectedRequest.updateRequestStatus();
-                    loadRequests();  // Reload the table after accepting the request
+                    loadRequests();
                 }
             });
         }
@@ -124,16 +127,17 @@ public class HandleRequestController extends menucontroller{
         }
     }
 
-    private void showError(String error, String s) {
+    // Error Box
+    private void showError(String errorShown, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
-        alert.setTitle("Lỗi");
-        alert.setHeaderText("Đã xảy ra lỗi!");
-        alert.setContentText(error);
+        alert.setTitle("Error");
+        alert.setHeaderText("Error Happened");
+        alert.setContentText(errorShown);
 
-        // Hiển thị Alert và chờ người dùng đóng
         alert.showAndWait();
     }
 
+    // decline request method
     public void declineRequest(ActionEvent event) {
         Request selectedRequest = requestTable.getSelectionModel().getSelectedItem();
 

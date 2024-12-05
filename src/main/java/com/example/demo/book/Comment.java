@@ -7,9 +7,8 @@ public class Comment {
     private int userId;
     private String content;
     private String date;
-    private Integer parentCommentId; // Optional to handle null values
+    private Integer parentCommentId;
 
-    // Constructor
     public Comment(int id, String bookId, int userId, String content, Integer parentCommentId, String date) {
         this.id = id;
         this.bookId = bookId;
@@ -19,7 +18,6 @@ public class Comment {
         this.date = date;
     }
 
-    // Getters and Setters
     public int getId() {
         return id;
     }
@@ -68,7 +66,6 @@ public class Comment {
         this.date = date;
     }
 
-    // toString() method for debugging or display
     @Override
     public String toString() {
         return "Comment{" +

@@ -16,7 +16,7 @@
       <Pane fx:id="pane21" layoutX="192.0" layoutY="261.0" prefHeight="46.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Pane fx:id="pane1" layoutX="192.0" layoutY="165.0" prefHeight="48.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Button fx:id="manageStudent" layoutX="40.0" layoutY="189.0" onAction="#handleManageStudentAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Students" />
-      <Button fx:id="home" layoutX="40.0" layoutY="141.0" onAction="#handleHomeAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Home" />
+      <Button fx:id="homeButton" layoutX="40.0" layoutY="141.0" onAction="#handleHomeAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Home" />
       <Button fx:id="handleRequest" layoutX="40.0" layoutY="285.0" onAction="#handleHandleRequestAction" prefHeight="46.0" prefWidth="190.0" styleClass="sidebar-button" text="Handle request" />
       <Button fx:id="manageBook" layoutX="40.0" layoutY="237.0" onAction="#handleManageBookAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Books">
          <font>
@@ -58,11 +58,11 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="isbn" layoutX="195.0" layoutY="82.0" />
-                  <TextField fx:id="title" layoutX="195.0" layoutY="110.0" />
-                  <TextField fx:id="author" layoutX="195.0" layoutY="140.0" />
+                  <TextField fx:id="ISBN" layoutX="195.0" layoutY="82.0" />
+                  <TextField fx:id="Title" layoutX="195.0" layoutY="110.0" />
+                  <TextField fx:id="Author" layoutX="195.0" layoutY="140.0" />
                   <TextField fx:id="publisyear" layoutX="195.0" layoutY="167.0" text="none" />
-                  <TextField fx:id="publisher" layoutX="195.0" layoutY="197.0" text="none" />
+                  <TextField fx:id="Publisher" layoutX="195.0" layoutY="197.0" text="none" />
                   <TextField fx:id="imgUrlS" layoutX="195.0" layoutY="233.0" text="none" />
                   <Button layoutX="246.0" layoutY="376.0" mnemonicParsing="false" onAction="#addBook" text="+Create">
                      <font>

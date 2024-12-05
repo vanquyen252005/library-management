@@ -16,7 +16,7 @@
       <Pane fx:id="pane2" layoutX="192.0" layoutY="224.0" prefHeight="46.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Pane fx:id="pane1" layoutX="192.0" layoutY="165.0" prefHeight="48.0" prefWidth="50.0" styleClass="background-nav-pre-below" />
       <Button fx:id="manageStudent" layoutX="40.0" layoutY="189.0" onAction="#handleManageStudentAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Students" />
-      <Button fx:id="home" layoutX="40.0" layoutY="141.0" onAction="#handleHomeAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Home" />
+      <Button fx:id="homeButton" layoutX="40.0" layoutY="141.0" onAction="#handleHomeAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Home" />
       <Button fx:id="handleRequest" layoutX="40.0" layoutY="285.0" onAction="#handleHandleRequestAction" prefHeight="46.0" prefWidth="190.0" styleClass="sidebar-button" text="Handle request" />
       <Button fx:id="manageBook" layoutX="40.0" layoutY="237.0" onAction="#handleManageBookAction" prefHeight="48.0" prefWidth="190.0" styleClass="sidebar-button" text="Manage Books">
          <font>
@@ -48,10 +48,10 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="name" layoutX="158.0" layoutY="62.0" prefHeight="26.0" prefWidth="209.0" />
-                  <TextField fx:id="username" layoutX="158.0" layoutY="90.0" prefHeight="26.0" prefWidth="210.0" />
-                  <TextField fx:id="Class" layoutX="158.0" layoutY="126.0" prefHeight="26.0" prefWidth="210.0" />
-                  <TextField fx:id="phone" layoutX="158.0" layoutY="157.0" prefHeight="26.0" prefWidth="210.0" />
+                  <TextField fx:id="nameField" layoutX="158.0" layoutY="62.0" prefHeight="26.0" prefWidth="209.0" />
+                  <TextField fx:id="usernameField" layoutX="158.0" layoutY="90.0" prefHeight="26.0" prefWidth="210.0" />
+                  <TextField fx:id="classField" layoutX="158.0" layoutY="126.0" prefHeight="26.0" prefWidth="210.0" />
+                  <TextField fx:id="phoneField" layoutX="158.0" layoutY="157.0" prefHeight="26.0" prefWidth="210.0" />
                   <Button layoutX="305.0" layoutY="305.0" mnemonicParsing="false" onAction="#updateStudent" styleClass="button-update" text="Update">
                      <font>
                         <Font size="14.0" />

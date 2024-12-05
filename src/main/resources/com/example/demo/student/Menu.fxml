@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1200.0" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.student.MenuController">
+
+   <!-- Menu Panel -->
+   <Pane fx:id="menuPane" layoutX="14.0" layoutY="276.0" prefHeight="496.0" prefWidth="212.0" styleClass="side_ankerpane">
+      <Button fx:id="homeButton" layoutX="14.0" layoutY="95.0" mnemonicParsing="false" onAction="#home" prefHeight="41.0" prefWidth="188.0" styleClass=".btn_workbench" text="Home" />
+      <Button fx:id="profileButton" layoutX="12.0" layoutY="376.0" mnemonicParsing="false" onAction="#Profile" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Profile" />
+      <Button fx:id="returnBookButton" layoutX="12.0" layoutY="246.0" mnemonicParsing="false" onAction="#handleRequest" prefHeight="41.0" prefWidth="188.0" styleClass=".inner_pane" text="Handle request" />
+   </Pane>
+
+   <!-- Content Area -->
+   <AnchorPane fx:id="contentArea" layoutX="251.0" layoutY="94.0" prefHeight="479.0" prefWidth="925.0" />
+
+   <!-- Header Area (Logo, User info, Buttons) -->
+
+      <!-- Logout Button -->
+   <Button fx:id="logOut" layoutX="92.0" layoutY="249.0" onAction="#logout" text="Logout" />
+      <!-- Change Theme Button -->
+   <!-- Logo Image -->
+
+
+   <!-- User Info (User ID) -->
+   <Label layoutX="81.0" layoutY="193.0" text="User ID: 12345" />
+   <Button fx:id="back" layoutX="301.0" layoutY="694.0" mnemonicParsing="false" onAction="#handleBack" text="Back" />
+   <Button fx:id="notificationButton" layoutX="1077.0" layoutY="34.0" mnemonicParsing="false" onAction="#notification" text="Notifcation" />
+
+</AnchorPane>
